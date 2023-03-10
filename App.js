@@ -1,14 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import Navigation from './routes/HomeStack';
+import Login from './pages/Login';
+import Welcome from './pages/Welcome';
 
-export default function App() {
+const App = () => { 
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <Navigation/>
+  )
 }
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {
