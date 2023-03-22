@@ -7,6 +7,9 @@ import Welcome from './pages/Welcome';
 const App = () => { 
   return (
     <Navigation/>
+    // <View>
+    //   <Text>Hello</Text>
+    // </View>
   )
 }
 
