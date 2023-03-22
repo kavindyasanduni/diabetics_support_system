@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
 import { Alert } from 'react-native';
+import RoleIdentify from './RoleIdentify';
 
 const Login = props => {
 
@@ -16,7 +17,9 @@ const Login = props => {
   };
 
   const handleOnPress = () => {
-    Alert.alert('You clicked the button!');
+    return(
+      <RoleIdentify/>
+    )
   };
 
   return (
@@ -42,9 +45,10 @@ const Login = props => {
         onChangeText={handleLoginPassword}
         value={password}
       />
-      <TouchableOpacity style={styles.button} >
-        <Text  style={styles.buttonText}>Log In</Text>
+      <TouchableOpacity style={styles.button} onPress={()=>props.navigation.navigate("PatientHome")}>
+        <Text  style={styles.buttonText} >Log In</Text>
       </TouchableOpacity>
+      <RoleIdentify/>
     </View>
   );
 };
