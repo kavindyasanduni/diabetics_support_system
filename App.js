@@ -1,20 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+import React, { useState } from 'react';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
+import AddUserDetails from './screen/DoctorDetails';
+import SeeReservation from './screen/SeeReservation';
+import UpdateUserDetails from './screen/UpdateDoctor';
+import UpdateUserDetails2 from './screen/UpdateNutritionist';
+import Table from './screen/ReservationHistory';
+import DoctorList from './screen/DoctorList';
+import SearchBar from './screen/Component/Searchbar';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+export default function App(){
+  return(
+    
+    <DoctorList/>
+  )
+
+};
+
+
+
