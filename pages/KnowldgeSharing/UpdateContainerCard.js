@@ -118,7 +118,7 @@ const UpdateContainerCard = (props) => {
 
           //send data to database when uploading finished
           axios
-            .post("http://192.168.8.100:8082/addKInformation", {
+            .post("http://10.10.21.73:8082/addKInformation", {
               title: title,
               catergory: selectedOption,
               description: text,

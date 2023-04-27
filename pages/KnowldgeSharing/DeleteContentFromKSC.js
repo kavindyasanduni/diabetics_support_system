@@ -28,7 +28,7 @@ const DeleteContentFromKSC = () => {
   const fetchData = async () => {
     // console.log("called");
     try{
-    const response = await axios.get(`http://192.168.8.100:8082/getKInformationByCategory/${selectedOption}`);
+    const response = await axios.get(`http://10.10.21.73:8082/getKInformationByCategory/${selectedOption}`);
     setTableData(response.data);
     console.log("Data captured: " + response.data);
     }catch(error){
