@@ -11,13 +11,7 @@ function AddUserDetails2 () {
   const [AvailableTime, setAvailableTime] = useState('');
  
 
-  const handleSave = () => {
-    // handle save logic here
-  };
-
-  const handleChoosePhoto = () => {
-    // handle choose photo logic here
-  };
+  
 
   return (
     <View style={styles.container}>
@@ -67,7 +61,7 @@ function AddUserDetails2 () {
         value={AvailableTime}
         onChangeText={setAvailableTime}
       />
-      <TouchableOpacity style={styles.button} onPress={handleSave}>
+      <TouchableOpacity style={styles.button} onPress>
         <Text style={styles.buttonText}>Save</Text>
       </TouchableOpacity>
 

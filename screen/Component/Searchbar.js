@@ -1,42 +1,51 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 
+const SearchBar = ({ onSubmit }) => {
+  const [term, setTerm] = useState('');
 
-
-const SearchBar = () => {
-  const [searchText, setSearchText] = useState('');
-
-  const handleSearch = (text) => {
-    setSearchText(text);
-    // handle search logic here
+  const handleSearch = () => {
+    onSubmit(term);
   };
 
   return (
-    <View style={styles.container}>
-  
+    <View style={styles.searchBar}>
+      <Feather name="search" style={styles.searchIcon} />
       <TextInput
-        style={styles.input}
+        style={styles.searchInput}
         placeholder="Search Doctor"
-        value={searchText}
-        onChangeText={handleSearch}
+        value={term}
+        onChangeText={setTerm}
+        onEndEditing={handleSearch}
       />
-    </View>
+      </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#f2f2f2',
-    padding: 5,
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F0EEEE',
+    height: 50,
     borderRadius: 25,
-    marginHorizontal: 20,
-    marginVertical: 70,
+    marginHorizontal: 15,
+    marginTop: 50,
+    marginBottom: 10,
   },
-  input: {
-    fontSize: 16,
-    padding: 5,
+  searchIcon: {
+    fontSize: 30,
+    marginHorizontal: 15,
   },
- 
+  searchInput: {
+    flex: 1,
+    fontSize: 18,
+  },
+  button: {
+    marginRight: 10,
+  },
+  
 });
 
 export default SearchBar;

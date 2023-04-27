@@ -11,14 +11,13 @@ function AddUserDetails() {
   const [AvailableDays, setAvailableDays] = useState('');
   const [AvailableTime, setAvailableTime] = useState('');
 
-  const handleSave = () => {
-    // handle save logic here
-  };
+    const handleSave = () => {
+      // handle save logic here
+    };
 
-  const handleChoosePhoto = () => {
-    // handle choose photo logic here
-  };
-
+    const handleChoosePhoto = () => {
+      // handle choose photo logic here
+    };
   return (
     <View style={styles.container}>
    
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#ddd',
     borderRadius: 25,
-    padding: 7,
+    padding: 13,
     paddingLeft:15,
     marginBottom: 10,
   },
