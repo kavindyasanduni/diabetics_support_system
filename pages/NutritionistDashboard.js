@@ -4,8 +4,8 @@ import { View, Text, TouchableOpacity, TextInput, StyleSheet ,SafeAreaView} from
 
 const NutritionistDashboard = props =>{
     return(
-        <View>
-            <Text >Nutritionist Dash board </Text>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Text >Nutritionist Home page </Text>
         </View>
     )
 }

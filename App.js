@@ -6,7 +6,11 @@ import MyDrawer from './routes/Drawer';
 import Welcome from './pages/Welcome';
 import PatienteditProfile from './pages/PatientEditProfile';
 import PatientProfile from './pages/PatientProfile';
-import RoleIdentify from './pages/RoleIdentify';
+//import RoleIdentify from './pages/RoleIdentify';
+import ChangePassword from './pages/ChangePassword';
+import ForgotPassword from './pages/ForgotPassword';
+import GuardianSignUp from './pages/GuardianSignUp';
+import PatientEditProfile from './pages/PatientEditProfile';
 
 
 const App = () => { 

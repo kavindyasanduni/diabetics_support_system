@@ -1,14 +1,15 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert,Image} from 'react-native';
 
 const Welcome = props => {
-
+/*
     const onPressButton = () => {
         Alert.alert('clicked button');
-    };
+    };*/
 
     return (
         <View style={styles.container}> 
+            
             <Text style={styles.text1}>Manage Your Diabetes</Text> 
             <Text style={styles.text2}>Welcome</Text>
             <TouchableOpacity style={styles.button} onPress={()=> props.navigation.navigate("Login")}>
@@ -55,7 +56,13 @@ const styles = StyleSheet.create({
     buttonText:{
         textAlign:'center',
         color:'#FFFFFF',
-    }
+    },
+    image: {
+        width: 200,
+        height: 200,
+        alignSelf: 'center',
+        marginTop: 50,
+      },
 });
 
 export default Welcome;
