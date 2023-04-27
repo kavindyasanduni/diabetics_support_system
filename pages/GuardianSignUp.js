@@ -2,30 +2,22 @@ import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
 import axios from 'axios'
 
-//sign up page for the patient 
+//patient can add guardian information
 
-const PatientSignUp = props => {
+const GuardianSignUp = props => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [NIC, setNIC] = useState('')
   const [email, setEmail] = useState('')
-  const [guardianName, setGuardianName] = useState('')
-  const [guardianEmail, setGuardianEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
 
   const [firstNameError, setFirstNameError] = useState(false)
   const [lastNameError, setLastNameError] = useState(false)
   const [NICError, setNICError] = useState(false)
   const [emailError, setEmailError] = useState(false)
-  const [guardianNameError, setGuardianNameError] = useState(false)
-  const [guardianEmailError, setGuardianEmailError] = useState(false)
-  const [passwordError, setPasswordError] = useState(false)
-  const [confirmpasswordError, setConfirmPasswordError] = useState(false)
 
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-// set user inputs into variables
+
+  // get the user inputs into variabless
   const handleFirstName = text => {
     setFirstName(text)
   }
@@ -41,17 +33,8 @@ const PatientSignUp = props => {
   const handleEmail = text => {
     setEmail(text)
   }
-
-
-  const handlePassword = text => {
-    setPassword(text)
-  }
-
-  const handleConfirmPassword = text => {
-    setConfirmPassword(text)
-  }
   
-//validation of input fields
+
   const handleSubmit = () => {
     if (!firstName) {
       setFirstNameError(true)
@@ -70,44 +53,17 @@ const PatientSignUp = props => {
       return;
     }
     
-    if (!password) {
-      setPasswordError(true)
-      return;
-    }
-    if (!confirmPassword) {
-      setConfirmPasswordError(true)
-      return;
-    }
-    
+    // email valiadation 
+    if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address');
+        return;
+      }
 
-    if (!firstName || !lastName || !NIC || !email || !password || !confirmPassword) {
+    if (!firstName || !lastName || !NIC || !email ) {
       alert('All fields are required');
       return;
     }
     
-    
-
-    if (!emailRegex.test(email)) {
-      alert('Please enter a valid email address');
-      return;
-    }
-
-    if (passwordRegex.test(password)) {
-      // Password meets the criteria
-      if (password.length < 8) {
-        alert('Password must be at least 8 characters long');
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        alert('Password does not match');
-        return;
-      }
-
-    } else {
-      // Password does not meet the criteria
-      alert('password should have at least one spelling, number and symbol')
-    }
   
     
 
@@ -117,15 +73,14 @@ const PatientSignUp = props => {
       firstname:firstName,
       lastname:lastName,
       nic: NIC,
-      password : password,
-      
-     
+      password : "Guardian@123",
+      user_type :"Guardian"
     })
     .then(response => {
       console.log('Data successfully saved to database:', response.data);
-      //alert('Sign up successful!');
+      alert('Sign up successful!');
       // Navigate to the login page
-      props.navigation.navigate('GuardianSignUp');
+      props.navigation.navigate('Login');
     })
     .catch(error => {
       console.error('Error saving data:', error);
@@ -134,13 +89,13 @@ const PatientSignUp = props => {
   };
 
   return (
-    <View style={{top:20}}>
+    <View style={{top:70}}>
       
-      <Text style={{ color: '#7a42f4', fontSize: 20, top: 50, textAlign: 'center', justifyContent: 'center', alignItems: 'center' }}>Enter Your Details</Text>
+      <Text style={{ color: '#7a42f4', fontSize: 20, top: 50, textAlign: 'center', justifyContent: 'center', alignItems: 'center' }}>Enter Your Guardian Details</Text>
       <TextInput
         style={[styles.input, firstNameError && styles.errorInput]}
         underlineColorAndroid="transparent"
-        placeholder="First Name"
+        placeholder="Guardian First Name"
         placeholderTextColor='#7a42f4'
         autoCapitalize="none"
         onChangeText={handleFirstName}
@@ -148,7 +103,7 @@ const PatientSignUp = props => {
       <TextInput
         style={[styles.input, lastNameError && styles.errorInput]}
         underlineColorAndroid="transparent"
-        placeholder="Last Name"
+        placeholder="Guardian Last Name"
         placeholderTextColor='#7a42f4'
         autoCapitalize="none"
         onChangeText={handleLastName}
@@ -156,52 +111,33 @@ const PatientSignUp = props => {
       <TextInput
         style={[styles.input, NICError && styles.errorInput]}
         underlineColorAndroid="transparent"
-        placeholder="NIC"
+        placeholder="Guardian NIC"
         placeholderTextColor='#7a42f4'
         autoCapitalize="none"
         onChangeText={handleNIC}
         keyboardType='numeric'
         maxLength={12}
       />
+      
       <TextInput
         style={[styles.input, emailError && styles.errorInput]}
         underlineColorAndroid="transparent"
-        placeholder="Email"
+        placeholder="Guardian Email"
         placeholderTextColor='#7a42f4'
         autoCapitalize="none"
         onChangeText={handleEmail}
-      />
-      
-      <TextInput
-        style={[styles.input, passwordError && styles.errorInput]}
-        underlineColorAndroid="transparent"
-        placeholder="Password"
-        placeholderTextColor='#7a42f4'
-        autoCapitalize="none"
-        onChangeText={handlePassword}
-        secureTextEntry={true}
-      />
-      
-      <TextInput
-        style={[styles.input, confirmpasswordError && styles.errorInput]}
-        underlineColorAndroid="transparent"
-        placeholder="Confirm Password"
-        placeholderTextColor="#9a73ef"
-        autoCapitalize="none"
-        onChangeText={handleConfirmPassword}
-        secureTextEntry={true}
       />
 
       <TouchableOpacity
             style = {styles.submitButton}
             onPress={handleSubmit}>
-            <Text style = {styles.submitButtonText}> Next </Text>
+            <Text style = {styles.submitButtonText}> Sign Up </Text>
       </TouchableOpacity>
       </View>
    );
        
 }
-   export default PatientSignUp
+   export default GuardianSignUp
 
    const styles = StyleSheet.create({
       container: {

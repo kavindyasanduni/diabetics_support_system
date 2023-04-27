@@ -6,6 +6,7 @@ import PatientProfile from '../pages/PatientProfile';
 import PatientSetting from '../pages/PatientSetting';
 import CustomDrawer from "./CustomDrawer";
 
+// create drawer navigation
 const Drawer = createDrawerNavigator();
 
 const MyDrawer = props =>{

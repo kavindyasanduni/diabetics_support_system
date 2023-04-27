@@ -1,77 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Image, TouchableOpacity, Alert } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import Constants from 'expo-constants';
+import { View, TextInput, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
 
-const PatientEditProfile = ({route,navigation}) => {
-  const { userId, name, email, gender, profilePicture } = route.params;
-  const [newName, setNewName] = useState(name);
-  const [newPassword, setNewPassword] = useState('');
-  const [newGender, setNewGender] = useState(gender);
-  const [newEmail, setNewEmail] = useState(email);
-  const [newProfilePicture, setNewProfilePicture] = useState(profilePicture);
+const PatientEditProfile = ({ route, navigation }) => {
+  const { id, firstname: currentFirstname, email: currentEmail } = route.params;
+  const [firstname, setFirstname] = useState(currentFirstname);
+  const [email, setEmail] = useState(currentEmail);
 
-  const handleNameChange = (text) => {
-    setNewName(text);
-  };
-
-  const handlePasswordChange = (text) => {
-    setNewPassword(text);
-  };
-
-  const handleGenderChange = (text) => {
-    setNewGender(text);
-  };
-
-  const handleEmailChange = (text) => {
-    setNewEmail(text);
-  };
-
-  const handleImagePicker = async () => {
-    if (Constants.platform.ios) {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert('Sorry, we need camera roll permissions to make this work!');
-        return;
-      }
-    }
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setNewProfilePicture(result.uri);
-    }
-  };
-
-  const handleSubmit = async () => {
+  const handleUpdateProfile = async () => {
     try {
-      const formData = new FormData();
-      formData.append('name', newName);
-      formData.append('password', newPassword);
-      formData.append('gender', newGender);
-      formData.append('email', newEmail);
-      if (newProfilePicture) {
-        const localUri = await fetch(newProfilePicture);
-        const filename = newProfilePicture.split('/').pop();
-        const match = /\.(\w+)$/.exec(filename);
-        const type = match ? `image/${match[1]}` : `image`;
-        formData.append('profilePicture', { uri: localUri, name: filename, type });
-      }
-
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      };
-
-      const response = await axios.put(`http://your-api-endpoint/users/${userId}`, formData, config);
-
+      await axios.put(`http://localhost:8080/api/users/${id}`, {
+        firstname,
+        email,
+      });
       navigation.goBack();
     } catch (error) {
       console.error(error);
@@ -79,41 +20,41 @@ const PatientEditProfile = ({route,navigation}) => {
   };
 
   return (
-    <View>
-      <TouchableOpacity onPress={handleImagePicker}>
-        {newProfilePicture
-          ? <Image source={{ uri: newProfilePicture }} style={{ width: 100, height: 100 }} />
-          : <Text>Select a profile picture</Text>
-        }
-      </TouchableOpacity>
+    <View style={styles.container}>
       <TextInput
-        placeholder="Enter new name"
-        onChangeText={handleNameChange}
-        value={newName}
+        style={styles.input}
+        placeholder="First Name"
+        value={firstname}
+        onChangeText={setFirstname}
       />
       <TextInput
-        placeholder="Enter new password"
-        onChangeText={handlePasswordChange}
-        value={newPassword}
-        secureTextEntry
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
       />
-      <TextInput
-        placeholder="Enter new gender"
-        onChangeText={handleGenderChange}
-        value={newGender}
-      />
-      <TextInput
-        placeholder="Enter new email"
-        onChangeText={handleEmailChange}
-        value={newEmail}
-        keyboardType="email-address"
-      />
-      <Button
-        title="Save Changes"
-        onPress={handleSubmit}
-      />
+      <Button title="Save Changes" onPress={handleUpdateProfile} />
     </View>
   );
-}
+};
 
-export default PatientEditProfile
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  input: {
+    height: 40,
+    marginVertical: 10,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    minWidth: '100%',
+  },
+});
+
+export default PatientEditProfile;
