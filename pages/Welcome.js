@@ -14,6 +14,10 @@ const Welcome = props => {
             <TouchableOpacity style={styles.button} onPress={()=> props.navigation.navigate("Login")}>
                 <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity style={styles.button} onPress={()=> props.navigation.navigate("Admin")}>
+                <Text style={styles.buttonText}>Admin dashbord</Text>
+            </TouchableOpacity>
         </View>
     );
 };

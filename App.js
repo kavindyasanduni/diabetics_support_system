@@ -11,7 +11,10 @@ import RoleIdentify from './pages/RoleIdentify';
 
 const App = () => { 
   return (
-    <RoleIdentify/>
+    <Navigation/>
+    // <View>
+    //   <Text>Hello</Text>
+    // </View>
   )
 }
 
