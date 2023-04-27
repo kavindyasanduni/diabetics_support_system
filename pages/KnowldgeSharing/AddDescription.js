@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextInput } from 'react-native';
 
 const  AddDescription= () => {
   const [text, setText] = useState('');
+  useEffect (()=>{
+    // console.log(text);
+    setText(text);
+
+  },[text])
 
   return (
     <TextInput

@@ -7,6 +7,7 @@ import PatientSignUp from '../pages/PatientSignUp.js';
 import Dashbord from "../pages/Admin Dashbord/Dashbord.js";
 import knowladgesharingdashbord from "../pages/KnowldgeSharing/knowladgesharingdashbord.js";
 import ButtonD from "../pages/Admin Dashbord/ButtonD.js";
+import DeleteContentFromKSC from "../pages/KnowldgeSharing/DeleteContentFromKSC.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,8 @@ const Navigation = props => {
                 <Stack.Screen name="PatientSignUp" component={PatientSignUp} options={{headerShown:true}}/>
                 <Stack.Screen name="Admin" component={Dashbord} />
                 <Stack.Screen name="knowladgesharingdashbord" component={knowladgesharingdashbord} />
+                <Stack.Screen name="deletefromksc" component={DeleteContentFromKSC} />
+
             </Stack.Navigator>
         </NavigationContainer>
     );
