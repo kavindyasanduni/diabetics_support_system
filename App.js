@@ -11,6 +11,7 @@ import ChangePassword from './pages/ChangePassword';
 import ForgotPassword from './pages/ForgotPassword';
 import GuardianSignUp from './pages/GuardianSignUp';
 import PatientEditProfile from './pages/PatientEditProfile';
+import EditPassword from './pages/EditPassword';
 
 
 const App = () => { 

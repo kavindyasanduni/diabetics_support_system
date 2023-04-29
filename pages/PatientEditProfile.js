@@ -1,60 +1,119 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
 
-const PatientEditProfile = ({ route, navigation }) => {
-  const { id, firstname: currentFirstname, email: currentEmail } = route.params;
-  const [firstname, setFirstname] = useState(currentFirstname);
-  const [email, setEmail] = useState(currentEmail);
+const PatientEditProfile = props =>{
 
-  const handleUpdateProfile = async () => {
-    try {
-      await axios.put(`http://localhost:8080/api/users/${id}`, {
-        firstname,
-        email,
-      });
-      navigation.goBack();
-    } catch (error) {
-      console.error(error);
+  const { userId } = props;
+  const [user, setUser] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [nic, setNic] = useState('');
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  useEffect(() => {
+    axios.get(`http://192.168.8.167:8082/api/users/52`)
+      .then(response => {
+        setUser(response.data);
+        setFirstName(response.data.firstname);
+        setLastName(response.data.lastname);
+        setEmail(response.data.email);
+        setNic(response.data.nic);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleSave = () => {
+    if (newPassword !== confirmPassword) {
+      Alert.alert("Passwords do not match");
+      return;
     }
+
+
+
+    const updatedUser = { ...user, firstname: firstName, lastname: lastName, email: email, nic: nic, password: newPassword};
+    axios.put(`http://192.168.8.167:8082/api/users/52`, updatedUser)
+      .then(response => {
+        setUser(response.data);
+        setIsEditing(false);
+      })
+      .catch(error => console.error(error));
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setFirstName(user.firstname);
+    setLastName(user.lastname);
+    setEmail(user.email);
+    setNic(user.nic);
   };
 
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="First Name"
-        value={firstname}
-        onChangeText={setFirstname}
+        value={firstName}
+        editable={isEditing}
+        onChangeText={text => setFirstName(text)}
       />
       <TextInput
         style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
+        value={lastName}
+        editable={isEditing}
+        onChangeText={text => setLastName(text)}
       />
-      <Button title="Save Changes" onPress={handleUpdateProfile} />
+      <TextInput
+        style={styles.input}
+        value={email}
+        editable={isEditing}
+        onChangeText={text => setEmail(text)}
+      />
+      <TextInput
+        style={styles.input}
+        value={nic}
+        editable={isEditing}
+        onChangeText={text => setNic(text)}
+      />
+      {isEditing ?
+        <>
+          <Button title="Save" onPress={handleSave} />
+          <Button title="Cancel" onPress={handleCancel} />
+        </>
+        :
+        <Button style={styles.title} title="Edit" onPress={handleEdit} />
+      }
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
   input: {
-    height: 40,
-    marginVertical: 10,
-    paddingHorizontal: 10,
+    borderColor: '#7a42f4',
+    padding: 10,
+    marginBottom: 10,
+    width:"90%",
+    height:40,
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    minWidth: '100%',
+    borderRadius: 10,
+    paddingHorizontal:10,
   },
+  title:{
+    backgroundColor: '#7a42f4',
+    padding: 10,
+    borderRadius: 10,
+  }
 });
 
 export default PatientEditProfile;
