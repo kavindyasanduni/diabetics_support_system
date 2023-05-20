@@ -17,7 +17,9 @@ import ChangePassword from "../pages/ChangePassword.js";
 import DoctorDashboard from "../pages/DoctorDashboard.js";
 import NutritionistDashboard from "../pages/NutritionistDashboard.js";
 import Guardianhome from "../pages/Guardianhome.js";
-
+import DoctorDrawer from "./Doctordrawer.js";
+import NutritionistDrawer from "./Nutrtionistdrawer.js";
+import Guardiandrawer from "./Guardiandrawer.js";
 
 //create stack navigators
 const Stack = createNativeStackNavigator();
@@ -27,8 +29,6 @@ const Navigation = props => {
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Welcome">
                 <Stack.Screen name="Welcome" component={Welcome} options={{headerShown:false}}/>
-                {/* <Stack.Screen name="Login" component={Login} options={{headerShown:true}}/> */}
-                {/* <Stack.Screen name="PatientSignUp" component={PatientSignUp} options={{headerShown:true}}/> */}
                 <Stack.Screen name="Admin" component={Dashbord} />
                 <Stack.Screen name="knowladgesharingdashbord" component={knowladgesharingdashbord} />
                 <Stack.Screen name="deletefromksc" component={DeleteContentFromKSC} />
@@ -38,10 +38,11 @@ const Navigation = props => {
                 <Stack.Screen name="GuardianSignUp" component={GuardianSignUp} options={{headerShown:false}}/>
                 <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerShown:false}}/>
                 <Stack.Screen name="ChangePassword" component={ChangePassword} options={{headerShown:false}}/>
-                <Stack.Screen name="DoctorDashboard" component={DoctorDashboard} options={{headerShown:false}}/>
-                <Stack.Screen name="NutritionistDashboard" component={NutritionistDashboard} options={{headerShown:false}}/>
-                <Stack.Screen name="Guardianhome" component={Guardianhome} options={{headerShown:false}}/>
+                {/* <Stack.Screen name="DoctorDashboard" component={DoctorDashboard} options={{headerShown:false}}/> */}
+                <Stack.Screen name="NutritionistDashboard" component={NutritionistDrawer} options={{headerShown:false}}/>
+                <Stack.Screen name="Guardianhome" component={Guardiandrawer} options={{headerShown:false}}/>
                 <Stack.Screen name="PatientHome" component={MyDrawer} options={{headerShown:false}}/>
+                <Stack.Screen name="DoctorDashboard" component={DoctorDrawer} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     );

@@ -12,6 +12,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import GuardianSignUp from './pages/GuardianSignUp';
 import PatientEditProfile from './pages/PatientEditProfile';
 import EditPassword from './pages/EditPassword';
+import UpdateContainerCard from './pages/KnowldgeSharing/UpdateContainerCard';
 
 
 const App = () => { 

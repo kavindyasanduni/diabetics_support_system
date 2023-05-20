@@ -39,7 +39,7 @@ const Login = props => {
     }
   
     try {
-      const response = await axios.post('http://192.168.8.167:8082/login', {
+      const response = await axios.post('http://192.168.8.167:8082/api/users/login', {
         email: email,
         password: password,
       });
@@ -49,6 +49,7 @@ const Login = props => {
       }
   
       const data = response.data;
+      console.log(response.data)
       //check user type of the user
       if (data.user_type === 'Doctor') {
         props.navigation.navigate('DoctorDashboard');
