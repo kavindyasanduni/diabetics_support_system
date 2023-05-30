@@ -6,7 +6,7 @@ import MyDrawer from './routes/Drawer';
 import Welcome from './pages/Welcome';
 import PatienteditProfile from './pages/PatientEditProfile';
 import PatientProfile from './pages/PatientProfile';
-//import RoleIdentify from './pages/RoleIdentify';
+import { UserProvider } from './pages/UserContext';
 import ChangePassword from './pages/ChangePassword';
 import ForgotPassword from './pages/ForgotPassword';
 import GuardianSignUp from './pages/GuardianSignUp';
@@ -17,10 +17,9 @@ import UpdateContainerCard from './pages/KnowldgeSharing/UpdateContainerCard';
 
 const App = () => { 
   return (
-    <Navigation/>
-    // <View>
-    //   <Text>Hello</Text>
-    // </View>
+    <UserProvider>
+      <Navigation/>
+    </UserProvider>
   )
 }
 

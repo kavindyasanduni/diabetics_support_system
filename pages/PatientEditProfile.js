@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { View, TextInput,Text, Button, StyleSheet ,TouchableOpacity,Image,Alert} from 'react-native';
 import axios from 'axios';
 import * as ImagePicker from 'expo-image-picker';
+import { useRoute } from '@react-navigation/native';
 
 import { storage } from "../firebaseconfig"; // import the initialized storage object from firebaseConfig
 
@@ -9,10 +10,11 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'; // import t
 
 const storageRef = ref(storage); // create a reference to the root of your storage // ====I edit this======================== //
 
+import { UserContext } from './UserContext';
 
 const PatientEditProfile = props =>{
-
-  const { userId } = props;
+  
+  const { userId } = useContext(UserContext);
   const [user, setUser] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [firstName, setFirstName] = useState('');
@@ -22,10 +24,11 @@ const PatientEditProfile = props =>{
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
+  const [editedProfilePicture, setEditedProfilePicture] = useState(null);
 
 
   useEffect(() => {
-    axios.get(`http://192.168.8.167:8082/api/users/4`)
+    axios.get(`http://192.168.8.167:8082/api/users/${userId}`)
       .then(response => {
         setUser(response.data);
         setFirstName(response.data.firstname);
@@ -35,10 +38,11 @@ const PatientEditProfile = props =>{
         setProfilePicture({ uri: response.data.profilePictureUrl });
       })
       .catch(error => console.error(error));
-  }, []);
+  }, [userId]);
 
   const handleEdit = () => {
     setIsEditing(true);
+    setEditedProfilePicture(profilePicture);
   };
 
   const handleSave = async () => {
@@ -59,10 +63,11 @@ const PatientEditProfile = props =>{
       updatedUser.profilePictureUrl = await getDownloadURL(storageRef);
     }
     try {
-      const response = await axios.put(`http://192.168.8.167:8082/api/users/4`, updatedUser);
+      const response = await axios.put(`http://192.168.8.167:8082/api/users/${userId}`, updatedUser);
       if (response.status === 200) {
         setUser(response.data);
         setIsEditing(false);
+        setEditedProfilePicture(null); 
       } else {
         Alert.alert("Error saving user");
       }
@@ -79,9 +84,14 @@ const PatientEditProfile = props =>{
     setLastName(user.lastname);
     setEmail(user.email);
     setNic(user.nic);
+    setProfilePicture(editedProfilePicture); // Revert back to the original profile picture
+    setEditedProfilePicture(null);
   };
 
   const handleProfilePicturePress = async () => {
+    if (!isEditing) {
+      return;
+    }
     // Get permission to access the user's photos
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') {

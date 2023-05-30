@@ -13,7 +13,7 @@ const Drawer = createDrawerNavigator();
 const MyDrawer = props =>{
     return (
     
-      <Drawer.Navigator drawerContent={props =><CustomDrawer{...props}/>}>
+      <Drawer.Navigator drawerContent={props => <CustomDrawer {...props}  />}>
         <Drawer.Screen name="PatientHome1" component={PatientHome} />
         <Drawer.Screen name="PatientProfile" component={PatientProfile} />
         <Drawer.Screen name="PatientEditProfile" component={PatientEditProfile} />
