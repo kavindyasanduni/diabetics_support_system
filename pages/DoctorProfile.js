@@ -5,7 +5,7 @@ import { View, Text, TouchableOpacity, TextInput, StyleSheet ,SafeAreaView} from
 const DoctorProfile = props =>{
     return(
         <View>
-            <Text>setting </Text>
+            <Text>setting p</Text>
         </View>
     )
 }

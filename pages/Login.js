@@ -1,7 +1,8 @@
-import React, { Component,useState} from 'react'
+import React, { Component,useState,useContext} from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
 import { Alert } from 'react-native';
 import axios from 'axios';
+import { UserContext } from './UserContext';
 
 // Login screen for the users
 
@@ -12,6 +13,8 @@ const Login = props => {
 
   const [emailError, setEmailError] = useState(false)
   const [passwordError, setPasswordError] = useState(false)
+
+  const { setUserId } = useContext(UserContext);
 
 
   const handleLoginEmail = text => {
@@ -39,7 +42,7 @@ const Login = props => {
     }
   
     try {
-      const response = await axios.post('http://192.168.8.167:8082/login', {
+      const response = await axios.post('http://192.168.8.167:8082/api/users/login', {
         email: email,
         password: password,
       });
@@ -49,6 +52,9 @@ const Login = props => {
       }
   
       const data = response.data;
+      const userId = data.uid;
+      setUserId(userId);
+      //console.log(userId);
       //check user type of the user
       if (data.user_type === 'Doctor') {
         props.navigation.navigate('DoctorDashboard');
