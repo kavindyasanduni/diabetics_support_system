@@ -17,6 +17,8 @@ import ChangePassword from "../pages/ChangePassword.js";
 import DoctorDashboard from "../pages/DoctorDashboard.js";
 import NutritionistDashboard from "../pages/NutritionistDashboard.js";
 import Guardianhome from "../pages/Guardianhome.js";
+import UpdateContainer from "../pages/KnowldgeSharing/UpdateContainer.js";
+import UpdateContainerCard from "../pages/KnowldgeSharing/UpdateContainerCard.js";
 
 
 //create stack navigators
@@ -32,6 +34,7 @@ const Navigation = props => {
                 <Stack.Screen name="Admin" component={Dashbord} />
                 <Stack.Screen name="knowladgesharingdashbord" component={knowladgesharingdashbord} />
                 <Stack.Screen name="deletefromksc" component={DeleteContentFromKSC} />
+                <Stack.Screen name="updateksc" component={UpdateContainerCard}/>
 
                 <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
                 <Stack.Screen name="PatientSignUp" component={PatientSignUp} options={{headerShown:false}}/>
