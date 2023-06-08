@@ -17,7 +17,7 @@ const Welcome = props => {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.button} onPress={()=> props.navigation.navigate("Admin")}>
-                <Text style={styles.buttonText}>Admin dashbord</Text>
+                <Text style={styles.buttonText}>Admin dashboard</Text>
             </TouchableOpacity>
         </View>
     );
