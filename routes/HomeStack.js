@@ -17,6 +17,9 @@ import ChangePassword from "../pages/ChangePassword.js";
 import DoctorDashboard from "../pages/DoctorDashboard.js";
 import NutritionistDashboard from "../pages/NutritionistDashboard.js";
 import Guardianhome from "../pages/Guardianhome.js";
+import DoctorTable from "../pages/OnlineConsultation/DoctorTable.js";
+import NutritionistTable from "../pages/OnlineConsultation/NutritionistTable.js";
+import DoctorConsultationScreen from "../pages/OnlineConsultation/Online.js";
 
 
 //create stack navigators
@@ -42,6 +45,11 @@ const Navigation = props => {
                 <Stack.Screen name="NutritionistDashboard" component={NutritionistDashboard} options={{headerShown:false}}/>
                 <Stack.Screen name="Guardianhome" component={Guardianhome} options={{headerShown:false}}/>
                 <Stack.Screen name="PatientHome" component={MyDrawer} options={{headerShown:false}}/>
+
+                <Stack.Screen name="DoctorTable" component={DoctorTable} options={{ headerShown: false }} />
+                <Stack.Screen name="NutritionistTable" component={NutritionistTable} options={{ headerShown: false }} />
+                <Stack.Screen name="DoctorConsultation" component={DoctorConsultationScreen} options={{ headerShown: false }} />
+
             </Stack.Navigator>
         </NavigationContainer>
     );

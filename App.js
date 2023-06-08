@@ -11,7 +11,12 @@ import ChangePassword from './pages/ChangePassword';
 import ForgotPassword from './pages/ForgotPassword';
 import GuardianSignUp from './pages/GuardianSignUp';
 import PatientEditProfile from './pages/PatientEditProfile';
-
+import DoctorConsultationScreen from './pages/OnlineConsultation/Online';
+import DoctorCalling from './pages/OnlineConsultation/DoctorCalling';
+import NutritionistCalling from './pages/OnlineConsultation/NutritionistCalling';
+import EndConsultation from './pages/OnlineConsultation/EndConsultation';
+import DoctorTable from './pages/OnlineConsultation/DoctorTable';
+import NutritionistTable from './pages/OnlineConsultation/NutritionistTable';
 
 const App = () => { 
   return (
