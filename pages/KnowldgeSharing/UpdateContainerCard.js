@@ -595,7 +595,7 @@ const styles = StyleSheet.create({
   },
   dropdownItemText: {
     fontSize: 16,
-    color: "#be2edd",
+    color: "#007AFF",
   },
   //end of select catergory dropdown
 

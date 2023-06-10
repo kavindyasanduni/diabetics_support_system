@@ -48,7 +48,7 @@ const DeleteContentFromKSC = () => {
     // console.log("called");
     try {
       const response = await axios.get(
-        `http:///192.168.8.100:8082/getKInformationByCategory/${selectedOption}`
+        `http:///192.168.8.103:8082/getKInformationByCategory/${selectedOption}`
       );
       setTableData(response.data);
       console.log("Data captured: " + response.data);
@@ -84,7 +84,7 @@ const DeleteContentFromKSC = () => {
       try {
         // Send the updated data to the backend API
         await axios.put(
-          `http:///192.168.8.100:8082/updateKInformation/${newData.id}`,
+          `http:///192.168.8.103:8082/updateKInformation/${newData.id}`,
           {
             title: newData.title,
             catergory: selectedOption,
@@ -131,7 +131,7 @@ const DeleteContentFromKSC = () => {
             // send data to database when uploading finished
             axios
               .put(
-                `http:///192.168.8.100:8082/updateKInformation/${newData.id}`,
+                `http:///192.168.8.103:8082/updateKInformation/${newData.id}`,
                 {
                   title: newData.title,
                   catergory: selectedOption,
@@ -183,7 +183,7 @@ const DeleteContentFromKSC = () => {
     try {
       // Delete data to the backend API
       await axios.delete(
-        `http:///192.168.8.100:8082/deleteKInformationById/${id}`
+        `http:///192.168.8.103:8082/deleteKInformationById/${id}`
       );
       console.log("Data Deleted Successfully");
       // Fetch the updated data from the backend API
@@ -344,7 +344,7 @@ const styles = StyleSheet.create({
   },
   dropdownItemText: {
     fontSize: 16,
-    color: "#be2edd",
+    color: "#007AFF",
   },
   //end of select catergory dropdown
 

@@ -13,6 +13,8 @@ import SubmitButton from "../KnowldgeSharing/SubmitButton";
 import Triangle from "./Triangle ";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import KnowledgeSharingAnalytic from "./Analytic Data/KnowladgeSharingAnalytic";
+import AllUsers from "./Analytic Data/AllUsers";
+import PaymentSummary from "./Analytic Data/PaymentSummary";
 
 const Dashbord = (props) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
@@ -36,7 +38,10 @@ const Dashbord = (props) => {
           </View>
 
           <View>
-            <KnowledgeSharingAnalytic />
+            <AllUsers />
+          </View>
+          <View>
+            <PaymentSummary />
           </View>
         </ScrollView>
       </View>

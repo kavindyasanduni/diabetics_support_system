@@ -109,23 +109,29 @@ const chartData = {
           ))}
         </View>
 
-        {/* <View style={styles.container}>
+        <View>
+          <Text style={{ fontSize: 16, fontWeight: "bold", color: "#2c3e50" , marginTop:15 }}>
+            Total Posts per month
+          </Text>
+        </View>
+        <View style={styles.container}>
+        
           <LineChart
             data={chartData}
-            width={300}
+            width={320}
             height={200}
             yAxisLabel=""
             chartConfig={{
-              backgroundColor: "#ffffff",
-              backgroundGradientFrom: "#ffffff",
-              backgroundGradientTo: "#ffffff",
+              backgroundColor: "#3498db",
+              backgroundGradientFrom: "#2980b9",
+              backgroundGradientTo: "#3498db",
               decimalPlaces: 0,
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
               labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
             }}
             style={styles.chart}
           />
-        </View> */}
+        </View>
       </View>
     </View>
   );
@@ -139,8 +145,8 @@ const styles = StyleSheet.create({
     left: 11,
     backgroundColor: "#FFFFFF",
     width: 370,
-    height: 300,
-    borderRadius: 15,
+    height: 400,
+    borderRadius: 8,
     ...Platform.select({
       ios: {
         shadowColor: "#000000",
@@ -152,7 +158,7 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
       },
       android: {
-        elevation: 5,
+        elevation: 2,
       },
     }),
   },
@@ -190,6 +196,7 @@ const styles = StyleSheet.create({
         // color : "#2c3e50",
     color : "#7f8c8d",
     paddingTop : 5,
+    textTransform: "capitalize",
 
   }, 
   textCountNo : {
@@ -202,12 +209,13 @@ const styles = StyleSheet.create({
   //styles for charts
 
   container: {
+    // paddingTop : 15,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
   chart: {
-    marginVertical: 8,
+    // marginVertical: 8,
     borderRadius: 16,
   },
 });
