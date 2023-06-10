@@ -58,49 +58,47 @@ const SeeReservation = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 20,
     marginTop: 100,
-    
-
   },
-  
+
   input: {
     borderWidth: 1,
-    borderBottomColor:'blue',
-    borderColor: '#E2E2E2',
+    borderBottomColor: "blue",
+    borderColor: "#E2E2E2",
     borderRadius: 5,
     padding: 7,
-    paddingLeft:15,
+    paddingLeft: 15,
     marginBottom: 10,
-    marginTop:20,
-    width:200,
-    marginLeft: 50
+    marginTop: 20,
+    width: 200,
+    marginLeft: 50,
   },
-    
-  box:{
-      marginTop: 20,
-      width: 325,
-      backgroundColor: '#E2E2E2',
-      borderRadius:25,
-      marginBottom: 25,
-      height:150,
+
+  box: {
+    marginTop: 20,
+    width: 325,
+    backgroundColor: "#E2E2E2",
+    borderRadius: 25,
+    marginBottom: 25,
+    height: 150,
   },
-    
+
   button: {
-    backgroundColor: '#0E1879',
+    backgroundColor: "#3498db",
     padding: 10,
     borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width:160,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 160,
     marginBottom: 20,
     marginLeft: 150,
-    marginTop:10,
+    marginTop: 10,
   },
 
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     //fontWeight: 500,
     fontSize: 18,
   },

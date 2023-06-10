@@ -8,18 +8,31 @@ const Welcome = props => {
     };*/
 
     return (
-        <View style={styles.container}> 
-            
-            <Text style={styles.text1}>Manage Your Diabetes</Text> 
-            <Text style={styles.text2}>Welcome</Text>
-            <TouchableOpacity style={styles.button} onPress={()=> props.navigation.navigate("Login")}>
-                <Text style={styles.buttonText}>Next</Text>
-            </TouchableOpacity>
+      <View style={styles.container}>
+        <Text style={styles.text1}>Manage Your Diabetes</Text>
+        <Text style={styles.text2}>Welcome</Text>
 
-            <TouchableOpacity style={styles.button} onPress={()=> props.navigation.navigate("Admin")}>
-                <Text style={styles.buttonText}>Admin dashbord</Text>
-            </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => props.navigation.navigate("PatientHomePage")}
+        >
+          <Text style={styles.buttonText}>Patient home page</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => props.navigation.navigate("Login")}
+        >
+          <Text style={styles.buttonText}>Next</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => props.navigation.navigate("Admin")}
+        >
+          <Text style={styles.buttonText}>Admin dashbord</Text>
+        </TouchableOpacity>
+      </View>
     );
 };
 

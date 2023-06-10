@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,23 +6,42 @@ import {
   View,
   Button,
   Image,
-  ScrollView
-
+  ScrollView,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import axios from "axios";
 
 
-const AddProfile = ({ photo }) => {
+const ProfileDoc = (props) => {
   const [AppoinmentDateandDay, setAppinmentDateandDay] = useState("");
-  //const [age, setAge] = useState("");
-  //const [sex, setSex] = useState("");
-  //const [category, setCategory] = useState("");
-  //const [selectedPhoto, setSelectedPhoto] = useState(photo);
 
-  const click =()=> {
+  //to get the passed id from the doctors component
+  const { id } = props.route.params;
+  // console.log(id);
 
+//fetch data to purticular id
+const [doctorData, setDoctorData] = useState([]); //data save
+
+useEffect(() => {
+  fetchData();
+}, []);
+
+//fetch the data
+const fetchData = async () => {
+  try {
+    const response = await axios.get(
+      `http://192.168.8.101:8082/getdoctordatabyid/${id}`
+    );
+    setDoctorData(response.data);
+    console.log("Data successfully fetched" + response.data);
+  } catch (error) {
+    console.log(error);
+    alert("An error occurred while fetching the data. Please try again later.");
   }
+};
 
+
+  const click = () => {};
 
   return (
     <ScrollView>
@@ -32,7 +51,11 @@ const AddProfile = ({ photo }) => {
             source={require("../assets/images/d1.jpg")}
             style={styles.photoButton}
           />
-          <Text style={styles.DocName}>Dr.Jack Alan</Text>
+          {/* <Text style={styles.DocName}>Dr.Jack Alan</Text> */}
+          <Text style={styles.DocName}>
+            DR.{doctorData.fname + " " + doctorData.lname}
+          </Text>
+
           <Text style={styles.Desc}>Diabetologists</Text>
           <Text style={styles.Desc}>BioNeu Hospital</Text>
         </View>
@@ -50,11 +73,11 @@ const AddProfile = ({ photo }) => {
 
         <View style={styles.DescContainer}>
           <Text style={{ fontSize: 20 }}>Available Time</Text>
-          <Text style={styles.input}>Appoinment Date and day</Text>
+          <Text style={styles.input}>{doctorData.a_date}</Text>
 
           <Text style={styles.input}>Status</Text>
 
-          <Text style={styles.input}>Time</Text>
+          <Text style={styles.input}>{doctorData.a_time}</Text>
 
           <View style={styles.input}>
             <TouchableOpacity style={styles.button} onPress={click}>
@@ -65,12 +88,11 @@ const AddProfile = ({ photo }) => {
 
         <View style={styles.DescContainer}>
           <Text style={{ fontSize: 20 }}>Available Time</Text>
-          <Text style={styles.input}>Appoinment Date and day</Text>
+          <Text style={styles.input}>{doctorData.a_date}</Text>
 
           <Text style={styles.input}>Status</Text>
 
-          <Text style={styles.input}>Time</Text>
-
+          <Text style={styles.input}>{doctorData.a_time}</Text>
 
           <View style={styles.input}>
             <TouchableOpacity style={styles.button} onPress={click}>
@@ -80,7 +102,8 @@ const AddProfile = ({ photo }) => {
         </View>
       </View>
     </ScrollView>
-  );};
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -89,7 +112,7 @@ const styles = StyleSheet.create({
   },
   HeadContainer: {
     marginBottom: 25,
-    backgroundColor: "#0E1879",
+    backgroundColor: "#1D11AD",
     width: "100%",
     padding: 10,
     borderRadius: 0,
@@ -133,7 +156,6 @@ const styles = StyleSheet.create({
   },
   DescContainer: {
     padding: 20,
-    
   },
   input: {
     borderWidth: 1,
@@ -146,13 +168,12 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#0E1879",
+    backgroundColor: "#3498db",
     height: 30,
     width: 100,
     // marginLeft: 100,
     borderRadius: 10,
-    marginRight:"auto"
-
+    marginRight: "auto",
   },
   buttonText: {
     color: "#fff",
@@ -163,4 +184,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddProfile;
+export default ProfileDoc;

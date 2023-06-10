@@ -21,7 +21,7 @@ import { ScrollView } from "react-native-gesture-handler";
         <View style={styles.button1}>
           <TouchableOpacity style={styles.buttonC}>
             <Image
-              source={require("../assets/images/dp.jpg")}
+              source={require("../assets/images/d1.jpg")}
               style={{ width: 70, height: 70 }}
             />
             <Text style={styles.t1}>Dr</Text>

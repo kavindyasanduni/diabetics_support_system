@@ -50,44 +50,41 @@ function UpdateUserDetails() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 20,
   },
-  
+
   input: {
     borderWidth: 2,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     borderRadius: 25,
     padding: 7,
-    paddingLeft:15,
+    paddingLeft: 15,
     marginBottom: 20,
   },
-    input1:{
-        marginBottom:60,
-        fontSize:18,
-        fontWeight:'bold',
-        paddingTop:50
-
-    },
-     input2:{
-        marginBottom:15,
-        fontSize:18,
-        fontWeight:'bold',
-
-    },
+  input1: {
+    marginBottom: 60,
+    fontSize: 18,
+    fontWeight: "bold",
+    paddingTop: 50,
+  },
+  input2: {
+    marginBottom: 15,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
   button: {
-    backgroundColor: '#0E1879',
+    backgroundColor: "#3498db",
     padding: 10,
     borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width:150,
-    marginLeft:150,
-    
+    alignItems: "center",
+    justifyContent: "center",
+    width: 150,
+    marginLeft: 150,
   },
   buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: "#fff",
+    fontWeight: "bold",
     fontSize: 18,
   },
 });
