@@ -116,7 +116,7 @@ const chartData = {
         </View>
         <View style={styles.container}>
         
-          <LineChart
+          {/* <LineChart
             data={chartData}
             width={320}
             height={200}
@@ -130,7 +130,7 @@ const chartData = {
               labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
             }}
             style={styles.chart}
-          />
+          /> */}
         </View>
       </View>
     </View>
