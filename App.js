@@ -13,6 +13,7 @@ import GuardianSignUp from './pages/GuardianSignUp';
 import PatientEditProfile from './pages/PatientEditProfile';
 import EditPassword from './pages/EditPassword';
 import UpdateContainerCard from './pages/KnowldgeSharing/UpdateContainerCard';
+import PDash from './screen/PDashBoard';
 
 
 const App = () => { 
@@ -25,11 +26,11 @@ const App = () => {
 
 export default App;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+// });

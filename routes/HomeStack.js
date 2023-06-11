@@ -20,6 +20,9 @@ import Guardianhome from "../pages/Guardianhome.js";
 import DoctorDrawer from "./Doctordrawer.js";
 import NutritionistDrawer from "./Nutrtionistdrawer.js";
 import Guardiandrawer from "./Guardiandrawer.js";
+import UpdateContainer from "../pages/KnowldgeSharing/UpdateContainer.js";
+import UpdateContainerCard from "../pages/KnowldgeSharing/UpdateContainerCard.js";
+
 
 //create stack navigators
 const Stack = createNativeStackNavigator();
@@ -32,6 +35,7 @@ const Navigation = props => {
                 <Stack.Screen name="Admin" component={Dashbord} />
                 <Stack.Screen name="knowladgesharingdashbord" component={knowladgesharingdashbord} />
                 <Stack.Screen name="deletefromksc" component={DeleteContentFromKSC} />
+                <Stack.Screen name="updateksc" component={UpdateContainerCard}/>
 
                 <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
                 <Stack.Screen name="PatientSignUp" component={PatientSignUp} options={{headerShown:false}}/>
