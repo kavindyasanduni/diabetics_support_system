@@ -20,6 +20,8 @@ import Guardianhome from "../pages/Guardianhome.js";
 import DoctorDrawer from "./Doctordrawer.js";
 import NutritionistDrawer from "./Nutrtionistdrawer.js";
 import Guardiandrawer from "./Guardiandrawer.js";
+import AdminDashboard from "../pages/AdminDashboard.js";
+import AdminDrawer from "./AdminDrawer.js";
 
 //create stack navigators
 const Stack = createNativeStackNavigator();
@@ -43,6 +45,7 @@ const Navigation = props => {
                 <Stack.Screen name="Guardianhome" component={Guardiandrawer} options={{headerShown:false}}/>
                 <Stack.Screen name="PatientHome" component={MyDrawer} options={{headerShown:false}}/>
                 <Stack.Screen name="DoctorDashboard" component={DoctorDrawer} options={{ headerShown: false }} />
+                <Stack.Screen name="AdminDashboard" component={AdminDrawer} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     );
