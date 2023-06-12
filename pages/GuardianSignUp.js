@@ -68,7 +68,7 @@ const GuardianSignUp = props => {
     
 
     // Send the data to the server
-    axios.post('http://192.168.8.167:8082/adduser', {
+    axios.post('http://192.168.8.167:8082/api/users/adduser', {
       email: email,
       firstname:firstName,
       lastname:lastName,

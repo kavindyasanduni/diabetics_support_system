@@ -28,6 +28,8 @@ import NutritionistCard from "../screen/Nutritionist.js";
 import Reservation from "../screen/Reservation.js";
 import ProfileDoc from "../screen/ProfileDoc.js";
 
+import AdminDashboard from "../pages/AdminDashboard.js";
+import AdminDrawer from "./AdminDrawer.js";
 
 //create stack navigators
 const Stack = createNativeStackNavigator();
@@ -62,6 +64,7 @@ const Navigation = props => {
 
 
 
+                <Stack.Screen name="AdminDashboard" component={AdminDrawer} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     );

@@ -2,16 +2,14 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import axios from 'axios';
 
-// handle forgot password. user can enter email when he forgot password
-
-const ForgotPassword = props=> {
+const ForgotPassword = (props) => {
   const [email, setEmail] = useState('');
   const [success, setSuccess] = useState(false);
   const [token, setToken] = useState('');
 
   const handleSendEmail = async () => {
     try {
-      const response = await axios.post('https://192.168.8.167:8082/api/users/forgot-password', {
+      const response = await axios.post('http://192.168.8.167:8082/api/users/forgot-password', {
         email: email,
       });
 

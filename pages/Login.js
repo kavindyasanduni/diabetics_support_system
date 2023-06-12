@@ -66,6 +66,8 @@ const Login = props => {
         props.navigation.navigate('NutritionistDashboard');
       }else if(data.user_type === 'Guardian'){
         props.navigation.navigate('Guardianhome');
+      }else if(data.user_type === 'Admin'){
+        props.navigation.navigate('AdminDashboard');
       }
       else {
         throw new Error('Invalid user type');
