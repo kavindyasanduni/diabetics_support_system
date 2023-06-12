@@ -19,7 +19,7 @@ import DoctorsCard from './screen/Doctors';
 import Table from './screen/ReservationHistory';
 //import NutritionistCard from './screen/Nutritionist';
 import AddProfile from './screen/ProfileDoc';
-import PDash from './screen/PDashBoard';
+// import PDash from './screen/PDashBoard';
 import UpdateUserDetails from './screen/UpdateDoctor';
 import SeeReservation from './screen/SeeReservation';
 import AddUserDetails2 from './screen/NutitionistDetails';

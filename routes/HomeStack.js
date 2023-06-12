@@ -52,6 +52,16 @@ const Navigation = props => {
                 <Stack.Screen name="Guardianhome" component={Guardiandrawer} options={{headerShown:false}}/>
                 <Stack.Screen name="PatientHome" component={MyDrawer} options={{headerShown:false}}/>
                 <Stack.Screen name="DoctorDashboard" component={DoctorDrawer} options={{ headerShown: false }} />
+
+{/* routes for patientdashbord */}
+                <Stack.Screen name="PatientHomePage"component={PDash} options={{ headerShown: false }} />
+                <Stack.Screen name="DoctorAppointment" component={DoctorsCard} options={{ headerShown: false }} />
+                <Stack.Screen name="NutritionistAppointment" component={NutritionistCard} options={{ headerShown: false }} />
+                <Stack.Screen  name="MakeReservation" component={Reservation} options={{ headerShown: false }} />
+                <Stack.Screen  name="DoctorProfile" component={ProfileDoc} options={{ headerShown: false }} />
+
+
+
             </Stack.Navigator>
         </NavigationContainer>
     );
