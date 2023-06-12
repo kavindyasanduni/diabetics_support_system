@@ -27,7 +27,7 @@ const DoctorsCard = (props) => {
   //fetch the data
   const fetchData = async () =>{
     try { 
-      const response = await axios.get(`http://192.168.8.101:8082/getdoctordata`);
+      const response = await axios.get(`http://192.168.8.102:8082/getdoctordata`);
       setDoctorData(response.data);
       console.log("Data successfully fetched" + response.data);
 
@@ -39,6 +39,9 @@ const DoctorsCard = (props) => {
 
     }
   }
+
+  const name = "doctor";
+
 
 
 
@@ -52,7 +55,7 @@ const DoctorsCard = (props) => {
           {doctorsData.map((data, index) => (
             <TouchableOpacity style={styles.buttonC} 
             key={index}
-              onPress={() => props.navigation.navigate("DoctorProfile", { id: data.did })}
+              onPress={() => props.navigation.navigate("DoctorProfile", { id: data.did  , name :name})}
 
             >
               <Image

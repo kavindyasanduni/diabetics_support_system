@@ -20,7 +20,7 @@ const Reservation = () => {
 
   const handleSubmit = async () => {
     axios
-      .post("http://10.10.12.8:8082/addReservation", {
+      .post("http://192.168.8.102:8082/addReservation", {
         r_type: rType,
         p_name: pName,
         phone_no: pNo,

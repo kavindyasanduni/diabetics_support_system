@@ -27,6 +27,7 @@ import DoctorsCard from "../screen/Doctors.js";
 import NutritionistCard from "../screen/Nutritionist.js";
 import Reservation from "../screen/Reservation.js";
 import ProfileDoc from "../screen/ProfileDoc.js";
+import AddUserDetails2 from "../screen/NutitionistDetails.js";
 
 
 //create stack navigators
@@ -59,6 +60,7 @@ const Navigation = props => {
                 <Stack.Screen name="NutritionistAppointment" component={NutritionistCard} options={{ headerShown: false }} />
                 <Stack.Screen  name="MakeReservation" component={Reservation} options={{ headerShown: false }} />
                 <Stack.Screen  name="DoctorProfile" component={ProfileDoc} options={{ headerShown: false }} />
+                <Stack.Screen  name="NutritionistProfile" component={AddUserDetails2} options={{ headerShown: false }} />
 
 
 

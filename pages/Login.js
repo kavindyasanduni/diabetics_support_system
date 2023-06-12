@@ -44,7 +44,7 @@ const Login = props => {
     }
   
     try {
-      const response = await axios.post('http://192.168.8.167:8082/api/users/login', {
+      const response = await axios.post('http://192.168.8.100:8082/api/users/login', {
         email: email,
         password: password,
       });
