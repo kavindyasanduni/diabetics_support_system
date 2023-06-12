@@ -22,6 +22,11 @@ import NutritionistDrawer from "./Nutrtionistdrawer.js";
 import Guardiandrawer from "./Guardiandrawer.js";
 import UpdateContainer from "../pages/KnowldgeSharing/UpdateContainer.js";
 import UpdateContainerCard from "../pages/KnowldgeSharing/UpdateContainerCard.js";
+import PDash from "../screen/PDashBoard.js";
+import DoctorsCard from "../screen/Doctors.js";
+import NutritionistCard from "../screen/Nutritionist.js";
+import Reservation from "../screen/Reservation.js";
+import ProfileDoc from "../screen/ProfileDoc.js";
 
 
 //create stack navigators

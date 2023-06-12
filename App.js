@@ -14,6 +14,23 @@ import PatientEditProfile from './pages/PatientEditProfile';
 import EditPassword from './pages/EditPassword';
 import UpdateContainerCard from './pages/KnowldgeSharing/UpdateContainerCard';
 import PDash from './screen/PDashBoard';
+import Reservation from './screen/Reservation';
+import DoctorsCard from './screen/Doctors';
+import Table from './screen/ReservationHistory';
+//import NutritionistCard from './screen/Nutritionist';
+import AddProfile from './screen/ProfileDoc';
+import PDash from './screen/PDashBoard';
+import UpdateUserDetails from './screen/UpdateDoctor';
+import SeeReservation from './screen/SeeReservation';
+import AddUserDetails2 from './screen/NutitionistDetails';
+import AddUserDetails from './screen/DoctorDetails'; 
+//import UpdateUserDetails from './screen/UpdateDoctor';
+import UpdateUserDetails2 from './screen/UpdateNutritionist';
+
+
+
+
+
 
 
 const App = () => { 
