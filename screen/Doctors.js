@@ -27,9 +27,9 @@ const DoctorsCard = (props) => {
   //fetch the data
   const fetchData = async () =>{
     try { 
-      const response = await axios.get(`http://192.168.8.102:8082/getdoctordata`);
+      const response = await axios.get(`http://192.168.8.100:8082/getdoctordata`);
       setDoctorData(response.data);
-      console.log("Data successfully fetched" + response.data);
+      console.log("Data successfully fetched" + response);
 
     }catch (error){
       console.log(error);

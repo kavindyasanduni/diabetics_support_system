@@ -20,7 +20,7 @@ const CustomDrawer = (props) => {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get(`http://192.168.8.167:8082/api/users/${userId}`);
+      const response = await axios.get(`http://192.168.8.100:8082/api/users/${userId}`);
       const userData = response.data;
       setProfilePictureUrl(userData.profilePictureUrl);
       setFirstName(userData.firstname);

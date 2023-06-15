@@ -16,7 +16,7 @@ const Knowladgesharingdashbord = (props) => {
         console.log(description);
     };
   return (
-    <View>
+    <View style = {{flex : 1 , backgroundColor: '#fff'}}>
       <View style={styles.aroundContainer}>
       <View style={styles.container}>
           <View style={styles.button_view}>

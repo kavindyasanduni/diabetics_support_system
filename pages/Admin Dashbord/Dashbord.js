@@ -28,9 +28,9 @@ const Dashbord = (props) => {
       {/* Your dashboard content goes here */}
 
       {/* The menu icon */}
-      <TouchableOpacity onPress={toggleMenu}>
+      {/* <TouchableOpacity onPress={toggleMenu}>
         <Icon name="menu" size={30} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <View style = { {flex : 1 , paddingBottom: 5}}>
         <ScrollView>
           <View>
@@ -46,7 +46,7 @@ const Dashbord = (props) => {
         </ScrollView>
       </View>
       {/* The side menu */}
-      <Modal
+      {/* <Modal
         animationType="slide"
         transparent={true}
         visible={isMenuVisible}
@@ -70,14 +70,14 @@ const Dashbord = (props) => {
                 onPress={() =>
                   props.navigation.navigate("knowladgesharingdashbord")
                 }
-              >
+              > */}
                 {/* <ButtonD title ="Update Knowledge Sharing center"  navigation="knowladgesharingdashbord" /> */}
-                <Text style={styles.buttonText}>knowladgesharingdashbord</Text>
+                {/* <Text style={styles.buttonText}>knowladgesharingdashbord</Text>
               </TouchableOpacity>
             </View>
           </View>
         </TouchableWithoutFeedback>
-      </Modal>
+      </Modal> */}
     </View>
   );
 

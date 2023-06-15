@@ -31,6 +31,8 @@ import AddUserDetails2 from "../screen/NutitionistDetails.js";
 
 import AdminDashboard from "../pages/AdminDashboard.js";
 import AdminDrawer from "./AdminDrawer.js";
+import SeeReservation from "../screen/SeeReservation.js";
+import ReservationCancel from "../screen/ReservationCansel.js";
 
 //create stack navigators
 const Stack = createNativeStackNavigator();
@@ -63,6 +65,7 @@ const Navigation = props => {
                 <Stack.Screen  name="MakeReservation" component={Reservation} options={{ headerShown: false }} />
                 <Stack.Screen  name="DoctorProfile" component={ProfileDoc} options={{ headerShown: false }} />
                 <Stack.Screen  name="NutritionistProfile" component={AddUserDetails2} options={{ headerShown: false }} />
+                <Stack.Screen  name="ReservationCancel" component={ReservationCancel} options={{ headerShown: false }} />
 
 
 

@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Picker,
   TouchableOpacity,
   Modal,
   ScrollView,
@@ -17,6 +16,9 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
+import { Picker } from '@react-native-picker/picker';
+import BASE_URL from "../../config";
+
 
 const DeleteContentFromKSC = () => {
   //for dropdown selection
@@ -48,10 +50,10 @@ const DeleteContentFromKSC = () => {
     // console.log("called");
     try {
       const response = await axios.get(
-        `http:///192.168.8.103:8082/getKInformationByCategory/${selectedOption}`
+        `${BASE_URL}/getKInformationByCategory/${selectedOption}`
       );
       setTableData(response.data);
-      console.log("Data captured: " + response.data);
+      console.log("Data captured: " + response);
     } catch (error) {
       console.log(error);
       alert(
@@ -70,7 +72,9 @@ const DeleteContentFromKSC = () => {
     description: data.description,
     imgLink: data.img_url,
     date: data.created_date,
+    
   }));
+  // console.log(kInformation.date);
   //to show spesific number of length
   const maxDescriptionLength = 10;
 
@@ -84,7 +88,7 @@ const DeleteContentFromKSC = () => {
       try {
         // Send the updated data to the backend API
         await axios.put(
-          `http:///192.168.8.103:8082/updateKInformation/${newData.id}`,
+          `${BASE_URL}/updateKInformation/${newData.id}`,
           {
             title: newData.title,
             catergory: selectedOption,
@@ -131,7 +135,7 @@ const DeleteContentFromKSC = () => {
             // send data to database when uploading finished
             axios
               .put(
-                `http:///192.168.8.103:8082/updateKInformation/${newData.id}`,
+                `${BASE_URL}/updateKInformation/${newData.id}`,
                 {
                   title: newData.title,
                   catergory: selectedOption,
@@ -183,7 +187,7 @@ const DeleteContentFromKSC = () => {
     try {
       // Delete data to the backend API
       await axios.delete(
-        `http:///192.168.8.103:8082/deleteKInformationById/${id}`
+        `${BASE_URL}/deleteKInformationById/${id}`
       );
       console.log("Data Deleted Successfully");
       // Fetch the updated data from the backend API
@@ -200,12 +204,12 @@ const DeleteContentFromKSC = () => {
 
 
   return (
-    <View>
+    <View style={{flex:1 , backgroundColor:'#fff'}}>
       <View style={styles.container}>
         {/* select catergory */}
 
         <View style={styles.description}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={toggleDropdown}
             style={styles.dropdownButton}
           >
@@ -231,8 +235,21 @@ const DeleteContentFromKSC = () => {
                 <Text style={styles.dropdownItemText}>Cancel</Text>
               </TouchableOpacity>
             </View>
-          </Modal>
+          </Modal> */}
+        
         </View>
+        <Picker
+          selectedValue={selectedOption}
+          onValueChange={(value) => selectOption(value)}
+        >
+          <Picker.Item label="Select an option" value="" />
+          {options.map((option, index) => (
+            <Picker.Item key={index} label={option} value={option} />
+          ))}
+      </Picker>
+
+
+       
         {/* <View style={styles.submitButtonCOntainer}>
           <View>
             <TouchableOpacity
@@ -250,10 +267,10 @@ const DeleteContentFromKSC = () => {
           {/* <ScrollView> */}
           <View style={styles.tableContainer}>
             <View style={styles.tableHeader}>
-              <Text style={styles.tableHeaderText}>Id</Text>
               <Text style={styles.tableHeaderText}>Title</Text>
               <Text style={styles.tableHeaderText}>Description</Text>
               <Text style={styles.tableHeaderText}>Option</Text>
+              {/* <Text style={styles.tableHeaderText}>Option</Text> */}
             </View>
             {/* Render table data here */}
             <View style={styles.tableData}>
@@ -354,9 +371,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     backgroundColor: "#FFF",
-    marginTop: 50,
+    marginTop: 30,
     width: 375,
-    height: 550,
+    height: 580,
     marginLeft: 10,
     // marginRight:10,
     paddingLeft: 20,
@@ -370,13 +387,13 @@ const styles = StyleSheet.create({
         shadowColor: "#000000",
         shadowOffset: {
           width: 0,
-          height: 4,
+          height: 10,
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
       },
       android: {
-        elevation: 5,
+        elevation: 8,
       },
     }),
   },
