@@ -23,6 +23,12 @@ import AddUserDetails2 from './screen/NutitionistDetails';
 import AddUserDetails from './screen/DoctorDetails'; 
 //import UpdateUserDetails from './screen/UpdateDoctor';
 import UpdateUserDetails2 from './screen/UpdateNutritionist';
+// import DoctorDashboard from './screen/DoctorDashboard';
+import NutritionistCard from './screen/Nutritionist';
+import Guardianhome from './pages/Guardianhome';
+import NutritionistDashboard from './pages/NutritionistDashboard';
+import DoctorDashboard from './pages/DoctorDashboard';
+
 
 
 
@@ -32,12 +38,14 @@ import UpdateUserDetails2 from './screen/UpdateNutritionist';
 
 const App = () => { 
   return (
-    // <DoctorsCard/>
-    // <View>
-    //   <Text>Hello</Text>
-    // </View>
+  
+    
     <Navigation/>
-  )
+   
+    
+    
+  
+  );
 }
 
 export default App;
