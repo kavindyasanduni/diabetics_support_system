@@ -98,20 +98,20 @@ const Navigation = props => {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="DoctorAppointment"
+            name="DoctorsCard"
             component={DoctorsCard}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="NutritionistAppointment"
+            name="NutritionistCard"
             component={NutritionistCard}
             options={{ headerShown: false }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="MakeReservation"
             component={Reservation}
             options={{ headerShown: false }}
-          />
+          /> */}
           <Stack.Screen
             name="DoctorProfile"
             component={ProfileDoc}
