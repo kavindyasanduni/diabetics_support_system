@@ -1,5 +1,7 @@
 import { padding } from "@mui/system";
-import React from "react";
+// import React from "react";
+import React, { useState, useEffect } from "react";
+
 import {
   SafeAreaView,
   View,
@@ -11,15 +13,61 @@ import {
 } from "react-native";
 import SearchBar from "./Component/Searchbar.js";
 import { ScrollView } from "react-native-gesture-handler";
+import axios from 'axios';
 
 
-  const NutritionistCard = () => {
+
+  const NutritionistCard = (props) => {
+    const [nutritionistData , setNutritionistData] = useState([]); //data save 
+
+    useEffect(() => {
+        fetchData();
+      }, []);  
+    
+    //fetch the data
+    const fetchData = async () =>{
+      try { 
+        const response = await axios.get(`http://192.168.8.100:8082/getallnutritionist`);
+        setNutritionistData(response.data);
+        console.log("Data successfully fetched" + response.data);
+  
+      }catch (error){
+        console.log(error);
+        alert(
+          "An error occurred while fetching the data. Please try again later."
+        );
+  
+      }
+    }
+
+    const name = "nutritionist";
+  
+
+
   return (
     <SafeAreaView>
       <ScrollView>
         <SearchBar style={styles.ser} />
         <View style={styles.button1}>
-          <TouchableOpacity style={styles.buttonC}>
+        {nutritionistData.map((data, index) => (
+            <TouchableOpacity style={styles.buttonC} 
+            key={index}
+              onPress={() => props.navigation.navigate("DoctorProfile", { id: data.nid , name: name })}
+
+            >
+              <Image
+                source={require("../assets/images/d1.jpg")}
+                style={{ width: 70, height: 70 }}
+              />
+              <Text
+                style={styles.t1}
+                // onPress={() => props.navigation.navigate("DoctorProfile" ,  { id: data.did })}
+              >
+                {data.fname +" "+ data.lname}
+              </Text>
+            </TouchableOpacity>
+          ))}
+          {/* <TouchableOpacity style={styles.buttonC}>
             <Image
               source={require("../assets/images/d1.jpg")}
               style={{ width: 50, height: 50 }}
@@ -55,7 +103,7 @@ import { ScrollView } from "react-native-gesture-handler";
               style={{ width: 50, height: 50 }}
             />
             <Text style={styles.t5}>Dr.Silva</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </ScrollView>
     </SafeAreaView>

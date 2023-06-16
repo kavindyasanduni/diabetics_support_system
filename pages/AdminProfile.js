@@ -2,7 +2,7 @@ import react from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet ,SafeAreaView} from 'react-native'
 
 
-const DoctorProfile = props =>{
+const AdminProfile = props =>{
     return(
         <View>
             <Text>setting p</Text>
@@ -10,4 +10,4 @@ const DoctorProfile = props =>{
     )
 }
 
-export default DoctorProfile;
+export default AdminProfile;

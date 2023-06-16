@@ -1,44 +1,112 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Button,
-  Image,
-  ScrollView,
-} from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { ScrollView, View, Text, Image, TouchableOpacity ,StyleSheet} from 'react-native';
+
 import axios from "axios";
 
 
 const ProfileDoc = (props) => {
   const [AppoinmentDateandDay, setAppinmentDateandDay] = useState("");
 
-  //to get the passed id from the doctors component
-  const { id } = props.route.params;
-  // console.log(id);
+  const { id, name } = props.route.params;
+  console.log(id);
+  console.log(name);
+  const [doctorData, setDoctorData] = useState([]);
 
-//fetch data to purticular id
-const [doctorData, setDoctorData] = useState([]); //data save
+  useEffect(() => {
+    if (name === "doctor") {
+      fetchDataD();
+    } else if (name === "nutritionist") {
+      fetchDataN();
+    }
+    // fetchDataN();
+  }, []);
 
-useEffect(() => {
-  fetchData();
-}, []);
+  const fetchDataD = async () => {
+    try {
+      const response = await axios.get(`http://192.168.8.100:8082/getdoctordatabyid/${id}`);
+      if (response.data) {
+        setDoctorData(response.data);
+      }
+      console.log('Data successfully fetched');
+      // setDoctorData(response.data)
+      // console.log('Data successfully fetched:', response.data);
+    } catch (error) {
+      console.log(error);
+      alert('An error occurred while fetching the data. Please try again later.');
+    }
+  };
 
-//fetch the data
-const fetchData = async () => {
-  try {
-    const response = await axios.get(
-      `http://192.168.8.101:8082/getdoctordatabyid/${id}`
-    );
-    setDoctorData(response.data);
-    console.log("Data successfully fetched" + response.data);
-  } catch (error) {
-    console.log(error);
-    alert("An error occurred while fetching the data. Please try again later.");
-  }
-};
+
+
+  const fetchDataN = async () => {
+    try {
+      const response = await axios.get(`http://192.168.8.100:8082/getnutritionist/${id}`);
+      if (response.data) {
+        setDoctorData(response.data);
+      }
+      console.log('Data successfully fetched');
+      // setDoctorData(response.data)
+      // console.log('Data successfully fetched:', response.data);
+    } catch (error) {
+      console.log(error);
+      alert('An error occurred while fetching the data. Please try again later.');
+    }
+  };
+
+
+  //send data
+    const handleClick = (date, time) => {
+      // Create an object with the data to be sent
+      const data = {
+        date: date,
+        time: time
+      };
+     if (name ==="doctor"){
+      // Send the data to the server using Axios
+      axios.post(`http://192.168.8.100:8082/addReservation`,{
+            pid: "1", //should send actual p id
+            r_type : name,
+            d_id : id,
+            date : date,
+            time : time,
+            p_name : "Lakshan",
+ 
+      })
+        .then(response => {
+          // Handle the response if needed
+          alert("Reservation saved!");
+          console.log('Data saved successfully!');
+        })
+        .catch(error => {
+          // Handle the error if needed
+          alert("Error occurred! Try again later");
+          console.error('Error saving data:', error);
+        });
+
+     }else if (name === "nutritionist"){
+          axios.post(`http://192.168.8.100:8082/addReservation`,{
+            p_id: "1",
+            r_type : name,
+            d_id : id,
+            date : date,
+            time : time,
+            p_name : "Lakshan",
+            isremove : "no",
+
+       })
+        .then(response => {
+          // Handle the response if needed
+          alert("Reservation saved!");
+          console.log('Data saved successfully!');
+        })
+        .catch(error => {
+          // Handle the error if needed
+          alert("Error occurred! Try again later");
+          console.error('Error saving data:', error);
+        });
+      }
+    };
+  
 
 
   const click = () => {};
@@ -71,7 +139,7 @@ const fetchData = async () => {
           <Text style={styles.input}>Clik here to make Appointment</Text>
         </View>
 
-        <View style={styles.DescContainer}>
+        {/* <View style={styles.DescContainer}>
           <Text style={{ fontSize: 20 }}>Available Time</Text>
           <Text style={styles.input}>{doctorData.a_date}</Text>
 
@@ -84,9 +152,25 @@ const fetchData = async () => {
               <Text style={styles.buttonText}>Book Now </Text>
             </TouchableOpacity>
           </View>
-        </View>
-
+        </View> */}
         <View style={styles.DescContainer}>
+        {doctorData.a_date && doctorData.a_date.map((date, index) => (    
+          <View key={index}>
+            <Text style={{ fontSize: 20 ,paddingTop:20 }}>Available Time</Text> 
+            <Text style={styles.input}>{date}</Text>
+            <Text style={styles.input}>Status</Text>
+            <Text style={styles.input}>{doctorData.a_time[index]}</Text>
+            <View style={styles.input}>
+              <TouchableOpacity style={styles.button} onPress={() => handleClick(date, doctorData.a_time[index])}>
+                <Text style={styles.buttonText}>Book Now </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        ))}
+      </View>
+
+
+        {/* <View style={styles.DescContainer}>
           <Text style={{ fontSize: 20 }}>Available Time</Text>
           <Text style={styles.input}>{doctorData.a_date}</Text>
 
@@ -99,7 +183,7 @@ const fetchData = async () => {
               <Text style={styles.buttonText}>Book Now </Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </View> */}
       </View>
     </ScrollView>
   );
@@ -156,6 +240,7 @@ const styles = StyleSheet.create({
   },
   DescContainer: {
     padding: 20,
+    // marginTop: 20,
   },
   input: {
     borderWidth: 1,

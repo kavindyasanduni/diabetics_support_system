@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text,TouchableOpacity } from "react-native";
 import UpdateContainer from "./UpdateContainer";
 import UpdateContainerCard from "./UpdateContainerCard";
 
-const Knowladgesharingdashbord = () => {
+const Knowladgesharingdashbord = (props) => {
 
     const [description, setDescription] = useState("");
     console.log(description);
@@ -16,33 +16,40 @@ const Knowladgesharingdashbord = () => {
         console.log(description);
     };
   return (
-    <View>
+    <View style = {{flex : 1 , backgroundColor: '#fff'}}>
       <View style={styles.aroundContainer}>
-        {/* <UpdateContainer
-         modelHeader="Update Exercise" 
-         text="Add Photo" 
-        //  onChange={(text) => setDescription(text)}
-        // onSave={sendData} 
-        /> */}
+      <View style={styles.container}>
+          <View style={styles.button_view}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() =>
+                props.navigation.navigate("updateksc")
+              }
+            >
+              {/* <ButtonD title ="Update Knowledge Sharing center"  navigation="knowladgesharingdashbord" /> */}
+              <Text style={styles.buttonText}>
+                Add content to web application
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
 
-        <UpdateContainerCard
-        modelHeader="Add new content" 
-        text="Add Photo"
-        />
-      </View>
-
-      <View style={styles.aroundContainerSecond}>
-        {/* <UpdateContainer 
-        modelHeader="Update Diet Plans" 
-        text="Add Photo" 
-        // 
-        /> */}
-{/* 
-        <UpdateContainerCard
-        modelHeader="Add Diet Plans" 
-        text="Add Photo"
-        /> */}
-      </View>
+        <View style={styles.container}>
+          <View style={styles.button_view}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() =>
+                props.navigation.navigate("deletefromksc")
+              }
+            >
+              {/* <ButtonD title ="Update Knowledge Sharing center"  navigation="knowladgesharingdashbord" /> */}
+              <Text style={styles.buttonText}>
+                Update or Delete data in web
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        </View>
     </View>
   );
 };
@@ -51,35 +58,39 @@ const Knowladgesharingdashbord = () => {
 const styles = StyleSheet.create({
   aroundContainer: {
     marginTop: 50,
+    // justifyContent: 'center',
+    // alignContent: 'center',
+    alignItems:'center',
   },
   aroundContainerSecond: {
     marginTop: 50,
   },
-  //   container: {
-  //     // flexDirection: "row",
-  //     justifyContent: "center",
-  //     // alignItems:'center',
-  //     backgroundColor: "#FFF",
-  //     width: 300,
-  //     height: 250,
-  //     // marginLeft:52,
-  //     left: 49,
-  //     borderRadius: 32,
-  //     ...Platform.select({
-  //       ios: {
-  //         shadowColor: '#000000',
-  //         shadowOffset: {
-  //           width: 0,
-  //           height: 4,
-  //         },
-  //         shadowOpacity: 0.25,
-  //         shadowRadius: 4,
-  //       },
-  //       android: {
-  //         elevation: 5,
-  //       },
-  //     }),
-  //   },
+  container: {
+      // flexDirection: "row",
+      justifyContent: "center",
+      alignItems:'center',
+      backgroundColor: "#FFF",
+      width: 250,
+      height: 70,
+      marginTop: 50,
+      // marginLeft:52,
+      // left: 49,
+      borderRadius: 20,
+      ...Platform.select({
+        ios: {
+          shadowColor: '#000000',
+          shadowOffset: {
+            width: 0,
+            height: 4,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 4,
+        },
+        android: {
+          elevation: 5,
+        },
+      }),
+    },
   //   modelHeader: {
   //     // flexDirection: "row",
   //     color: "#1D11AD",

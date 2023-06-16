@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
 import axios from 'axios'
+import { LinearGradient } from "expo-linear-gradient";
+
 
 //sign up page for the patient 
 
@@ -112,7 +114,7 @@ const PatientSignUp = props => {
     
 
     // Send the data to the server
-    axios.post('http://192.168.8.167:8082/adduser', {
+    axios.post('http://192.168.8.167:8082/api/users/adduser', {
       email: email,
       firstname:firstName,
       lastname:lastName,
@@ -133,15 +135,29 @@ const PatientSignUp = props => {
     });
   };
 
+  //gradient
+
+  const colors = ["#8914af", "#05b9de", "#45a7a9"];
+  const start = { x: 0, y: 0 };
+  const end = { x: 0, y: 1 };
+  const locations = [0.1, 0.66, 1];
+
   return (
-    <View style={{top:20}}>
+    <View style={{top:20 , flex : 1}}>
+      <LinearGradient
+        colors={colors}
+        start={start}
+        end={end}
+        locations={locations}
+        style={styles.gradient}
+      >
       
-      <Text style={{ color: '#7a42f4', fontSize: 20, top: 50, textAlign: 'center', justifyContent: 'center', alignItems: 'center' }}>Enter Your Details</Text>
+      <Text style={{ color: '#fff', fontSize: 20, top: 50, textAlign: 'center', justifyContent: 'center', alignItems: 'center' }}>Enter Your Details</Text>
       <TextInput
         style={[styles.input, firstNameError && styles.errorInput]}
         underlineColorAndroid="transparent"
         placeholder="First Name"
-        placeholderTextColor='#7a42f4'
+        placeholderTextColor='#fff'
         autoCapitalize="none"
         onChangeText={handleFirstName}
       />
@@ -149,7 +165,7 @@ const PatientSignUp = props => {
         style={[styles.input, lastNameError && styles.errorInput]}
         underlineColorAndroid="transparent"
         placeholder="Last Name"
-        placeholderTextColor='#7a42f4'
+        placeholderTextColor='#fff'
         autoCapitalize="none"
         onChangeText={handleLastName}
       />
@@ -157,7 +173,7 @@ const PatientSignUp = props => {
         style={[styles.input, NICError && styles.errorInput]}
         underlineColorAndroid="transparent"
         placeholder="NIC"
-        placeholderTextColor='#7a42f4'
+        placeholderTextColor='#fff'
         autoCapitalize="none"
         onChangeText={handleNIC}
         keyboardType='numeric'
@@ -167,7 +183,7 @@ const PatientSignUp = props => {
         style={[styles.input, emailError && styles.errorInput]}
         underlineColorAndroid="transparent"
         placeholder="Email"
-        placeholderTextColor='#7a42f4'
+        placeholderTextColor='#fff'
         autoCapitalize="none"
         onChangeText={handleEmail}
       />
@@ -176,7 +192,7 @@ const PatientSignUp = props => {
         style={[styles.input, passwordError && styles.errorInput]}
         underlineColorAndroid="transparent"
         placeholder="Password"
-        placeholderTextColor='#7a42f4'
+        placeholderTextColor='#fff'
         autoCapitalize="none"
         onChangeText={handlePassword}
         secureTextEntry={true}
@@ -186,37 +202,47 @@ const PatientSignUp = props => {
         style={[styles.input, confirmpasswordError && styles.errorInput]}
         underlineColorAndroid="transparent"
         placeholder="Confirm Password"
-        placeholderTextColor="#9a73ef"
+        placeholderTextColor="#fff"
         autoCapitalize="none"
         onChangeText={handleConfirmPassword}
         secureTextEntry={true}
       />
-
-      <TouchableOpacity
+      <View style={{alignItems:'center'}}>      
+        <TouchableOpacity
             style = {styles.submitButton}
             onPress={handleSubmit}>
             <Text style = {styles.submitButtonText}> Next </Text>
       </TouchableOpacity>
       </View>
+
+      </LinearGradient>
+      </View>
    );
        
 }
-   export default PatientSignUp
+export default PatientSignUp
 
    const styles = StyleSheet.create({
       container: {
          paddingTop: 23,
          borderRadius:22,
       },
+      gradient: {
+        flex: 1,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+      },
       input: {
          margin: 5,
          height: 40,
-         top:80,
+         top:100,
          left:35,
          width:300,
-         borderColor: '#7a42f4',
+         borderColor: '#fff',
          borderWidth: 1,
-         borderRadius:22
+         borderRadius:22,
+         paddingLeft:20,
+         marginTop: 20,
       },
       submitButton: {
          backgroundColor: '#7a42f4',
@@ -224,8 +250,8 @@ const PatientSignUp = props => {
          margin: 15,
          height: 40,
          width:258,
-         top:100,
-         left:60,
+         top:150,
+        //  left:60,
          borderRadius:22,
          alignItems:'center'
       },
