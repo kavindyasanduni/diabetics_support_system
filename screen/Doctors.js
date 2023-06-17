@@ -79,27 +79,14 @@ const DoctorsCard = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 100,
-    backgroundColor: "#fff",
-  },
-  item: {
-    backgroundColor: "#f9c2ff",
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 32,
-  },
   buttonC: {
-    backgroundColor: "#1D11AD",
-    padding: 10,
-    marginVertical: 8,
+    backgroundColor: "#21a9ad",
+    padding: 20,
+    marginVertical: 15,
     marginHorizontal: 16,
-    paddingVertical: 19,
+    paddingVertical: 20,
     flexDirection: "row",
+    borderRadius: 10,
   },
   t1: { color: "#fff", padding: 10, fontSize: 20 },
   t2: { color: "#fff", padding: 10, fontSize: 20 },
@@ -108,23 +95,6 @@ const styles = StyleSheet.create({
   t4: { color: "#fff", padding: 10, fontSize: 20 },
 
   t5: { color: "#fff", padding: 10, fontSize: 20 },
-
-  button1: {
-    color: "red",
-    paddingVertical: 10,
-    marginVertical: 5,
-  },
-  button2: {
-    color: "blue",
-    paddingVertical: 30,
-  },
-  button3: {
-    color: "yellow",
-  },
-  ser: {
-    position: "absolute",
-    paddingTop: 20,
-  },
 });
 
 export default DoctorsCard;
