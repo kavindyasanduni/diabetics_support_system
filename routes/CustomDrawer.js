@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { View, Text, ImageBackground, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
 import axios from "axios";
+import BASE_URL from "../config";
 
 import { UserContext } from '../pages/UserContext';
 
@@ -20,7 +21,7 @@ const CustomDrawer = (props) => {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get(`http://192.168.8.100:8082/api/users/${userId}`);
+      const response = await axios.get(`${BASE_URL}/api/users/${userId}`);
       const userData = response.data;
       setProfilePictureUrl(userData.profilePictureUrl);
       setFirstName(userData.firstname);

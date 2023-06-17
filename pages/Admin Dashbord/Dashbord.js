@@ -41,7 +41,7 @@ const Dashbord = (props) => {
             <AllUsers />
           </View>
           <View>
-            <PaymentSummary />
+            {/* <PaymentSummary /> */}
           </View>
         </ScrollView>
       </View>

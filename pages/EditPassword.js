@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput,Text, Button, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
+import BASE_URL from '../config';
 
 const EditPassword = props => {
 
@@ -16,7 +17,7 @@ const EditPassword = props => {
     }
 
     const updatedUser = { currentPassword: currentPassword, newPassword: newPassword };
-    axios.put(`http://192.168.8.167:8082/api/users/1/password`, updatedUser)
+    axios.put(`${BASE_URL}/api/users/1/password`, updatedUser)
       .then(response => {
         Alert.alert("Password updated successfully");
       })

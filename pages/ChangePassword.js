@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
-
+import BASE_URL from '../config';
 
 import axios from 'axios';
 
@@ -31,7 +31,7 @@ const ChangePassword = props => {
         throw new Error('Passwords do not match');
       }
 // call API
-      const response = await axios.post('https://192.168.8.167:8082/change-password', {
+      const response = await axios.post(`${BASE_URL}/change-password`, {
         email: email,
         password: password,
       });

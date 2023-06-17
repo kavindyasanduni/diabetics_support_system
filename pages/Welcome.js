@@ -7,9 +7,10 @@ import {
   Alert,
   Image,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+// import { LinearGradient } from "expo-linear-gradient";
 // import Svg, { Path } from "react-native-svg";
-import { Svg, Path, Defs, Stop } from 'react-native-svg';
+// import { Svg, Path, Defs, Stop } from 'react-native-svg';
+import { LinearGradient } from "expo-linear-gradient";
 
 const Welcome = (props) => {
   /*

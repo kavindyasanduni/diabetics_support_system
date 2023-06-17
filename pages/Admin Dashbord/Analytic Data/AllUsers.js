@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { View, Text, StyleSheet } from "react-native";
 import { BarChart } from "react-native-chart-kit";
+import BASE_URL from "../../../config";
 
 const AllUsers = () => {
 
@@ -13,7 +14,7 @@ const AllUsers = () => {
 
   const fetchData = async() => {
     try { 
-      const response = await axios.get("http://192.168.8.100:8082/api/users/getCountOfUsers");
+      const response = await axios.get(`${BASE_URL}/api/users/getCountOfUsers`);
       // console.log("response"  , response.data);
 
       //set data to an array

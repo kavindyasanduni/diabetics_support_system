@@ -4,6 +4,7 @@ import { Alert } from 'react-native';
 import axios from 'axios';
 import { UserContext } from './UserContext';
 import { LinearGradient } from "expo-linear-gradient";
+import BASE_URL from '../config';
 
 
 // Login screen for the users
@@ -44,7 +45,7 @@ const Login = props => {
     }
   
     try {
-      const response = await axios.post('http://192.168.8.100:8082/api/users/login', {
+      const response = await axios.post(`${BASE_URL}/api/users/login`, {
         email: email,
         password: password,
       });

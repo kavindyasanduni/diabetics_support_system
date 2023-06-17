@@ -12,6 +12,8 @@ const storageRef = ref(storage); // create a reference to the root of your stora
 
 import { UserContext } from './UserContext';
 
+import BASE_URL from '../config';
+
 const PatientEditProfile = props =>{
   
   const { userId } = useContext(UserContext);
@@ -28,7 +30,7 @@ const PatientEditProfile = props =>{
 
 
   useEffect(() => {
-    axios.get(`http://192.168.8.167:8082/api/users/${userId}`)
+    axios.get(`${BASE_URL}/api/users/${userId}`)
       .then(response => {
         setUser(response.data);
         setFirstName(response.data.firstname);
@@ -63,7 +65,7 @@ const PatientEditProfile = props =>{
       updatedUser.profilePictureUrl = await getDownloadURL(storageRef);
     }
     try {
-      const response = await axios.put(`http://192.168.8.167:8082/api/users/${userId}`, updatedUser);
+      const response = await axios.put(`${BASE_URL}/api/users/${userId}`, updatedUser);
       if (response.status === 200) {
         setUser(response.data);
         setIsEditing(false);
