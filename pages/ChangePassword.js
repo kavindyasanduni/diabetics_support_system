@@ -10,7 +10,7 @@ const ChangePassword = props => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState(true);
+  const [success, setSuccess] = useState(false);
 
   
 
@@ -31,7 +31,7 @@ const ChangePassword = props => {
         throw new Error('Passwords do not match');
       }
 // call API
-      const response = await axios.post('https://192.168.8.167:8082/change-password', {
+      const response = await axios.post('http://192.168.8.167:8082/change-password', {
         email: email,
         password: password,
       });

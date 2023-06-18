@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
 import axios from 'axios'
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 //patient can add guardian information
 
@@ -14,6 +15,8 @@ const GuardianSignUp = props => {
   const [lastNameError, setLastNameError] = useState(false)
   const [NICError, setNICError] = useState(false)
   const [emailError, setEmailError] = useState(false)
+  const route = useRoute();
+  const { otpEmail } = route.params;
 
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -78,9 +81,9 @@ const GuardianSignUp = props => {
     })
     .then(response => {
       console.log('Data successfully saved to database:', response.data);
-      alert('Sign up successful!');
+      //alert('Sign up successful!');
       // Navigate to the login page
-      props.navigation.navigate('Login');
+      props.navigation.navigate('OTPVerification', { otpEmail: otpEmail });
     })
     .catch(error => {
       console.error('Error saving data:', error);

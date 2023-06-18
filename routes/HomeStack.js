@@ -22,6 +22,7 @@ import NutritionistDrawer from "./Nutrtionistdrawer.js";
 import Guardiandrawer from "./Guardiandrawer.js";
 import AdminDashboard from "../pages/AdminDashboard.js";
 import AdminDrawer from "./AdminDrawer.js";
+import OTPVerification from "../pages/OTPVerification.js";
 
 //create stack navigators
 const Stack = createNativeStackNavigator();
@@ -38,6 +39,7 @@ const Navigation = props => {
                 <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
                 <Stack.Screen name="PatientSignUp" component={PatientSignUp} options={{headerShown:false}}/>
                 <Stack.Screen name="GuardianSignUp" component={GuardianSignUp} options={{headerShown:false}}/>
+                <Stack.Screen name="OTPVerification" component={OTPVerification} options={{headerShown:false}}/>
                 <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerShown:false}}/>
                 <Stack.Screen name="ChangePassword" component={ChangePassword} options={{headerShown:false}}/>
                 {/* <Stack.Screen name="DoctorDashboard" component={DoctorDashboard} options={{headerShown:false}}/> */}

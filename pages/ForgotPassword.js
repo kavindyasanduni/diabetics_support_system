@@ -16,7 +16,7 @@ const ForgotPassword = (props) => {
       if (response.status === 200) {
         setSuccess(true);
         setToken(response.data.token);
-        props.navigation.navigate('ChangePassword', { email: email });
+        props.navigation.navigate("Login");
       } else {
         throw new Error('Invalid email');
       }
@@ -27,7 +27,7 @@ const ForgotPassword = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Enter your email to send the reset link</Text>
+      <Text style={styles.title}>Enter your email to send the new password </Text>
       <TextInput
         style={styles.input}
         placeholder="Enter your email"
@@ -40,7 +40,7 @@ const ForgotPassword = (props) => {
         <Text style={styles.buttonText}>Send Email</Text>
       </TouchableOpacity>
       {success ? (
-        <Text style={styles.successMessage}>Reset link sent successfully!</Text>
+        <Text style={styles.successMessage}>Password sent successfully!</Text>
       ) : null}
     </View>
   );

@@ -13,13 +13,14 @@ import GuardianSignUp from './pages/GuardianSignUp';
 import PatientEditProfile from './pages/PatientEditProfile';
 import EditPassword from './pages/EditPassword';
 import UpdateContainerCard from './pages/KnowldgeSharing/UpdateContainerCard';
-
+import OTPVerification from './pages/OTPVerification';
 
 const App = () => { 
   return (
     <UserProvider>
       <Navigation/>
     </UserProvider>
+    //<OTPVerification/>
   )
 }
 

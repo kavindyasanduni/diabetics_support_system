@@ -54,6 +54,9 @@ const Login = props => {
       const data = response.data;
       const userId = data.uid;
       setUserId(userId);
+
+      setEmail(''); // Reset email field
+      setPassword(''); // Reset password field
       //console.log(userId);
       //check user type of the user
       if (data.user_type === 'Doctor') {

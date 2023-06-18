@@ -125,7 +125,7 @@ const PatientSignUp = props => {
       console.log('Data successfully saved to database:', response.data);
       //alert('Sign up successful!');
       // Navigate to the login page
-      props.navigation.navigate('GuardianSignUp');
+      props.navigation.navigate('GuardianSignUp',{ otpEmail: email });
     })
     .catch(error => {
       console.error('Error saving data:', error);
