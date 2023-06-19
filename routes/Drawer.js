@@ -15,10 +15,10 @@ const MyDrawer = props =>{
     return (
     
       <Drawer.Navigator drawerContent={props => <CustomDrawer {...props}  />}>
-        <Drawer.Screen name="PatientHome1" component={PatientHome} />
-        <Drawer.Screen name="EditPassword" component={EditPassword} />
-        <Drawer.Screen name="EditProfile" component={PatientEditProfile} />
-        <Drawer.Screen name="PatientSetting" component={PatientSetting} />
+        <Drawer.Screen name="PatientHome" component={PatientHome} options={{headerStyle:{backgroundColor:'#82006d'}}}/>
+        <Drawer.Screen name="EditPassword" component={EditPassword} options={{headerStyle:{backgroundColor:'#82006d'}}}/>
+        <Drawer.Screen name="EditProfile" component={PatientEditProfile} options={{headerStyle:{backgroundColor:'#82006d'}}}/>
+        <Drawer.Screen name="PatientSetting" component={PatientSetting} options={{headerStyle:{backgroundColor:'#82006d'}}}/>
       </Drawer.Navigator>
       
     );

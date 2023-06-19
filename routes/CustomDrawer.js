@@ -38,7 +38,7 @@ const CustomDrawer = (props) => {
           <Text style={styles.userName}>{`${firstName} ${lastName}`}</Text>
         </ImageBackground>
         <View style={styles.drawerItemsContainer}>
-          <DrawerItemList {...props} />
+          <DrawerItemList {...props}  activeTintColor="#FF0000" />
         </View>
       </DrawerContentScrollView>
       <View style={styles.signOutContainer}>
