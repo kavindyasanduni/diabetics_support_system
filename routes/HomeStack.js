@@ -20,9 +20,22 @@ import Guardianhome from "../pages/Guardianhome.js";
 import DoctorDrawer from "./Doctordrawer.js";
 import NutritionistDrawer from "./Nutrtionistdrawer.js";
 import Guardiandrawer from "./Guardiandrawer.js";
+import UpdateContainer from "../pages/KnowldgeSharing/UpdateContainer.js";
+import UpdateContainerCard from "../pages/KnowldgeSharing/UpdateContainerCard.js";
+import PDash from "../screen/PDashBoard.js";
+import DoctorsCard from "../screen/Doctors.js";
+import NutritionistCard from "../screen/Nutritionist.js";
+import Reservation from "../screen/Reservation.js";
+import ProfileDoc from "../screen/ProfileDoc.js";
+import AddUserDetails2 from "../screen/NutitionistDetails.js";
+
 import AdminDashboard from "../pages/AdminDashboard.js";
 import AdminDrawer from "./AdminDrawer.js";
 import OTPVerification from "../pages/OTPVerification.js";
+import SeeReservation from "../screen/SeeReservation.js";
+import ReservationCancel from "../screen/ReservationCansel.js";
+import ReservationNutritionist from "../screen/ReservationsNutritionist.js";
+import ReservationDoctor from "../screen/ReservationsDoctor.js";
 
 //create stack navigators
 const Stack = createNativeStackNavigator();
@@ -35,6 +48,7 @@ const Navigation = props => {
                 <Stack.Screen name="Admin" component={Dashbord} />
                 <Stack.Screen name="knowladgesharingdashbord" component={knowladgesharingdashbord} />
                 <Stack.Screen name="deletefromksc" component={DeleteContentFromKSC} />
+                <Stack.Screen name="updateksc" component={UpdateContainerCard}/>
 
                 <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
                 <Stack.Screen name="PatientSignUp" component={PatientSignUp} options={{headerShown:false}}/>
@@ -47,6 +61,22 @@ const Navigation = props => {
                 <Stack.Screen name="Guardianhome" component={Guardiandrawer} options={{headerShown:false}}/>
                 <Stack.Screen name="PatientHome" component={MyDrawer} options={{headerShown:false}}/>
                 <Stack.Screen name="DoctorDashboard" component={DoctorDrawer} options={{ headerShown: false }} />
+
+{/* routes for patientdashbord */}
+                <Stack.Screen name="PatientHomePage"component={PDash} options={{ headerShown: false }} />
+                <Stack.Screen name="DoctorAppointment" component={DoctorsCard} options={{ headerShown: false }} />
+                <Stack.Screen name="NutritionistAppointment" component={NutritionistCard} options={{ headerShown: false }} />
+                <Stack.Screen  name="MakeReservation" component={Reservation} options={{ headerShown: false }} />
+                <Stack.Screen  name="DoctorProfile" component={ProfileDoc} options={{ headerShown: false }} />
+                <Stack.Screen  name="NutritionistProfile" component={AddUserDetails2} options={{ headerShown: false }} />
+                <Stack.Screen  name="ReservationCancel" component={ReservationCancel} options={{ headerShown: false }} />
+
+{/* routes for nutritionist Dashbord */}
+                <Stack.Screen  name="Available Reservation nutritionist" component={ReservationNutritionist} options={{ headerShown: false }} />
+
+{/* routes for Doctor Dashbord */}
+                <Stack.Screen  name="Available Reservation doctor" component={ReservationDoctor} options={{ headerShown: false }} />
+
                 <Stack.Screen name="AdminDashboard" component={AdminDrawer} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>

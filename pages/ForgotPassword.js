@@ -9,7 +9,7 @@ const ForgotPassword = (props) => {
 
   const handleSendEmail = async () => {
     try {
-      const response = await axios.post('http://192.168.8.167:8082/api/users/forgot-password', {
+      const response = await axios.post(`${BASE_URL}/api/users/forgot-password`, {
         email: email,
       });
 

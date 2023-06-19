@@ -1,28 +1,116 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Button,
-  Image,
-  ScrollView
+import React, { useState, useEffect } from "react";
+import { ScrollView, View, Text, Image, TouchableOpacity ,StyleSheet} from 'react-native';
 
-} from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import axios from "axios";
+import BASE_URL from "../config";
 
 
-const AddProfile = ({ photo }) => {
+const ProfileDoc = (props) => {
   const [AppoinmentDateandDay, setAppinmentDateandDay] = useState("");
-  //const [age, setAge] = useState("");
-  //const [sex, setSex] = useState("");
-  //const [category, setCategory] = useState("");
-  //const [selectedPhoto, setSelectedPhoto] = useState(photo);
 
-  const click =()=> {
+  const { id, name } = props.route.params;
+  console.log(id);
+  console.log(name);
+  const [doctorData, setDoctorData] = useState([]);
 
-  }
+  useEffect(() => {
+    if (name === "doctor") {
+      fetchDataD();
+    } else if (name === "nutritionist") {
+      fetchDataN();
+    }
+    // fetchDataN();
+  }, []);
 
+  const fetchDataD = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/getdoctordatabyid/${id}`);
+      if (response.data) {
+        setDoctorData(response.data);
+      }
+      console.log('Data successfully fetched');
+      // setDoctorData(response.data)
+      // console.log('Data successfully fetched:', response.data);
+    } catch (error) {
+      console.log(error);
+      alert('An error occurred while fetching the data. Please try again later.');
+    }
+  };
+
+
+
+  const fetchDataN = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/getnutritionist/${id}`);
+      if (response.data) {
+        setDoctorData(response.data);
+      }
+      console.log('Data successfully fetched');
+      // setDoctorData(response.data)
+      // console.log('Data successfully fetched:', response.data);
+    } catch (error) {
+      console.log(error);
+      alert('An error occurred while fetching the data. Please try again later.');
+    }
+  };
+
+
+  //send data
+    const handleClick = (date, time) => {
+      // Create an object with the data to be sent
+      const data = {
+        date: date,
+        time: time
+      };
+     if (name ==="doctor"){
+      // Send the data to the server using Axios
+      axios.post(`${BASE_URL}/addReservation`,{
+            p_id: "1", //should send actual p id
+            r_type : name,
+            d_id : id,
+            date : date,
+            time : time,
+            p_name : "Lakshan",
+ 
+      })
+        .then(response => {
+          // Handle the response if needed
+          alert("Reservation saved!");
+          console.log('Data saved successfully!');
+        })
+        .catch(error => {
+          // Handle the error if needed
+          alert("Error occurred! Try again later");
+          console.error('Error saving data:', error);
+        });
+
+     }else if (name === "nutritionist"){
+          axios.post(`${BASE_URL}/addReservation`,{
+            p_id: "1",
+            r_type : name,
+            d_id : id,
+            date : date,
+            time : time,
+            p_name : "Lakshan",
+            isremove : "no",
+
+       })
+        .then(response => {
+          // Handle the response if needed
+          alert("Reservation saved!");
+          console.log('Data saved successfully!');
+        })
+        .catch(error => {
+          // Handle the error if needed
+          alert("Error occurred! Try again later");
+          console.error('Error saving data:', error);
+        });
+      }
+    };
+  
+
+
+  const click = () => {};
 
   return (
     <ScrollView>
@@ -32,7 +120,11 @@ const AddProfile = ({ photo }) => {
             source={require("../assets/images/d1.jpg")}
             style={styles.photoButton}
           />
-          <Text style={styles.DocName}>Dr.Jack Alan</Text>
+          {/* <Text style={styles.DocName}>Dr.Jack Alan</Text> */}
+          <Text style={styles.DocName}>
+            DR.{doctorData.fname + " " + doctorData.lname}
+          </Text>
+
           <Text style={styles.Desc}>Diabetologists</Text>
           <Text style={styles.Desc}>BioNeu Hospital</Text>
         </View>
@@ -48,39 +140,55 @@ const AddProfile = ({ photo }) => {
           <Text style={styles.input}>Clik here to make Appointment</Text>
         </View>
 
-        <View style={styles.DescContainer}>
+        {/* <View style={styles.DescContainer}>
           <Text style={{ fontSize: 20 }}>Available Time</Text>
-          <Text style={styles.input}>Appoinment Date and day</Text>
+          <Text style={styles.input}>{doctorData.a_date}</Text>
 
           <Text style={styles.input}>Status</Text>
 
-          <Text style={styles.input}>Time</Text>
+          <Text style={styles.input}>{doctorData.a_time}</Text>
 
           <View style={styles.input}>
             <TouchableOpacity style={styles.button} onPress={click}>
               <Text style={styles.buttonText}>Book Now </Text>
             </TouchableOpacity>
           </View>
-        </View>
-
+        </View> */}
         <View style={styles.DescContainer}>
+        {doctorData.a_date && doctorData.a_date.map((date, index) => (    
+          <View key={index}>
+            <Text style={{ fontSize: 20 ,paddingTop:20 }}>Available Time</Text> 
+            <Text style={styles.input}>{date}</Text>
+            <Text style={styles.input}>Status</Text>
+            <Text style={styles.input}>{doctorData.a_time[index]}</Text>
+            <View style={styles.input}>
+              <TouchableOpacity style={styles.button} onPress={() => handleClick(date, doctorData.a_time[index])}>
+                <Text style={styles.buttonText}>Book Now </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        ))}
+      </View>
+
+
+        {/* <View style={styles.DescContainer}>
           <Text style={{ fontSize: 20 }}>Available Time</Text>
-          <Text style={styles.input}>Appoinment Date and day</Text>
+          <Text style={styles.input}>{doctorData.a_date}</Text>
 
           <Text style={styles.input}>Status</Text>
 
-          <Text style={styles.input}>Time</Text>
-
+          <Text style={styles.input}>{doctorData.a_time}</Text>
 
           <View style={styles.input}>
             <TouchableOpacity style={styles.button} onPress={click}>
               <Text style={styles.buttonText}>Book Now </Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </View> */}
       </View>
     </ScrollView>
-  );};
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -89,7 +197,7 @@ const styles = StyleSheet.create({
   },
   HeadContainer: {
     marginBottom: 25,
-    backgroundColor: "#0E1879",
+    backgroundColor: "#1D11AD",
     width: "100%",
     padding: 10,
     borderRadius: 0,
@@ -133,7 +241,7 @@ const styles = StyleSheet.create({
   },
   DescContainer: {
     padding: 20,
-    
+    // marginTop: 20,
   },
   input: {
     borderWidth: 1,
@@ -146,13 +254,12 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#0E1879",
+    backgroundColor: "#3498db",
     height: 30,
     width: 100,
     // marginLeft: 100,
     borderRadius: 10,
-    marginRight:"auto"
-
+    marginRight: "auto",
   },
   buttonText: {
     color: "#fff",
@@ -163,4 +270,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddProfile;
+export default ProfileDoc;

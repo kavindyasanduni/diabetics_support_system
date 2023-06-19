@@ -12,22 +12,36 @@ import {
 
 import { ScrollView } from "react-native-gesture-handler";
 
-const PDash = () => {
+const PDash = (props) => {
   return (
     <SafeAreaView>
       <ScrollView>
         <View style={styles.container}>
-        <Text style={styles.m1}> Patient DashBoard</Text>
+          <Text style={styles.m1}> Patient DashBoard</Text>
           <TouchableOpacity style={styles.buttonC}>
-            <Text style={styles.t1}>Book Appoinment  Doctor</Text>
+            <Text
+              style={styles.t1}
+              onPress={() => props.navigation.navigate("DoctorAppointment" , {type : "doctor"})}
+            >
+              Book Appoinment Doctor
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.buttonC}>
-            <Text style={styles.t2}>Book Appoinment  Nutritionist </Text>
+            <Text
+              style={styles.t2}
+              onPress={() => props.navigation.navigate("NutritionistAppointment")
+              }
+            >
+              Book Appoinment Nutritionist{" "}
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.buttonC}>
-            <Text style={styles.t3}>My Reservation</Text>
+            <Text style={styles.t3} 
+            onPress={() => props.navigation.navigate("MakeReservation")}
+
+             >Make Reservation</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.buttonC}>
@@ -57,7 +71,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   item: {
-    backgroundColor: "#f9c2ff",
+    backgroundColor: "#fff",
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
@@ -66,7 +80,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
   buttonC: {
-    backgroundColor: "#0E1879",
+    backgroundColor: "#F9F5F6",
     padding: 10,
     marginVertical: 8,
     marginHorizontal: 16,
@@ -76,13 +90,13 @@ const styles = StyleSheet.create({
     marginBottom: 7,
     marginTop: 2,
   },
-  t1: { color: "#fff", padding: 5, fontSize: 20 },
-  t2: { color: "#fff", padding: 5, fontSize: 20 },
-  t3: { color: "#fff", padding: 5, fontSize: 20 },
+  t1: { color: "#000000", padding: 5, fontSize: 20 },
+  t2: { color: "#000000", padding: 5, fontSize: 20 },
+  t3: { color: "#000000", padding: 5, fontSize: 20 },
 
-  t4: { color: "#fff", padding: 5, fontSize: 20 },
+  t4: { color: "#000000", padding: 5, fontSize: 20 },
 
-  t5: { color: "#fff", padding: 5, fontSize: 20 },
+  t5: { color: "#000000", padding: 5, fontSize: 20 },
 
   button1: {
     color: "red",
@@ -92,8 +106,8 @@ const styles = StyleSheet.create({
   m1: {
     fontSize: 20,
     fontWeight: "bold",
-    marginLeft:28,
-    marginBottom:20,
+    marginLeft: 28,
+    marginBottom: 20,
   },
 
   button2: {

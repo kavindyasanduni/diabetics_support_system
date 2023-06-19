@@ -1,42 +1,203 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import axios from 'axios';
+import { Picker } from '@react-native-picker/picker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import AvailableDateTime from './Component/AvailableDateTime ';
+import BASE_URL from '../config';
 
-function UpdateUserDetails() {
-  const [SelectDoctor, setSelectDoctor] = useState('');
-  const [SelectAvailableDays, setSelectAvailableDays] = useState('');
-  const [SelectAvailableTime, setSelectAvailableTime] = useState('');
+function UpdateDoctorDetails() {
+ 
+  const [doctorData, setDoctorData] = useState([]);
+  const [selectedDoctor, setSelectedDoctor] = useState('');
+  const [appointmentDates, setAppointmentDates] = useState([]);
+  const [appointmentTimes, setAppointmentTimes] = useState([]);
 
-  const handleSave = () => {
-    // handle save logic here
-  };
+  const [availableDays, setAvailableDays] = useState('');
+  const [availableTimes, setAvailableTimes] = useState([]);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
 
   const handleChoosePhoto = () => {
     // handle choose photo logic here
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/getdoctordata`);
+      if (response.data) {
+        setDoctorData(response.data);
+      }
+      console.log(response.data);
+      console.log('Data successfully fetched');
+    } catch (error) {
+      console.log(error);
+      alert('An error occurred while fetching the data. Please try again later.');
+    }
+  };
+
+  const handleDoctorChange = (doctorId) => {
+    setSelectedDoctor(doctorId);
+  
+    // Find the selected doctor object
+    const selectedDoctorObj = doctorData.find((doctor) => doctor.did === doctorId);
+    if (selectedDoctorObj) {
+      setAppointmentDates(selectedDoctorObj.a_date);
+      setAppointmentTimes(selectedDoctorObj.a_time);
+    }
+  };
+
+
+
+  //dat and time picker
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleDateConfirm = (date) => {
+    setSelectedDate(date);
+    hideDatePicker();
+  };
+
+  const showTimePicker = () => {
+    setTimePickerVisibility(true);
+  };
+
+  const hideTimePicker = () => {
+    setTimePickerVisibility(false);
+  };
+
+  const handleTimeConfirm = (time) => {
+    setSelectedTime(time);
+    hideTimePicker();
+  };
+
+//date and time picker functionality
+  const addAvailableDateTime = () => {
+    if (selectedDate && selectedTime) {
+      const date = new Date(selectedDate);
+      const time = selectedTime.toLocaleTimeString().slice(0, 5);
+      const dateString = date.toISOString().slice(0, 10);
+  
+      setAvailableDays((prevDays) => {
+        const daysArray = prevDays ? prevDays.split(', ') : [];
+        daysArray.push(dateString);
+        return daysArray.join(', ');
+      });
+      setAvailableTimes((prevTimes) => [...prevTimes, time]);
+  
+      setSelectedDate('');
+      setSelectedTime('');
+    }
+  };
+  
+    //to remove date and tiem
+    const removeAvailableDateTime = (dateTime) => {
+      const updatedTimes = availableTimes.filter((dt) => dt !== dateTime);
+      setAvailableTimes(updatedTimes);
+    };
+
+
+    //save data back to database
+    const date = availableDays.split(",");
+    const handleSave = async () => {
+      console.log(selectedDoctor);
+      try {
+        const response = await axios.put(`http://192.168.8.101:8082/updateDoctor/${selectedDoctor}`, {
+          // did: selectedDoctor,
+          a_date: date,
+          a_time: appointmentTimes,
+        })
+    
+        .then(function (response) {
+          console.log("Successfully added to user databaseU" , response.data);
+        })
+        
+      } catch (error) {
+        console.log(error);
+        alert('An error occurred while updating the data. Please try again later.');
+      }
+    };
+
   return (
     <View style={styles.container}>
-   
-      <Text style={styles.input1}>Update  Doctor</Text>
+      <Text style={styles.input1}>Update Doctor</Text>
 
-       <TextInput
-        style={styles.input}
-        placeholder="Select Doctor"
-        value={SelectDoctor}
-        onChangeText={setSelectDoctor}
+
+      <Picker
+        selectedValue={selectedDoctor}
+        onValueChange={(value) => handleDoctorChange(value)}
+      >
+        <Picker.Item label="Select Doctor" value="" />
+        {doctorData.map((doctor) => (
+          <Picker.Item key={doctor.did} label={`${doctor.fname} ${doctor.lname}`} value={doctor.did} />
+        ))}
+      </Picker>
+
+      <Text style={styles.label}>Appointment Dates:</Text>
+      {appointmentDates.map((date, index) => (
+        <Text key={index}>{date}</Text>
+      ))}
+
+      <Text style={styles.label}>Appointment Times:</Text>
+      {appointmentTimes.map((time, index) => (
+        <Text key={index}>{time}</Text>
+      ))}
+   
+
+
+    <Text> Add new  Date and times</Text>
+      <View style={styles.datePickerContainer}>
+        <View >
+        <TouchableOpacity style = {styles.buttonP} onPress={showDatePicker}>
+          <Text >Select Date</Text>
+        </TouchableOpacity>
+        </View>
+        <View  >
+        <TouchableOpacity style = {styles.buttonP} onPress={showTimePicker}>
+          <Text >Select Time</Text>
+        </TouchableOpacity>
+        </View>
+        <View >
+        {selectedDate && selectedTime && (
+          <TouchableOpacity style={styles.buttonAddDate} onPress={addAvailableDateTime}>
+            <Text >Add DateTime</Text>
+          </TouchableOpacity>
+        )}
+        </View>
+      </View> 
+
+
+      <View style={styles.selectedDateTimeContainer}>
+      {availableTimes.map((dateTime, index) => (
+          <AvailableDateTime
+            key={index}
+            dateTime={dateTime}
+            onRemove={() => removeAvailableDateTime(dateTime)}
+          />
+        ))}
+      </View>
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleDateConfirm}
+        onCancel={hideDatePicker}
       />
-      
-      <TextInput
-        style={styles.input}
-        placeholder="Available Days"
-        value={SelectAvailableDays}
-        onChangeText={setSelectAvailableDays}
-      />
-        <TextInput
-        style={styles.input}
-        placeholder="Available Time"
-        value={SelectAvailableTime}
-        onChangeText={setSelectAvailableTime}
+      <DateTimePickerModal
+        isVisible={isTimePickerVisible}
+        mode="time"
+        onConfirm={handleTimeConfirm}
+        onCancel={hideTimePicker}
       />
 
       <TouchableOpacity style={styles.button} onPress={handleSave}>
@@ -50,46 +211,68 @@ function UpdateUserDetails() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 20,
   },
-  
+
   input: {
     borderWidth: 2,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     borderRadius: 25,
     padding: 7,
-    paddingLeft:15,
+    paddingLeft: 15,
     marginBottom: 20,
   },
-    input1:{
-        marginBottom:60,
-        fontSize:18,
-        fontWeight:'bold',
-        paddingTop:50
-
-    },
-     input2:{
-        marginBottom:15,
-        fontSize:18,
-        fontWeight:'bold',
-
-    },
+  input1: {
+    marginBottom: 10,
+    fontSize: 18,
+    fontWeight: "bold",
+    // paddingTop: 50,
+  },
+  input2: {
+    marginBottom: 15,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
   button: {
-    backgroundColor: '#0E1879',
+    backgroundColor: "#3498db",
+    padding: 10,
+    borderRadius: 25,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 150,
+    marginLeft: 100,
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+
+  //select dat and time
+
+  datePickerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  buttonP: {
+    borderWidth: 2,
+    borderColor: '#ddd',
+    padding: 10,
+    borderRadius: 25,
+    width: 120, // Adjust the width as needed
+    alignItems: 'center',
+  },
+  buttonAddDate: {
+    marginTop: 30,
+    borderWidth: 2,
+    borderColor: '#ddd',
     padding: 10,
     borderRadius: 25,
     alignItems: 'center',
-    justifyContent: 'center',
-    width:150,
-    marginLeft:150,
-    
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 18,
   },
 });
 
-export default UpdateUserDetails;
+export default UpdateDoctorDetails;
