@@ -8,6 +8,7 @@ import {
 } from "react-native";
 
 import axios from "axios";
+import BASE_URL from "../config";
 
 const Reservation = () => {
   const [pName, setPname] = useState("");
@@ -20,7 +21,7 @@ const Reservation = () => {
 
   const handleSubmit = async () => {
     axios
-      .post("http://192.168.8.102:8082/addReservation", {
+      .post(`${BASE_URL}/addReservation`, {
         r_type: rType,
         p_name: pName,
         phone_no: pNo,

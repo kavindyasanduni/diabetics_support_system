@@ -417,105 +417,17 @@ const UpdateContainerCard = (props) => {
 };
 
 const styles = StyleSheet.create({
-  // aroundContainer: {
-  //   // marginTop: 30,
-  //   height:"100%",
-  //   backgroundColor: "#FFF",
-    
-    // flex:1,
-
-  // },
-  // aroundContainerSecond: {
-  //   marginTop: 100,
-  // },
   container: {
-    // justifyContent: "center",
     backgroundColor: "#FFF",
-    // marginTop: 10,
     width: "100%",
     height: "100%",
-    // left: 49,
-    // borderRadius: 32,
-    // ...Platform.select({
-    //   ios: {
-    //     shadowColor: "#000000",
-    //     shadowOffset: {
-    //       width: 0,
-    //       height: 4,
-    //     },
-    //     shadowOpacity: 0.25,
-    //     shadowRadius: 4,
-    //   },
-    //   android: {
-    //     elevation: 5,
-    //   },
-    // }),
+
   },
-  // modelHeader: {
-  //   color: "#1D11AD",
-  //   fontWeight: "bold",
-  // },
-  // headerContainer: {
-  //   alignItems: "center",
-  //   padding: 10,
-  //   marginTop: 10,
-  // },
+  
   description: {
     alignItems: "center",
-    marginTop: 100,
-
-    // borderColor: "red",
+    marginTop: 100,  
   },
-  // addPhotoCntainer: {
-  //   flexDirection: "row",
-  //   marginTop: 20,
-  //   padding: 10,
-
-  //   justifyContent: "space-between",
-  //   alignItems: "center",
-  //   marginLeft: 15,
-  //   marginRight: 15,
-  // },
-  // submitButtonCOntainer: {
-  //   flexDirection: "row",
-  //   flex: 1,
-  //   justifyContent: "center",
-  //   alignContent: "center",
-  //   left: 115,
-  //   marginTop: 20,
-  //   width: 200,
-  // },
-  // addPhoto: {
-  //   color: "#1D11AD",
-  // },
-  // //css for choose phot
-  // button: {
-  //   backgroundColor: "#be2edd",
-  //   width: 135,
-  //   height: 30,
-  //   borderRadius: 25,
-  // },
-  // buttonText: {
-  //   justifyContent: "center",
-  //   textAlign: "center",
-  //   color: "#FFF",
-
-  //   padding: 5,
-  // },
-
-  // //button submit
-  // button_s: {
-  //   backgroundColor: "#1D11AD",
-  //   padding: 5,
-  //   borderRadius: 18,
-  //   alignItems: "center",
-  //   width: 110,
-  //   height: 32,
-  // },
-  // text: {
-  //   color: "white",
-  //   fontWeight: "bold",
-  // },
 
   // //styles for drop down
   dropdownButton: {

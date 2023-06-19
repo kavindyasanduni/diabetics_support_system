@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, TextInput, StyleSheet ,SafeAreaView,Image
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native-gesture-handler";
 
-const DoctorDashboard = ({ navigation }) => {
+const DoctorDashboard = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.textView}>
@@ -17,16 +17,18 @@ const DoctorDashboard = ({ navigation }) => {
         <View style={styles.container}>
           <View style={styles.cardContainer}>
             <View style={styles.card}>
-              <Icon name="human-female-boy" size={85} color="#1D11AD" />
-
-              <Text style={styles.cardText}>Assigned Patient</Text>
-            </View>
-          </View>
-          <View style={styles.cardContainer}>
-            <View style={styles.card}>
               <Icon name="book-clock" size={85} color="#1D11AD" />
 
-              <Text style={styles.cardText}>reservation</Text>
+              <TouchableOpacity
+              style={styles.button}
+              onPress={() =>
+                props.navigation.navigate("Available Reservation doctor")
+              }
+            >       
+              <Text style={styles.cardText}>
+              reservations
+              </Text>
+            </TouchableOpacity>
             </View>
           </View>
           <View style={styles.cardContainer}>
@@ -89,6 +91,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
     fontWeight: "bold",
+    color : "#2c3e50",
+
     // fontColor: "gray",
   },
   Image: {

@@ -89,11 +89,11 @@ const data = {
           width={320}
           height={220}
           chartConfig={{
-            backgroundColor: '#3498db',
-            // backgroundGradientFrom: '#2980b9',
-            backgroundGradientTo: '#3498db',
+            // backgroundColor: '#2ecc71',
+            backgroundGradientFrom: '#f1c40f',
+            backgroundGradientTo: '#27ae60',
             decimalPlaces: 2,
-            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            color: (opacity = 50) => `rgba(255, 255, 255, ${opacity})`,
             style: {
               borderRadius: 16,
             },
@@ -101,6 +101,8 @@ const data = {
           style={{
             marginVertical: 8,
             borderRadius: 16,
+            // paddingBottom:5,
+            // marginBottom: 5,
           }}
         />
       </View>
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
     left: 11,
     backgroundColor: "#FFFFFF",
     width: 370,
-    height: 450,
+    height: 470,
     borderRadius: 8,
     ...Platform.select({
       ios: {
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
       },
       android: {
-        elevation: 2,
+        elevation: 5,
       },
     }),
   },
@@ -194,6 +196,9 @@ const styles = StyleSheet.create({
   //styles for barchart
   barChartContainer : {
     paddingTop: 10,
+    // alignItems:"center",
+
+
 
   }
 });

@@ -31,6 +31,8 @@ import NutritionistCard from './screen/Nutritionist';
 import Guardianhome from './pages/Guardianhome';
 import NutritionistDashboard from './pages/NutritionistDashboard';
 import DoctorDashboard from './pages/DoctorDashboard';
+import FileManagement from './pages/FilesManagement';
+import PaymentSummary from './pages/Admin Dashbord/Analytic Data/PaymentSummary';
 
 
 
@@ -44,6 +46,8 @@ const App = () => {
     <UserProvider>
       <Navigation/>
     </UserProvider>
+    // <FileManagement/>
+    // <PaymentSummary/>
   )
 }
 

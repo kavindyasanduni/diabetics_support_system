@@ -14,6 +14,7 @@ import SearchBar from './Component/Searchbar.js';
 import { ScrollView } from 'react-native-gesture-handler';
 import axios from 'axios';
 // import { useEffect } from 'react';
+import BASE_URL from '../config.js';
 
 
 const DoctorsCard = (props) => {
@@ -27,7 +28,7 @@ const DoctorsCard = (props) => {
   //fetch the data
   const fetchData = async () =>{
     try { 
-      const response = await axios.get(`http://192.168.8.100:8082/getdoctordata`);
+      const response = await axios.get(`${BASE_URL}/getdoctordata`);
       setDoctorData(response.data);
       console.log("Data successfully fetched" + response);
 

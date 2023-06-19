@@ -224,6 +224,7 @@ import axios from "axios";
 import { View, Text, StyleSheet } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import BASE_URL from "../../../config";
+import { Path } from "react-native-svg";
 
 const KnowledgeSharingAnalytic = () => {
   const [count, setCount] = useState([]);
@@ -283,6 +284,10 @@ const KnowledgeSharingAnalytic = () => {
     ],
   };
 
+  
+  const shape = {
+    curveBasis: Path.curveBasis, // Bezier curve shape
+  };
   return (
     <View>
       <View style={styles.subTitlesContainer}>
@@ -320,18 +325,19 @@ const KnowledgeSharingAnalytic = () => {
               height={200}
               yAxisLabel=""
               chartConfig={{
-                backgroundColor: "#3498db",
-                backgroundGradientFrom: "#2980b9",
+                backgroundColor: "#8e44ad",
+                backgroundGradientFrom: "#8e44ad",
                 backgroundGradientTo: "#3498db",
                 decimalPlaces: 0,
                 color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
               }}
               style={styles.chart}
             />
           ) : (
             <Text>Loading data...</Text>
           )}
+    
         </View>
       </View>
     </View>
@@ -347,7 +353,7 @@ const styles = StyleSheet.create({
     left: 11,
     backgroundColor: "#FFFFFF",
     width: 370,
-    height: 400,
+    height: 410,
     borderRadius: 8,
     ...Platform.select({
       ios: {
@@ -360,7 +366,7 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
       },
       android: {
-        elevation: 2,
+        elevation: 5,
       },
     }),
   },

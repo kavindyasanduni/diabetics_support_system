@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, StyleSheet ,Image } from 'react-native'
 import axios from 'axios'
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -137,13 +137,13 @@ const PatientSignUp = props => {
 
   //gradient
 
-  const colors = ["#8914af", "#05b9de", "#45a7a9"];
+  const colors = ["#0c2461", "#1e3799", "#0c2461"];
   const start = { x: 0, y: 0 };
   const end = { x: 0, y: 1 };
   const locations = [0.1, 0.66, 1];
 
   return (
-    <View style={{top:20 , flex : 1}}>
+    <View style={{ flex : 1}}>
       <LinearGradient
         colors={colors}
         start={start}
@@ -151,8 +151,17 @@ const PatientSignUp = props => {
         locations={locations}
         style={styles.gradient}
       >
-      
-      <Text style={{ color: '#fff', fontSize: 20, top: 50, textAlign: 'center', justifyContent: 'center', alignItems: 'center' }}>Enter Your Details</Text>
+        <View style={styles.logoContainer}>
+         <View style={styles.logoCircle}>
+            <Image
+              source={require("../assets/Logo/Diamate.png")}
+              style={styles.logo}
+            />
+          </View>
+        </View >
+      <Text style={{ color: '#fff', fontSize: 20, textAlign: 'center', justifyContent: 'center', alignItems: 'center', marginTop:40 }}>Enter Your Details</Text>
+
+      <View style ={{alignItems:"center" ,marginTop:50}}>
       <TextInput
         style={[styles.input, firstNameError && styles.errorInput]}
         underlineColorAndroid="transparent"
@@ -207,7 +216,8 @@ const PatientSignUp = props => {
         onChangeText={handleConfirmPassword}
         secureTextEntry={true}
       />
-      <View style={{alignItems:'center'}}>      
+      </View>
+      <View style={{alignItems:'center' ,marginTop:20}}>      
         <TouchableOpacity
             style = {styles.submitButton}
             onPress={handleSubmit}>
@@ -223,6 +233,24 @@ const PatientSignUp = props => {
 export default PatientSignUp
 
    const styles = StyleSheet.create({
+
+    logoCircle: {
+      width: 70,
+      height: 70,
+      borderRadius: 80, // half of width and height
+      backgroundColor: "rgba(255, 255, 255, 0.1)",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    logo: {
+      width: "60%",
+      height: "60%",
+      resizeMode: "contain",
+    },
+    logoContainer: {
+      alignItems: "center",
+      marginTop: 60,
+    },
       container: {
          paddingTop: 23,
          borderRadius:22,
@@ -235,9 +263,10 @@ export default PatientSignUp
       input: {
          margin: 5,
          height: 40,
-         top:100,
-         left:35,
-         width:300,
+        //  top:50,
+        // marginTop : 50,
+        //  left:35,
+         width:"90%",
          borderColor: '#fff',
          borderWidth: 1,
          borderRadius:22,
@@ -245,14 +274,14 @@ export default PatientSignUp
          marginTop: 20,
       },
       submitButton: {
-         backgroundColor: '#7a42f4',
+         backgroundColor: '#4a69bd',
          padding: 10,
          margin: 15,
-         height: 40,
+         height: 49,
          width:258,
-         top:150,
+        //  top:150,
         //  left:60,
-         borderRadius:22,
+        borderRadius: 32,
          alignItems:'center'
       },
       submitButtonText:{
