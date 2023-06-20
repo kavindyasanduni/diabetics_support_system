@@ -50,7 +50,10 @@ const PatientHome = (props) => {
              >Reservations</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.buttonC}>
+          <TouchableOpacity style={styles.buttonC} 
+            onPress={() => props.navigation.navigate("LandingPage")}
+          
+          >
             <Text style={styles.t4}>Online Consultation</Text>
           </TouchableOpacity>
 

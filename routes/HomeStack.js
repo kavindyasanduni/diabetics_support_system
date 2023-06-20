@@ -38,6 +38,9 @@ import SeeReservation from "../screen/SeeReservation.js";
 import ReservationCancel from "../screen/ReservationCansel.js";
 import ReservationNutritionist from "../screen/ReservationsNutritionist.js";
 import ReservationDoctor from "../screen/ReservationsDoctor.js";
+import FileManagement from "../pages/ReportView/FilesManagement.js";
+import MedicalReport from "../pages/ReportView/MedicalReport.js";
+import MedicalReportNutritionist from "../pages/ReportView/MedicalReportNutritionist.js";
 
 //create stack navigators
 const Stack = createNativeStackNavigator();
@@ -77,6 +80,11 @@ const Navigation = props => {
                 <Stack.Screen  name="DoctorProfile" component={ProfileDoc} options={{ headerShown: false }} />
                 <Stack.Screen  name="NutritionistProfile" component={AddUserDetails2} options={{ headerShown: false }} />
                 <Stack.Screen  name="ReservationCancel" component={ReservationCancel} options={{ headerShown: false }} />
+            {/* file upload  */}
+                 <Stack.Screen  name="UploadFiles" component={FileManagement} options={{ headerShown: false }} />
+                 <Stack.Screen  name="ViewReportsDoctor" component={MedicalReport} options={{ headerShown: false }} />
+                 <Stack.Screen  name="ViewReportsNutritionist" component={MedicalReportNutritionist} options={{ headerShown: false }} />
+
 
 {/* routes for nutritionist Dashbord */}
                 <Stack.Screen  name="Available Reservation nutritionist" component={ReservationNutritionist} options={{ headerShown: false }} />

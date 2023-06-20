@@ -15,7 +15,7 @@ const LandingPage = ({ navigation }) => {
         style={styles.button}
         title="Get Started"
         onPress={handleButtonClick}
-        color={"red"}
+        color={"#189AB4"}
       />
     </View>
   );
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor:"#fff"
   },
   title: {
     fontSize: 40,

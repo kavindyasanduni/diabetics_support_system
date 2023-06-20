@@ -7,7 +7,12 @@ import { Linking } from 'react-native';
 const baseURL = "http://192.168.8.101:8082";
 const medicalReportURL = "/medicalReports/did/1/2";
 
-export default function MedicalReport() {
+const MedicalReport = (props) => {
+    const id = props.route.params.id;
+    const p_id = props.route.params.p_id;
+    console.log(id);
+    console.log(p_id);
+   
     const [data, setData] = useState(null);
     const [reportLinkes, setReportLinkes] = useState([]);
     
@@ -19,7 +24,7 @@ export default function MedicalReport() {
         // Fetch data using Axios GET request
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${baseURL}/medicalReports/did/1/2`);
+                const response = await axios.get(`${baseURL}/medicalReports/did/${p_id}/${id}`);
                 setData(response.data);
                 console.log(response.data);
                 setReportLinkes(response.data[0].reportlink);
@@ -56,3 +61,5 @@ export default function MedicalReport() {
     </View>
   )
 }
+
+export default MedicalReport;
