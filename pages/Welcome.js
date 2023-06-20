@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Alert,Image} from 'react-native';
 
+
 const Welcome = props => {
 /*
     const onPressButton = () => {
@@ -10,13 +11,10 @@ const Welcome = props => {
     return (
         <View style={styles.container}> 
             
+
             <Text style={styles.text1}>Manage Your Diabetes</Text> 
             <Text style={styles.text2}>Welcome</Text>
-
-            <TouchableOpacity style={styles.button} onPress={()=> props.navigation.navigate("DoctorConsultation")}>
-                <Text style={styles.buttonText}>Doctor consultatiuin</Text>
-            </TouchableOpacity>
-
+         
             <TouchableOpacity style={styles.button} onPress={()=> props.navigation.navigate("Login")}>
                 <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
