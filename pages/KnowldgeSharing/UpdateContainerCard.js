@@ -10,6 +10,7 @@ import {
   Text,
   TextInput,
   Modal,
+  Alert,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
@@ -23,23 +24,25 @@ import {
   deleteObject,
 } from "firebase/storage";
 import { async } from "@firebase/util";
+import Swiper from "react-native-swiper";
+import BASE_URL from "../../config";
+
 
 const UpdateContainerCard = (props) => {
   const [image, setImage] = useState(null);
   const [viewBeforeUpload, setViewBeforeUpload] = useState(null);
-
   const [text, setText] = useState(""); //for description
   const [title, setTitle] = useState(""); // for title
-
   const [pogress, setPogress] = useState(0); //to get the upload pogress
-
   const [loading, setLoading] = useState(true); //to get the upload pogress
   //for dropdown selection
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
-
-
+  const swiperRef = useRef(null); // useRef hook is used to create a reference to the Swiper component, and that reference is passed to the ref attribute of the Swiper component
+  const [visibly , setVisible] = useState(true);
   const options = ["workouts", "diet plans", "news and reaserach"];
+
+
   let clickedSubmit;
   let catchedPhoto;
   const toggleDropdown = () => {
@@ -75,27 +78,33 @@ const UpdateContainerCard = (props) => {
     });
 
     if (!result.canceled) {
+      setImage(result.uri);
     }
   };
 
   /////////////////////////////////////////////////////////////
 
-  useEffect(() => {
-    console.log(text);
-    // setText(text);
-    console.log(title);
-  }, [text, title]);
+  // useEffect(() => {
+  //   console.log(text);
+  //   // setText(text);
+  //   console.log(title);
+  // }, [text, title]);
 
   //end of sending data to database
   // let imageLink;
 
   const handleImageSubmit = async () => {
-    // clickedSubmit = true;
 
-    const response = await fetch(result.uri);
+     if (!image) {
+    alert('Please select an image.');
+    return;
+  }
+  
+
+    const response = await fetch(image);
     const blob = await response.blob();
 
-    const storageRef = ref(storage, `/images/${result.uri.split("/").pop()}`); //split is used only getting image link
+    const storageRef = ref(storage, `/images/${image.split("/").pop()}`); //split is used only getting image link
     const uploadTask = uploadBytesResumable(storageRef, blob);
 
     uploadTask.on(
@@ -118,7 +127,7 @@ const UpdateContainerCard = (props) => {
 
           //send data to database when uploading finished
           axios
-            .post("http://10.10.21.73:8082/addKInformation", {
+            .post(`${BASE_URL}/addKInformation`, {
               title: title,
               catergory: selectedOption,
               description: text,
@@ -139,17 +148,96 @@ const UpdateContainerCard = (props) => {
         });
       }
     );
+    // Remove the selected image
+  setImage(null);
+  };
+
+  //to check user have filled the title and description
+  const handleNextButtonPress = () => {
+    if (title.trim() === '' || text.trim() === '') {
+      // Check if the title or description is empty or contains only whitespace
+      alert('Please fill in the title and description.');
+      return;
+    }
+
+    // Proceed to the next step
+    swiperRef.current.scrollBy(1, true);
+  };
+
+  const handleNextButtonSelectCategory = () => {
+    if (selectedOption === null) {
+      // Check if the title or description is empty or contains only whitespace
+      alert('Please Select category.');
+      return;
+    }
+
+    // Proceed to the next step
+    swiperRef.current.scrollBy(1, true);
+  };
+
+  const onDelete = () => {
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to delete the image changes?',
+      [
+        {
+          text: 'No',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            setImage(null);
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+    
+  };
+
+  const onCancel = () => {
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to discard changes?',
+      [
+        {
+          text: 'No',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            // Call your cancel reservation function here
+             props.navigation.navigate("knowladgesharingdashbord")
+             
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (
-    <View>
-      <View style={styles.container}>
-        <View style={styles.headerContainer}>
-          <View>
-            <Text style={styles.modelHeader}>{props.modelHeader}</Text>
+
+    ///////////////////////////////////////////////////////////////
+
+    //  <Modal visible={vissible} animationType="slide">
+
+  <View style={styles.container}> 
+   
+
+    <View style={{ flex: 1 }}>
+      <Swiper ref={swiperRef} loop={false}>
+      {/* first page */}
+      <View style={{ flex: 1 }}>
+          {/* select catergory */}
+          <View style={styles.headerContainer}>
+            <Text style={styles.modalHeader}>Add new Content</Text>
           </View>
-        </View>
-        {/* select catergory */}
+          <View style={styles.subTitlesContainer}>
+            <Text style={styles.subTitles}>Select a category</Text>
+          </View>
 
         <View style={styles.description}>
           <TouchableOpacity
@@ -180,186 +268,177 @@ const UpdateContainerCard = (props) => {
             </View>
           </Modal>
         </View>
-
-        <View style={styles.description}>
-          <TextInput
-            style={{
-              height: 40,
-              width: 250,
-              borderColor: "gray",
-              borderWidth: 1,
-              borderRadius: 10,
-              paddingLeft: 20,
-            }}
-            onChangeText={setTitle}
-            value={title}
-            placeholder="Content title"
-          />
-        </View>
-
-        <View style={styles.description}>
-          <TextInput
-            style={{
-              height: 80,
-              width: 250,
-              borderColor: "gray",
-              borderWidth: 1,
-              borderRadius: 10,
-              padding: 20,
-            }}
-            onChangeText={setText}
-            value={text}
-            placeholder="Description"
-          />
-        </View>
-        <View style={styles.addPhotoCntainer}>
-          <View>
-            <Text style={styles.addPhoto}>{props.text}</Text>
+        <View style={styles.buttonContainerFirstPage}>
+          <View style={styles.nextButtonContainer}>
+                  <TouchableOpacity onPress={handleNextButtonSelectCategory} style={styles.button_s}>
+                    <Text style={styles.buttonText}>Next</Text>
+                  </TouchableOpacity>
+            </View>
           </View>
-          <View>
-            <View style={styles.button_view}>
-              <TouchableOpacity style={styles.button} onPress={PickImage}>
-                {/* <ButtonD title ="Update Knowledge Sharing center"  navigation="knowladgesharingdashbord" /> */}
-                <Text style={styles.buttonText}>Choose Image</Text>
+      </View> 
+        {/* Second page */}
+        <View style={{ flex: 1 }}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.modalHeader}>Add new Content</Text>
+          </View>
+          <View style={styles.subTitlesContainer}>
+            <Text style={styles.subTitles}>Title</Text>
+          </View>
+          <View style={styles.editTitle}>
+            <TextInput
+              value={title}
+              onChangeText={setTitle}
+              multiline={true}
+              numberOfLines={4}
+              style={styles.descriptionInput}
+            />
+          </View>
+          <View style={styles.subTitlesContainer}>
+            <Text style={styles.subTitles}>Description</Text>
+          </View>
+          <View style={styles.editDescription}>
+            <TextInput
+              value={text}
+              onChangeText={setText}
+              multiline={true}
+              numberOfLines={4}
+              style={styles.descriptionInput}
+            />
+          </View>
+
+          <View style={styles.buttonContainerFirstPage}>
+          <View style={styles.nextButtonContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  swiperRef.current.scrollBy(-1, true);
+                }}
+                style={styles.buttonPrevious}
+              >
+                <Text style={styles.buttonText}>Previous</Text>
               </TouchableOpacity>
+            </View>
+            <View style={styles.nextButtonContainer}>
+                  <TouchableOpacity onPress={handleNextButtonPress} style={styles.button_s}>
+                    <Text style={styles.buttonText}>Next</Text>
+                  </TouchableOpacity>
             </View>
           </View>
         </View>
-        <View style={styles.imgViewing}>
-          {viewBeforeUpload && (
-            <Image
-              source={{ uri: viewBeforeUpload }}
-              style={{
-                width: 250,
-                height: 150,
-              }}
-            />
-          )}
-        </View>
-        <View style={styles.submitButtonCOntainer}>
+
+        {/* Third page */}
+        <View style={{ flex: 1 }}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.modalHeader}>Add new Content</Text>
+          </View>
+
+          <View style={styles.subTitlesContainer}>
+            <Text style={styles.subTitles}>Add card image</Text>
+          </View>
+
+          <View style={styles.ImgView}>
+          </View>
+          <View style={styles.chooseImageContainer}>
+              <TouchableOpacity
+                style={styles.chooseImageButton}
+                onPress={PickImage}
+              >
+               
+                <Text style={styles.chooseImageText}>
+                  Click here to select new image
+                </Text>
+              </TouchableOpacity>
+            </View>
+          <View style={styles.imgViewing}>
+            {/* <Image
+              source={{ uri: image }}
+              style={{ width: "100%", height: 200 }}
+            /> */}
+              {image && (
+              <Image
+                source={{ uri: image }}
+                style={{ width: '100%', height: 200 }}
+              />
+            )}
+           </View>
+          
           <View>
+            {/* <Image  source={{ uri: selectedImageUri }} style={{ width: '100%', height: 200 }} /> */}
+          </View>
+
+          <View style={styles.buttonContainerSecondPage}>
+            <View style={styles.nextButtonContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  swiperRef.current.scrollBy(-1, true);
+                }}
+                style={styles.buttonPrevious}
+              >
+                <Text style={styles.buttonText}>Previous</Text>
+              </TouchableOpacity>
+            </View>
+            {/* button chage cansel to delete */}
+            <View style={styles.canselButtonContainer}>
+              <TouchableOpacity
+                onPress={onDelete }
+                style={styles.buttonCansel}
+              >
+                <Text style={styles.buttonText}>Delete</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.saveButtonConatiner}>
             <TouchableOpacity
-              style={styles.button_s}
-              onPress={() => {
-                handleImageSubmit();
-              }}
+               onPress={() => {
+                      handleImageSubmit();
+                  }}
+              style={styles.buttonSaveChanges}
             >
-              <Text style={styles.text}>Submit</Text>
+              <Text style={styles.buttonText}>Save content</Text>
             </TouchableOpacity>
           </View>
+
+          <View style={styles.deleteButtonConatiner}>
+          <View style={styles.deleteButtonConatiner}>
+            <TouchableOpacity onPress={onCancel} style={styles.buttonDeleteContent}>
+              <Text style={styles.buttonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+          </View>
         </View>
-      </View>
+      </Swiper>
     </View>
+    </View>
+
+    // </Modal>
+  
+
+  /////////////////////////////////////////////////////////
   );
 };
 
-export default UpdateContainerCard;
 const styles = StyleSheet.create({
-  aroundContainer: {
-    marginTop: 30,
-  },
-  aroundContainerSecond: {
-    marginTop: 100,
-  },
   container: {
-    justifyContent: "center",
     backgroundColor: "#FFF",
-    // marginTop: 10,
-    width: 300,
-    height: 612,
-    left: 49,
-    borderRadius: 32,
-    ...Platform.select({
-      ios: {
-        shadowColor: "#000000",
-        shadowOffset: {
-          width: 0,
-          height: 4,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 5,
-      },
-    }),
+    width: "100%",
+    height: "100%",
+
   },
-  modelHeader: {
-    color: "#1D11AD",
-    fontWeight: "bold",
-  },
-  headerContainer: {
-    alignItems: "center",
-    padding: 10,
-    marginTop: 10,
-  },
+  
   description: {
     alignItems: "center",
-    marginTop: 30,
-
-    borderColor: "red",
-  },
-  addPhotoCntainer: {
-    flexDirection: "row",
-    marginTop: 20,
-    padding: 10,
-
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginLeft: 15,
-    marginRight: 15,
-  },
-  submitButtonCOntainer: {
-    flexDirection: "row",
-    flex: 1,
-    justifyContent: "center",
-    alignContent: "center",
-    left: 115,
-    marginTop: 20,
-    width: 200,
-  },
-  addPhoto: {
-    color: "#1D11AD",
-  },
-  //css for choose phot
-  button: {
-    backgroundColor: "#be2edd",
-    width: 135,
-    height: 30,
-    borderRadius: 25,
-  },
-  buttonText: {
-    justifyContent: "center",
-    textAlign: "center",
-    color: "#FFF",
-
-    padding: 5,
+    marginTop: 100,  
   },
 
-  //button submit
-  button_s: {
-    backgroundColor: "#1D11AD",
-    padding: 5,
-    borderRadius: 18,
-    alignItems: "center",
-    width: 110,
-    height: 32,
-  },
-  text: {
-    color: "white",
-    fontWeight: "bold",
-  },
-
-  //styles for drop down
+  // //styles for drop down
   dropdownButton: {
     backgroundColor: "#f2f2f2",
-    width: 250,
+    width: 290,
     padding: 10,
     borderRadius: 10,
   },
   dropdownButtonText: {
     color: "#333",
-    fontSize: 12,
+    fontSize: 14,
 
     alignItems: "center",
   },
@@ -379,13 +458,236 @@ const styles = StyleSheet.create({
   },
   dropdownItemText: {
     fontSize: 16,
-    color: "#be2edd",
+    color: "#007AFF",
   },
   //end of select catergory dropdown
 
-  //img viewing
+  // //img viewing
+  // imgViewing: {
+  //   marginTop: 30,
+  //   alignItems: "center",
+  // },
+
+
+  //////////////////////////////////////////////////////////
+
+
+   //styles for the modal header
+   headerContainer: {
+    alignItems: "center",
+    padding: 10,
+    marginTop: 10,
+  },
+  modalHeader: {
+    color: "#1D11AD",
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  //end of headerContainer
+  subTitles: {
+    color: "#1D11AD",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  subTitlesContainer: {
+    paddingLeft: 20,
+    margin: 10,
+    // alignContent:'center',
+  },
+
+  //styles for the edit title
+  editTitle: {
+    paddingLeft: 20,
+    paddingRight: 30,
+
+    paddingTop: 8,
+    left: 8,
+    backgroundColor: "#FFFFFF",
+    width: 370,
+    height: 100,
+    borderRadius: 15,
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000000",
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
+  },
+  //edit description
+  editDescription: {
+    paddingLeft: 20,
+    paddingTop: 8,
+    left: 8,
+    backgroundColor: "#FFFFFF",
+    width: 370,
+    height: 300,
+    borderRadius: 15,
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000000",
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
+  },
+  descriptionInput: {
+    width: 350,
+    fontSize: 15,
+  },
+  //end of edit description
+
+  //button container
+  buttonContainerFirstPage: {
+    flex: 1,
+    flexDirection: "row",
+    marginTop: 20,
+    left: 5,
+    justifyContent: "center",
+  },
+
+  //cansel button
+  canselButtonContainer: {
+    // marginTop: 20,
+    // left:5,
+    padding: 10,
+  },
+  buttonCansel: {
+    backgroundColor: "#EA2027",
+
+    padding: 3,
+    borderRadius: 18,
+    alignItems: "center",
+    width: 110,
+    height: 35,
+  },
+  buttonText: {
+    justifyContent: "center",
+    textAlign: "center",
+    color: "#FFF",
+    padding: 5,
+  },
+
+  //button submit
+  nextButtonContainer: {
+    padding: 10,
+  },
+  button_s: {
+    backgroundColor: "#00a8ff",
+    padding: 3,
+    borderRadius: 18,
+    alignItems: "center",
+    width: 110,
+    height: 35,
+  },
+  text: {
+    justifyContent: "center",
+    textAlign: "center",
+    color: "#FFF",
+    padding: 5,
+  },
+
+  //image viewing
   imgViewing: {
-    marginTop: 30,
+    width: 370,
+    marginTop:25,
+    left: 10,
     alignItems: "center",
   },
+  currentImageContainer: {
+    // paddingLeft: 20,
+    margin: 10,
+    alignItems: "center",
+  },
+
+  currentImageText: {
+    color: "#2c3e50",
+    fontWeight: "bold",
+    fontSize: 14,
+    // left:56,
+    alignContent: "center",
+    justifyContent: "center",
+  },
+  //end of image viewing
+  //choose phot button
+  chooseImageContainer: {
+    alignItems: "center",
+    paddingTop: 20,
+  },
+
+  chooseImageButton: {
+    // backgroundColor: "#ecf0f1",
+    // padding: 3,
+    // borderRadius: 18,
+    alignItems: "center",
+    // width: 160,
+    // height: 36,
+  },
+  chooseImageText: {
+    color: "#34495e",
+  },
+  //buttons conatiner second page
+  buttonContainerSecondPage: {
+    // flex:1,
+    flexDirection: "row",
+    marginTop: 50,
+    left: 5,
+    justifyContent: "center",
+  },
+
+  buttonPrevious: {
+    backgroundColor: "#1D11AD",
+    padding: 3,
+    borderRadius: 18,
+    alignItems: "center",
+    width: 110,
+    height: 35,
+    // paddingRight:10,
+  },
+  //save button
+  saveButtonConatiner: {
+    alignItems: "center",
+    marginTop: 50,
+  },
+  buttonSaveChanges: {
+    backgroundColor: "#3498db",
+    padding: 5,
+    borderRadius: 18,
+    alignItems: "center",
+    width: 130,
+    height: 40,
+    // paddingRight:10,
+  },
+  //end of savechages button
+
+  //delete all content
+  deleteButtonConatiner:{
+    alignItems: "center",
+    marginTop: 5,
+  },
+  buttonDeleteContent:{
+    backgroundColor: "#c0392b",
+    padding: 5,
+    borderRadius: 18,
+    alignItems: "center",
+    width: 130,
+    height: 40,
+  },
 });
+
+export default UpdateContainerCard;
+
