@@ -1,110 +1,128 @@
+import { padding } from "@mui/system";
 import React from "react";
 import {
+  SafeAreaView,
   View,
+  FlatList,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  TextInput,
-  StyleSheet,
-  SafeAreaView,
-  Image,
+  
 } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
 import { ScrollView } from "react-native-gesture-handler";
 
-const PatientDashbord = ({ navigation }) => {
+const PDash = (props) => {
   return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.textView}>
-        <Image
-          source={require("../assets/VectorArt/pd.png")}
-          style={styles.Image}
-        />
-        <Text style={styles.text}>HOME </Text>
-      </View>
+    <SafeAreaView>
       <ScrollView>
         <View style={styles.container}>
-          <View style={styles.cardContainer}>
-            <View style={styles.card}>
-              <Icon name="stethoscope" size={85} color="#1D11AD" />
+          <Text style={styles.m1}> Patient DashBoard</Text>
+          <TouchableOpacity style={styles.buttonC}>
+            <Text
+              style={styles.t1}
+              onPress={() => props.navigation.navigate("DoctorAppointment" , {type : "doctor"})}
+            >
+              Book Appoinment Doctor
+            </Text>
+          </TouchableOpacity>
 
-              <Text style={styles.cardText}>Book Doctor</Text>
-            </View>
-          </View>
-          <View style={styles.cardContainer}>
-            <View style={styles.card}>
-              <Icon name="food-off-outline" size={80} color="#1D11AD" />
+          <TouchableOpacity style={styles.buttonC}>
+            <Text
+              style={styles.t2}
+              onPress={() => props.navigation.navigate("NutritionistAppointment")
+              }
+            >
+              Book Appoinment Nutritionist{" "}
+            </Text>
+          </TouchableOpacity>
 
-              <Text style={styles.cardText}>Book Nutritionist</Text>
-            </View>
-          </View>
-          <View style={styles.cardContainer}>
-            <View style={styles.card}>
-              <Icon name="wechat" size={85} color="#1D11AD" />
-              <Text style={styles.cardText}>Online Consultation</Text>
-            </View>
-          </View>
+          <TouchableOpacity style={styles.buttonC}>
+            <Text style={styles.t3} 
+            onPress={() => props.navigation.navigate("MakeReservation")}
+
+             >Make Reservation</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.buttonC}>
+            <Text style={styles.t4}>Online Consultation</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.buttonC}>
+            <Text style={styles.t5}>Upload Report</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.buttonC}>
+            <Text style={styles.t5}>Medicine</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonC}>
+            <Text style={styles.t5}>Exercise & Diet plan </Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
     flex: 1,
-    paddingBottom: 20, // Add some padding to the bottom to prevent the last card from being cut off
-  },
-  cardContainer: {
-    // paddingHorizontal: 20,
-    marginTop: 20,
-    // marginBottom: 110,
-    marginTop: 10,
-    width: "90%",
-  },
-  card: {
-    height: 150,
+    marginTop: 100,
     backgroundColor: "#fff",
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    elevation: 3,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 20,
-    marginLeft: 1,
   },
-  text: {
+  item: {
+    backgroundColor: "#fff",
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
+  },
+  buttonC: {
+    backgroundColor: "#F9F5F6",
+    padding: 10,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    paddingVertical: 19,
+    flexDirection: "row",
+    borderRadius: 25,
+    marginBottom: 7,
+    marginTop: 2,
+  },
+  t1: { color: "#000000", padding: 5, fontSize: 20 },
+  t2: { color: "#000000", padding: 5, fontSize: 20 },
+  t3: { color: "#000000", padding: 5, fontSize: 20 },
+
+  t4: { color: "#000000", padding: 5, fontSize: 20 },
+
+  t5: { color: "#000000", padding: 5, fontSize: 20 },
+
+  button1: {
+    color: "red",
+    paddingVertical: 10,
+    marginVertical: 5,
+  },
+  m1: {
     fontSize: 20,
     marginBottom: 15,
     marginLeft: 20,
     fontWeight: "bold",
-    marginTop: 0,
-    color: "#fff",
-    //marginLeft: 10,
-    paddingLeft: 130,
+    marginLeft: 28,
+    marginBottom: 20,
   },
-  textView: {
-    backgroundColor: "#1D11AD",
-    // marginBottom: 180,
-    width: "100%",
-    height: 280,
+
+  button2: {
+    color: "blue",
+    paddingVertical: 30,
+  },
+  button3: {
+    color: "yellow",
+  },
+  ser: {
+    position: "absolute",
     paddingTop: 20,
-  },
-  cardText: {
-    fontSize: 20,
-    marginTop: 10,
-    fontWeight: "bold",
-    color: "#2c3e50",
-  },
-  Image: {
-    height: 220,
-    width: 200,
-    alignSelf: "center",
-    marginLeft: 25,
   },
 });
 
-export default PatientDashbord;
+export default PDash;

@@ -14,6 +14,7 @@ import axios from "axios";
 //import { Formik } from "formik";
 //import * as yup from "yup";
 import { ScrollView } from "react-native-gesture-handler";
+import BASE_URL from "../config";
 
 function AddDoctorData() {
   //add values
@@ -163,7 +164,7 @@ function AddDoctorData() {
       
       // All values passed validation, proceed with the desired action
      axios
-       .post("http://192.168.8.100:8082/adddoctorinformation", {
+       .post(`${BASE_URL}/adddoctorinformation`, {
          description: "",
          email: email,
          fname: fName,
@@ -182,7 +183,7 @@ function AddDoctorData() {
        });
 
      axios
-       .post("http://192.168.8.100:8082/api/users/adduser", {
+       .post(`${BASE_URL}/api/users/adduser`, {
          nic: nic,
          email: email,
          firstname: fName,

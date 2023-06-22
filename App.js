@@ -37,6 +37,8 @@ import AddNutritionistData from './screen/NutitionistDetails';
 import UpdateNutritionistDetails from './screen/UpdateNutritionist';
 import UpdateDoctorDetails from './screen/UpdateDoctor';
 import Search from './screen/Component/Search';
+import FileManagement from './pages/FilesManagement';
+import PaymentSummary from './pages/Admin Dashbord/Analytic Data/PaymentSummary';
 
 
 
@@ -47,23 +49,11 @@ import Search from './screen/Component/Search';
 
 const App = () => { 
   return (
-    // <UserProvider>
-      // <Navigation/>
-    // </UserProvider>
-    //<AddDoctorData/>
-    //<PDash/>
-   //<Guardianhome/>
-   //<DoctorDashboard/>
-   //<NutritionistDashboard/>
-   //<SeeReservation/>
-   //<Reservation/>
-   //<ReservationCancel/>
-   //< UpdateDoctorDetails/>
-   <AddNutritionistData/>
-   //<UpdateNutritionistDetails/>
-  // <search/>
-   
-   
+    <UserProvider>
+      <Navigation/>
+    </UserProvider>
+    // <FileManagement/>
+    // <PaymentSummary/>
   )
 }
 

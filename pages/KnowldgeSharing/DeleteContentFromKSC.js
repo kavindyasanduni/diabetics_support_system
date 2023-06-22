@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Modal,
   ScrollView,
+  Alert
 } from "react-native";
 import axios from "axios";
 import EditContentModal from "./EditContentModal";
@@ -18,6 +19,7 @@ import {
 } from "firebase/storage";
 import { Picker } from '@react-native-picker/picker';
 import BASE_URL from "../../config";
+import moment from 'moment';
 
 
 const DeleteContentFromKSC = () => {
@@ -26,15 +28,13 @@ const DeleteContentFromKSC = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [tableData, setTableData] = useState([]);
   const [selectedData, setSelectedData] = useState(null); //to edit purticualr data item
-  // console.log(selectedOption);
   const [pogress, setPogress] = useState(0); //to get the upload pogress
   const [imgLinkForCheking, setImageLinkForCheking] = useState(null); //to CHECK if the image is same
   const [id, setId] = useState(null);
-  console.log("id : " + id);
+  // console.log("id : " + id);
 
   const options = ["workouts", "diet plans", "news and reaserach"];
-  let clickedSubmit;
-  let catchedPhoto;
+
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -53,7 +53,7 @@ const DeleteContentFromKSC = () => {
         `${BASE_URL}/getKInformationByCategory/${selectedOption}`
       );
       setTableData(response.data);
-      console.log("Data captured: " + response);
+      console.log("Data captured: " + response.data);
     } catch (error) {
       console.log(error);
       alert(
@@ -66,21 +66,48 @@ const DeleteContentFromKSC = () => {
     fetchData();
   }, [selectedOption]);
   //get data to object
-  const kInformation = tableData.map((data, index) => ({
-    id: data.kid,
-    title: data.title,
-    description: data.description,
-    imgLink: data.img_url,
-    date: data.created_date,
-    
-  }));
-  // console.log(kInformation.date);
+  const kInformation = tableData.map((data, index) => {
+ 
+    return {
+      id: data.kid,
+      title: data.title,
+      description: data.description,
+      imgLink: data.img_url,
+      date: data.createdDate ? new Date(data.createdDate).toLocaleDateString() : 'No date', // Convert to localized date format or set as 'No date' if null
+      
+    };
+  });
+
+  // Sort the array in descending order based on the date
+// kInformation.sort((a, b) => new Date(b.date) - new Date(a.date));
   //to show spesific number of length
   const maxDescriptionLength = 10;
 
   // update the data
 
-  const handleSave = async (newData) => {
+  const handleSave = (newData) => {
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to save changes?',
+      [
+        {
+          text: 'No',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            // Call your cancel reservation function here
+             saveContent(newData)
+             
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const saveContent = async (newData) => {
     //if image is not changed and if changed
     console.log(newData.id);
     if (imgLinkForCheking == newData.imgLink) {
@@ -96,7 +123,7 @@ const DeleteContentFromKSC = () => {
             img_url: newData.imgLink,
           }
         );
-        console.log("Data updated");
+        alert("Successfully updated information");
         // Fetch the updated data from the backend API
         await fetchData();
         // Hide the edit modal
@@ -162,18 +189,7 @@ const DeleteContentFromKSC = () => {
         }
       );
     }
-    // console.log(newData.imgLink);
-    // try {
-    //   // Send the updated data to the backend API
-    //   await axios.put(`http://192.168.8.100:8082/updateKInformation/${newData.id}`, newData);
-    //   // Fetch the updated data from the backend API
-    //   await fetchData();
-    //   // Hide the edit modal
-    //   setSelectedData(null);
-    // } catch (error) {
-    //   console.log(error);
-    //   alert('An error occurred while updating the data. Please try again later.');
-    // }
+
   };
 
   // end of update data code
@@ -183,60 +199,54 @@ const DeleteContentFromKSC = () => {
   };
   // end of hide the modal
 
-  const handleDelete = async () => {
-    try {
-      // Delete data to the backend API
-      await axios.delete(
-        `${BASE_URL}/deleteKInformationById/${id}`
-      );
-      console.log("Data Deleted Successfully");
-      // Fetch the updated data from the backend API
-      await fetchData();
-      // Hide the edit modal
-      setSelectedData(null);
-    } catch (error) {
-      console.log(error);
-      alert(
-        "An error occurred while updating the data. Please try again later."
-      );
-    }
+  const handleDelete =  () => {
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to delete the image ?',
+      [
+        {
+          text: 'No',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: async() => {
+            try {
+              // Delete data to the backend API
+              await axios.delete(
+                `${BASE_URL}/deleteKInformationById/${id}`
+              );
+              alert("Data Deleted Successfully");
+              // Fetch the updated data from the backend API
+              await fetchData();
+              // Hide the edit modal
+              setSelectedData(null);
+            } catch (error) {
+              console.log(error);
+              alert(
+                "An error occurred while updating the data. Please try again later."
+              );
+            }
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+
+
+
+    
+
   };
 
 
+  
   return (
     <View style={{flex:1 , backgroundColor:'#fff'}}>
       <View style={styles.container}>
         {/* select catergory */}
 
         <View style={styles.description}>
-          {/* <TouchableOpacity
-            onPress={toggleDropdown}
-            style={styles.dropdownButton}
-          >
-            <Text style={styles.dropdownButtonText}>
-              {selectedOption || "Select an option"}
-            </Text>
-          </TouchableOpacity>
-          <Modal visible={dropdownVisible} animationType="slide">
-            <View style={styles.dropdownModal}>
-              {options.map((option, index) => (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => selectOption(option)}
-                  style={styles.dropdownItem}
-                >
-                  <Text style={styles.dropdownItemText}>{option}</Text>
-                </TouchableOpacity>
-              ))}
-              <TouchableOpacity
-                onPress={toggleDropdown}
-                style={styles.dropdownItem}
-              >
-                <Text style={styles.dropdownItemText}>Cancel</Text>
-              </TouchableOpacity>
-            </View>
-          </Modal> */}
-        
         </View>
         <Picker
           selectedValue={selectedOption}
@@ -248,34 +258,20 @@ const DeleteContentFromKSC = () => {
           ))}
       </Picker>
 
-
-       
-        {/* <View style={styles.submitButtonCOntainer}>
-          <View>
-            <TouchableOpacity
-              style={styles.button_s}
-              onPress={() => {
-                fetchData();
-              }}
-            >
-              <Text style={styles.text}>Show data</Text>
-            </TouchableOpacity>
-          </View>
-        </View> */}
-
         <View style={styles.aroundTable}>
           {/* <ScrollView> */}
           <View style={styles.tableContainer}>
             <View style={styles.tableHeader}>
               <Text style={styles.tableHeaderText}>Title</Text>
               <Text style={styles.tableHeaderText}>Description</Text>
+              <Text style={styles.tableHeaderText}>Created date</Text>
               <Text style={styles.tableHeaderText}>Option</Text>
-              {/* <Text style={styles.tableHeaderText}>Option</Text> */}
             </View>
             {/* Render table data here */}
             <View style={styles.tableData}>
               <ScrollView>
                 {kInformation.map((item, index) => (
+                 
                   <View style={styles.tableRow} key={index}>
                     <Text style={styles.tableCell}>
                       {item.title.slice(0, maxDescriptionLength)}

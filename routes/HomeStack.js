@@ -33,6 +33,8 @@ import AdminDashboard from "../pages/AdminDashboard.js";
 import AdminDrawer from "./AdminDrawer.js";
 import SeeReservation from "../screen/SeeReservation.js";
 import ReservationCancel from "../screen/ReservationCansel.js";
+import ReservationNutritionist from "../screen/ReservationsNutritionist.js";
+import ReservationDoctor from "../screen/ReservationsDoctor.js";
 
 //create stack navigators
 const Stack = createNativeStackNavigator();
@@ -44,8 +46,8 @@ const Navigation = props => {
                 <Stack.Screen name="Welcome" component={Welcome} options={{headerShown:false}}/>
                 <Stack.Screen name="Admin" component={Dashbord} />
                 <Stack.Screen name="knowladgesharingdashbord" component={knowladgesharingdashbord} />
-                <Stack.Screen name="deletefromksc" component={DeleteContentFromKSC} />
-                <Stack.Screen name="updateksc" component={UpdateContainerCard}/>
+                <Stack.Screen name="Update or Delete Data - KSC" component={DeleteContentFromKSC} />
+                <Stack.Screen name="Add new content - KSC" component={UpdateContainerCard}/>
 
                 <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
                 <Stack.Screen name="PatientSignUp" component={PatientSignUp} options={{headerShown:false}}/>
@@ -67,7 +69,11 @@ const Navigation = props => {
                 <Stack.Screen  name="NutritionistProfile" component={AddUserDetails2} options={{ headerShown: false }} />
                 <Stack.Screen  name="ReservationCancel" component={ReservationCancel} options={{ headerShown: false }} />
 
+{/* routes for nutritionist Dashbord */}
+                <Stack.Screen  name="Available Reservation nutritionist" component={ReservationNutritionist} options={{ headerShown: false }} />
 
+{/* routes for Doctor Dashbord */}
+                <Stack.Screen  name="Available Reservation doctor" component={ReservationDoctor} options={{ headerShown: false }} />
 
                 <Stack.Screen name="AdminDashboard" component={AdminDrawer} options={{ headerShown: false }} />
             </Stack.Navigator>

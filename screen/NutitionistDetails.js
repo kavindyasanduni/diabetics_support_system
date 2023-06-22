@@ -5,6 +5,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import AvailableDateTime from './Component/AvailableDateTime ';
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
+import BASE_URL from '../config';
 
 function AddNutritionistData () {
   const [fName, setFName] = useState("");
@@ -179,7 +180,7 @@ function AddNutritionistData () {
     // console.log(availableTimes);
 
     axios
-      .post("http://192.168.8.100:8082/addnutritionist", {
+      .post(`${BASE_URL}/addnutritionist`, {
         description: "",
         email: email,
         fname: fName,
@@ -198,7 +199,7 @@ function AddNutritionistData () {
       });
 
     axios
-      .post("http://192.168.8.100:8082/api/users/adduser", {
+      .post(`${BASE_URL}/api/users/adduser`, {
         nic: nic,
         email: email,
         firstname: fName,

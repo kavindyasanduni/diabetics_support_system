@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import AvailableDateTime from './Component/AvailableDateTime ';
-
+import BASE_URL from '../config';
 
 function UpdateNutritionistDetails() {
  
@@ -30,7 +30,7 @@ function UpdateNutritionistDetails() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://192.168.8.100:8082/getallnutritionist');
+      const response = await axios.get(`${BASE_URL}/getallnutritionist`);
       if (response.data) {
         setDoctorData(response.data);
       }

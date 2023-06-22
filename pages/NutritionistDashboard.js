@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity,Image } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const NutritionistDashboard = ({ navigation }) => {
+const NutritionistDashboard = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.textView}>
@@ -15,18 +15,21 @@ const NutritionistDashboard = ({ navigation }) => {
       </View>
       <ScrollView>
         <View style={styles.container}>
-          <View style={styles.cardContainer}>
-            <View style={styles.card}>
-              <Icon name="human-female-boy" size={85} color="#1D11AD" />
-
-              <Text style={styles.cardText}>Assigned Patient</Text>
-            </View>
-          </View>
+        
           <View style={styles.cardContainer}>
             <View style={styles.card}>
               <Icon name="book-clock" size={85} color="#1D11AD" />
-
-              <Text style={styles.cardText}>reservation</Text>
+              <TouchableOpacity
+              style={styles.button}
+              onPress={() =>
+                props.navigation.navigate("Available Reservation nutritionist")
+              }
+            >       
+              <Text style={styles.cardText}>
+              reservations
+              </Text>
+            </TouchableOpacity>
+            
             </View>
           </View>
           <View style={styles.cardContainer}>

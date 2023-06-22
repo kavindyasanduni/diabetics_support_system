@@ -7,6 +7,7 @@ import {
   Modal,
   TouchableWithoutFeedback,
   ScrollView,
+  Image,
 } from "react-native";
 import ButtonD from "./ButtonD";
 import SubmitButton from "../KnowldgeSharing/SubmitButton";
@@ -24,15 +25,18 @@ const Dashbord = (props) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      {/* Your dashboard content goes here */}
+    <View style={{ flex: 1 , backgroundColor:"#fff" }}>
+      
 
-      {/* The menu icon */}
-      {/* <TouchableOpacity onPress={toggleMenu}>
-        <Icon name="menu" size={30} />
-      </TouchableOpacity> */}
       <View style = { {flex : 1 , paddingBottom: 5}}>
         <ScrollView>
+        <View style={styles.textView}>
+        <Image
+          source={require("../../assets/VectorArt/admin_d.png")}
+          style={styles.Image}
+        />
+        <Text style={styles.text}>Admin Dashboard</Text>
+      </View>
           <View>
             <KnowledgeSharingAnalytic />
           </View>
@@ -45,142 +49,72 @@ const Dashbord = (props) => {
           </View>
         </ScrollView>
       </View>
-      {/* The side menu */}
-      {/* <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isMenuVisible}
-        onRequestClose={toggleMenu}
-      >
-        <TouchableWithoutFeedback onPress={toggleMenu}>
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              width: 250,
-            }}
-          >
-            <View style={{ flex: 1, backgroundColor: "#fff" }}>
-              <Text>Menu item 1</Text>
-              <Text>Menu item 2</Text>
-              <Text>Menu item 3</Text>
-
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() =>
-                  props.navigation.navigate("knowladgesharingdashbord")
-                }
-              > */}
-                {/* <ButtonD title ="Update Knowledge Sharing center"  navigation="knowladgesharingdashbord" /> */}
-                {/* <Text style={styles.buttonText}>knowladgesharingdashbord</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal> */}
+     
     </View>
   );
 
-  /////////////////////////////////////////////////////////////////////////////////
-
-  //   <View style={styles.background}>
-  //     <View style={styles.around_container}>
-  //       <View style={styles.container}>
-  //         <View style={styles.Button_styles}>
-  //           <ButtonD
-  //             title="Update Doctor Details"
-  //             navigation="knowladgesharingdashbord"
-  //           />
-  //         </View>
-  //       </View>
-  //       <View style={styles.container}>
-  //         <View>
-  //           <ButtonD
-  //             title="Update Nutritionist Details"
-  //             navigation="knowladgesharingdashbord"
-  //           />
-  //         </View>
-  //       </View>
-  //       <View style={styles.container}>
-  //         <View>
-  //           <ButtonD
-  //             title="Reservations"
-  //             navigation="knowladgesharingdashbord"
-  //           />
-  //         </View>
-  //       </View>
-  //       <View style={styles.container}>
-  //         <View>
-  //           <ButtonD
-  //             title="Payments & Refunding"
-  //             navigation="knowladgesharingdashbord"
-  //           />
-  //         </View>
-  //       </View>
-  //       <View style={styles.container}>
-  //         <View style={styles.button_view}>
-  //           <TouchableOpacity
-  //             style={styles.button}
-  //             onPress={() =>
-  //               props.navigation.navigate("knowladgesharingdashbord")
-  //             }
-  //           >
-  //             {/* <ButtonD title ="Update Knowledge Sharing center"  navigation="knowladgesharingdashbord" /> */}
-  //             <Text style={styles.buttonText}>
-  //               Add content to web application
-  //             </Text>
-  //           </TouchableOpacity>
-  //         </View>
-  //       </View>
-
-  //     </View>
-  //   </View>
-  // );
+ 
 };
 const styles = StyleSheet.create({
-  // background: {
-  //   backgroundColor: "#FFF",
-  //   flex: 1,
-  //   // height:844
-  // },
-  // around_container: {
-  //   marginTop: 100,
-  //   flex: 3,
-  // },
-  // container: {
-  //   flexDirection: "row",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // },
-  // Button_styles: {
-  //   // paddingLeft:100
-  // },
-  // button: {
-  //   backgroundColor: "#be2edd",
-  //   // top:512,
-  //   width: 250,
-  //   height: 49,
-  //   // left:,
-  //   borderRadius: 25,
-  //   margin: 10,
-  //   shadowColor: "black",
-  //   shadowOffset: { width: 0, height: 2 },
-  //   shadowOpacity: 0.5,
-  //   shadowRadius: 2,
-  // },
-  // buttonText: {
-  //   justifyContent: "center",
-  //   textAlign: "center",
-  //   // color:'#555555',
-  //   color: "#FFF",
-  //   padding: 12,
-  // },
-  // button_view: {
-  //   margin: 20,
-  //   flex: 1,
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  // },
+ 
   ////////////////////////////////////////////////////////////////
+
+  container: {
+    alignItems: "center",
+    flex: 1,
+    paddingBottom: 20, // Add some padding to the bottom to prevent the last card from being cut off
+  },
+  cardContainer: {
+    // paddingHorizontal: 20,
+    marginTop: 20,
+    // marginBottom: 110,
+    marginTop: 10,
+    width: "90%",
+  },
+  card: {
+    height: 150,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 3,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+    marginLeft: 1,
+  },
+  text: {
+    fontSize: 20,
+    marginBottom: 15,
+    // marginLeft: 40,
+    fontWeight: "bold",
+    marginTop: 0,
+    color: "#fff",
+    //marginLeft: 10,
+    // paddingLeft: 130,
+  },
+  textView: {
+    backgroundColor: "#1D11AD",
+    // marginBottom: 180,
+    width: "100%",
+    height: 280,
+    paddingTop: 25,
+    alignItems: "center",
+  },
+  cardText: {
+    fontSize: 20,
+    marginTop: 10,
+    fontWeight: "bold",
+    color : "#2c3e50",
+    // fontColor: "gray",
+  },
+  Image: {
+    height: 220,
+    width: "90%",
+
+    alignSelf: "center",
+  },
 });
 export default Dashbord;

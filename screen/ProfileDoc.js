@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { ScrollView, View, Text, Image, TouchableOpacity ,StyleSheet} from 'react-native';
 
 import axios from "axios";
+import BASE_URL from "../config";
 
 
 const ProfileDoc = (props) => {
   const [AppoinmentDateandDay, setAppinmentDateandDay] = useState("");
 
-  const { id, name } = props.route.params;
+  const { id, name ,description} = props.route.params;
   console.log(id);
   console.log(name);
   const [doctorData, setDoctorData] = useState([]);
@@ -23,7 +24,7 @@ const ProfileDoc = (props) => {
 
   const fetchDataD = async () => {
     try {
-      const response = await axios.get(`http://192.168.8.100:8082/getdoctordatabyid/${id}`);
+      const response = await axios.get(`${BASE_URL}/getdoctordatabyid/${id}`);
       if (response.data) {
         setDoctorData(response.data);
       }
@@ -40,7 +41,7 @@ const ProfileDoc = (props) => {
 
   const fetchDataN = async () => {
     try {
-      const response = await axios.get(`http://192.168.8.100:8082/getnutritionist/${id}`);
+      const response = await axios.get(`${BASE_URL}/getnutritionist/${id}`);
       if (response.data) {
         setDoctorData(response.data);
       }
@@ -63,8 +64,8 @@ const ProfileDoc = (props) => {
       };
      if (name ==="doctor"){
       // Send the data to the server using Axios
-      axios.post(`http://192.168.8.100:8082/addReservation`,{
-            pid: "1", //should send actual p id
+      axios.post(`${BASE_URL}/addReservation`,{
+            p_id: "1", //should send actual p id
             r_type : name,
             d_id : id,
             date : date,
@@ -84,7 +85,7 @@ const ProfileDoc = (props) => {
         });
 
      }else if (name === "nutritionist"){
-          axios.post(`http://192.168.8.100:8082/addReservation`,{
+          axios.post(`${BASE_URL}/addReservation`,{
             p_id: "1",
             r_type : name,
             d_id : id,
@@ -124,7 +125,7 @@ const ProfileDoc = (props) => {
             DR.{doctorData.fname + " " + doctorData.lname}
           </Text>
 
-          <Text style={styles.Desc}>Diabetologists</Text>
+          <Text style={styles.Desc}>{description}</Text>
           <Text style={styles.Desc}>BioNeu Hospital</Text>
         </View>
 
@@ -209,7 +210,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   Desc: {
-    color: "gray",
+    color: "#fff",
     fontSize: 15,
     marginLeft: 32,
   },

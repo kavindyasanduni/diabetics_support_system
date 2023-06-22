@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-
 import {
   Button,
   View,
@@ -10,10 +9,10 @@ import {
   Text,
   TextInput,
   Modal,
+  Alert,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
-
 // importing firebase modules
 import { storage } from "../../firebaseconfig";
 import {
@@ -24,30 +23,37 @@ import {
 } from "firebase/storage";
 import { async } from "@firebase/util";
 import Swiper from "react-native-swiper";
+import BASE_URL from "../../config";
 
-
-const UpdateContainerCard = () => {
+const UpdateContainerCard = (props) => {
   const [image, setImage] = useState(null);
   const [viewBeforeUpload, setViewBeforeUpload] = useState(null);
-
   const [text, setText] = useState(""); //for description
   const [title, setTitle] = useState(""); // for title
-
   const [pogress, setPogress] = useState(0); //to get the upload pogress
-
   const [loading, setLoading] = useState(true); //to get the upload pogress
   //for dropdown selection
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
-
   const swiperRef = useRef(null); // useRef hook is used to create a reference to the Swiper component, and that reference is passed to the ref attribute of the Swiper component
-
-  const [vissible , setVissible] = useState(true);
-
-
+  const [visibly , setVisible] = useState(true);
   const options = ["workouts", "diet plans", "news and reaserach"];
-  let clickedSubmit;
-  let catchedPhoto;
+
+  // const [currentPage, setCurrentPage] = useState(0);
+
+
+ 
+// useEffect(() => {
+//   if (swiperRef.current) {
+//     swiperRef.current.scrollToIndex({
+//       index: currentPage,
+//       animated: false,
+//     });
+//   }
+// }, [currentPage]);
+
+  // let clickedSubmit;
+  // let catchedPhoto;
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -85,25 +91,13 @@ const UpdateContainerCard = () => {
     }
   };
 
-  /////////////////////////////////////////////////////////////
-
-  // useEffect(() => {
-  //   console.log(text);
-  //   // setText(text);
-  //   console.log(title);
-  // }, [text, title]);
-
-  //end of sending data to database
-  // let imageLink;
-
   const handleImageSubmit = async () => {
 
-    // if (!result || !result.uri) {
-    //   alert("Please select an image first.");
-    //   return;
-    // }
-    // clickedSubmit = true;
-
+     if (!image) {
+    alert('Please select an image.');
+    return;
+  }
+  
     const response = await fetch(image);
     const blob = await response.blob();
 
@@ -125,12 +119,9 @@ const UpdateContainerCard = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
-          // setImage(downloadURL);
-          // imageLink = downloadURL;
-
           //send data to database when uploading finished
           axios
-            .post("http:///192.168.8.103:8082/addKInformation", {
+            .post(`${BASE_URL}/addKInformation`, {
               title: title,
               catergory: selectedOption,
               description: text,
@@ -141,6 +132,10 @@ const UpdateContainerCard = () => {
                 "Data successfully saved to database: ",
                 response.data
               );
+             props.navigation.navigate("knowladgesharingdashbord")
+            setText(null);
+            setImage(null);
+            setTitle(null);
             })
             .catch(function (error) {
               console.log(error);
@@ -151,129 +146,87 @@ const UpdateContainerCard = () => {
         });
       }
     );
+    // Remove the selected image
+  setImage(null);
+  };
+
+  //to check user have filled the title and description
+  const handleNextButtonPress = () => {
+    if (title.trim() === '' || text.trim() === '') {
+      // Check if the title or description is empty or contains only whitespace
+      alert('Please fill in the title and description.');
+      return;
+    }
+      // Reset current page to 0
+      // setCurrentPage(0);
+    // Proceed to the next step
+    swiperRef.current.scrollBy(1, true);
+  };
+
+  const handleNextButtonSelectCategory = () => {
+    if (selectedOption === null) {
+      // Check if the title or description is empty or contains only whitespace
+      alert('Please Select category.');
+      return;
+    }
+    // setCurrentPage(0);
+
+    // Proceed to the next step
+    swiperRef.current.scrollBy(1, true);
+  };
+
+  const onDelete = () => {
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to delete the image changes?',
+      [
+        {
+          text: 'No',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            setImage(null);
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+    
+  };
+
+  const onCancel = () => {
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to discard changes?',
+      [
+        {
+          text: 'No',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            // setCurrentPage(0);
+            // Call your cancel reservation function here
+             props.navigation.navigate("knowladgesharingdashbord")
+             
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (
-    // <View>
-    //   <View style={styles.container}>
-    //     <View style={styles.headerContainer}>
-    //       <View>
-    //         <Text style={styles.modelHeader}>{props.modelHeader}</Text>
-    //       </View>
-    //     </View>
-    //     {/* select catergory */}
-
-    //     <View style={styles.description}>
-    //       <TouchableOpacity
-    //         onPress={toggleDropdown}
-    //         style={styles.dropdownButton}
-    //       >
-    //         <Text style={styles.dropdownButtonText}>
-    //           {selectedOption || "Select an option"}
-    //         </Text>
-    //       </TouchableOpacity>
-    //       <Modal visible={dropdownVisible} animationType="slide">
-    //         <View style={styles.dropdownModal}>
-    //           {options.map((option, index) => (
-    //             <TouchableOpacity
-    //               key={index}
-    //               onPress={() => selectOption(option)}
-    //               style={styles.dropdownItem}
-    //             >
-    //               <Text style={styles.dropdownItemText}>{option}</Text>
-    //             </TouchableOpacity>
-    //           ))}
-    //           <TouchableOpacity
-    //             onPress={toggleDropdown}
-    //             style={styles.dropdownItem}
-    //           >
-    //             <Text style={styles.dropdownItemText}>Cancel</Text>
-    //           </TouchableOpacity>
-    //         </View>
-    //       </Modal>
-    //     </View>
-
-    //     <View style={styles.description}>
-    //       <TextInput
-    //         style={{
-    //           height: 40,
-    //           width: 250,
-    //           borderColor: "gray",
-    //           borderWidth: 1,
-    //           borderRadius: 10,
-    //           paddingLeft: 20,
-    //         }}
-    //         onChangeText={setTitle}
-    //         value={title}
-    //         placeholder="Content title"
-    //       />
-    //     </View>
-
-    //     <View style={styles.description}>
-    //       <TextInput
-    //         style={{
-    //           height: 80,
-    //           width: 250,
-    //           borderColor: "gray",
-    //           borderWidth: 1,
-    //           borderRadius: 10,
-    //           padding: 20,
-    //         }}
-    //         onChangeText={setText}
-    //         value={text}
-    //         placeholder="Description"
-    //       />
-    //     </View>
-    //     <View style={styles.addPhotoCntainer}>
-    //       <View>
-    //         <Text style={styles.addPhoto}>{props.text}</Text>
-    //       </View>
-    //       <View>
-    //         <View style={styles.button_view}>
-    //           <TouchableOpacity style={styles.button} onPress={PickImage}>
-    //             {/* <ButtonD title ="Update Knowledge Sharing center"  navigation="knowladgesharingdashbord" /> */}
-    //             <Text style={styles.buttonText}>Choose Image</Text>
-    //           </TouchableOpacity>
-    //         </View>
-    //       </View>
-    //     </View>
-    //     <View style={styles.imgViewing}>
-    //       {viewBeforeUpload && (
-    //         <Image
-    //           source={{ uri: viewBeforeUpload }}
-    //           style={{
-    //             width: 250,
-    //             height: 150,
-    //           }}
-    //         />
-    //       )}
-    //     </View>
-    //     <View style={styles.submitButtonCOntainer}>
-    //       <View>
-    //         <TouchableOpacity
-    //           style={styles.button_s}
-    //           onPress={() => {
-    //             handleImageSubmit();
-    //           }}
-    //         >
-    //           <Text style={styles.text}>Submit</Text>
-    //         </TouchableOpacity>
-    //       </View>
-    //     </View>
-    //   </View>
-    // </View>
-
-
-    ///////////////////////////////////////////////////////////////
 
     //  <Modal visible={vissible} animationType="slide">
 
   <View style={styles.container}> 
-   
-
     <View style={{ flex: 1 }}>
-      <Swiper ref={swiperRef} loop={false}>
-      {/* first page */}
+    <Swiper ref={swiperRef} loop={false} initialPage={0}>      
+    {/* first page */}
       <View style={{ flex: 1 }}>
           {/* select catergory */}
           <View style={styles.headerContainer}>
@@ -313,19 +266,14 @@ const UpdateContainerCard = () => {
           </Modal>
         </View>
         <View style={styles.buttonContainerFirstPage}>
-            <View style={styles.nextButtonContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  swiperRef.current.scrollBy(1, true);
-                }}
-                style={styles.button_s}
-              >
-                <Text style={styles.buttonText}>Next</Text>
-              </TouchableOpacity>
+          <View style={styles.nextButtonContainer}>
+                  <TouchableOpacity onPress={handleNextButtonSelectCategory} style={styles.button_s}>
+                    <Text style={styles.buttonText}>Next</Text>
+                  </TouchableOpacity>
             </View>
           </View>
       </View> 
-        {/* first page */}
+        {/* Second page */}
         <View style={{ flex: 1 }}>
           <View style={styles.headerContainer}>
             <Text style={styles.modalHeader}>Add new Content</Text>
@@ -367,19 +315,14 @@ const UpdateContainerCard = () => {
               </TouchableOpacity>
             </View>
             <View style={styles.nextButtonContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  swiperRef.current.scrollBy(1, true);
-                }}
-                style={styles.button_s}
-              >
-                <Text style={styles.buttonText}>Next</Text>
-              </TouchableOpacity>
+                  <TouchableOpacity onPress={handleNextButtonPress} style={styles.button_s}>
+                    <Text style={styles.buttonText}>Next</Text>
+                  </TouchableOpacity>
             </View>
           </View>
         </View>
 
-        {/* second page */}
+        {/* Third page */}
         <View style={{ flex: 1 }}>
           <View style={styles.headerContainer}>
             <Text style={styles.modalHeader}>Add new Content</Text>
@@ -403,11 +346,17 @@ const UpdateContainerCard = () => {
               </TouchableOpacity>
             </View>
           <View style={styles.imgViewing}>
-            <Image
+            {/* <Image
               source={{ uri: image }}
               style={{ width: "100%", height: 200 }}
-            />
-          </View>
+            /> */}
+              {image && (
+              <Image
+                source={{ uri: image }}
+                style={{ width: '100%', height: 200 }}
+              />
+            )}
+           </View>
           
           <View>
             {/* <Image  source={{ uri: selectedImageUri }} style={{ width: '100%', height: 200 }} /> */}
@@ -427,7 +376,7 @@ const UpdateContainerCard = () => {
             {/* button chage cansel to delete */}
             <View style={styles.canselButtonContainer}>
               <TouchableOpacity
-                // onPress={onDelete}
+                onPress={onDelete }
                 style={styles.buttonCansel}
               >
                 <Text style={styles.buttonText}>Delete</Text>
@@ -437,7 +386,7 @@ const UpdateContainerCard = () => {
           <View style={styles.saveButtonConatiner}>
             <TouchableOpacity
                onPress={() => {
-                            handleImageSubmit();
+                      handleImageSubmit();
                   }}
               style={styles.buttonSaveChanges}
             >
@@ -446,12 +395,11 @@ const UpdateContainerCard = () => {
           </View>
 
           <View style={styles.deleteButtonConatiner}>
-            <TouchableOpacity
-              onPress={()=>setVissible(false)}
-              style={styles.buttonDeleteContent}
-            >
+          <View style={styles.deleteButtonConatiner}>
+            <TouchableOpacity onPress={onCancel} style={styles.buttonDeleteContent}>
               <Text style={styles.buttonText}>Cancel</Text>
             </TouchableOpacity>
+          </View>
           </View>
         </View>
       </Swiper>
@@ -459,112 +407,22 @@ const UpdateContainerCard = () => {
     </View>
 
     // </Modal>
-  
 
-  /////////////////////////////////////////////////////////
   );
 };
 
 const styles = StyleSheet.create({
-  // aroundContainer: {
-  //   // marginTop: 30,
-  //   height:"100%",
-  //   backgroundColor: "#FFF",
-    
-    // flex:1,
-
-  // },
-  // aroundContainerSecond: {
-  //   marginTop: 100,
-  // },
   container: {
-    // justifyContent: "center",
     backgroundColor: "#FFF",
-    // marginTop: 10,
     width: "100%",
     height: "100%",
-    // left: 49,
-    // borderRadius: 32,
-    // ...Platform.select({
-    //   ios: {
-    //     shadowColor: "#000000",
-    //     shadowOffset: {
-    //       width: 0,
-    //       height: 4,
-    //     },
-    //     shadowOpacity: 0.25,
-    //     shadowRadius: 4,
-    //   },
-    //   android: {
-    //     elevation: 5,
-    //   },
-    // }),
+
   },
-  // modelHeader: {
-  //   color: "#1D11AD",
-  //   fontWeight: "bold",
-  // },
-  // headerContainer: {
-  //   alignItems: "center",
-  //   padding: 10,
-  //   marginTop: 10,
-  // },
+  
   description: {
     alignItems: "center",
-    marginTop: 100,
-
-    // borderColor: "red",
+    marginTop: 100,  
   },
-  // addPhotoCntainer: {
-  //   flexDirection: "row",
-  //   marginTop: 20,
-  //   padding: 10,
-
-  //   justifyContent: "space-between",
-  //   alignItems: "center",
-  //   marginLeft: 15,
-  //   marginRight: 15,
-  // },
-  // submitButtonCOntainer: {
-  //   flexDirection: "row",
-  //   flex: 1,
-  //   justifyContent: "center",
-  //   alignContent: "center",
-  //   left: 115,
-  //   marginTop: 20,
-  //   width: 200,
-  // },
-  // addPhoto: {
-  //   color: "#1D11AD",
-  // },
-  // //css for choose phot
-  // button: {
-  //   backgroundColor: "#be2edd",
-  //   width: 135,
-  //   height: 30,
-  //   borderRadius: 25,
-  // },
-  // buttonText: {
-  //   justifyContent: "center",
-  //   textAlign: "center",
-  //   color: "#FFF",
-
-  //   padding: 5,
-  // },
-
-  // //button submit
-  // button_s: {
-  //   backgroundColor: "#1D11AD",
-  //   padding: 5,
-  //   borderRadius: 18,
-  //   alignItems: "center",
-  //   width: 110,
-  //   height: 32,
-  // },
-  // text: {
-  //   color: "white",
-  //   fontWeight: "bold",
-  // },
 
   // //styles for drop down
   dropdownButton: {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
 import axios from 'axios'
+import BASE_URL from '../config'
 
 //patient can add guardian information
 
@@ -68,7 +69,7 @@ const GuardianSignUp = props => {
     
 
     // Send the data to the server
-    axios.post('http://192.168.8.167:8082/api/users/adduser', {
+    axios.post(`${BASE_URL}/api/users/adduser`, {
       email: email,
       firstname:firstName,
       lastname:lastName,

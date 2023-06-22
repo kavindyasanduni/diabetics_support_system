@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,27 +6,30 @@ import {
   StyleSheet,
   Alert,
   Image,
+  Animated,
+  Easing,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-// import Svg, { Path } from "react-native-svg";
-import { Svg, Path, Defs, Stop } from 'react-native-svg';
 
 const Welcome = (props) => {
-  /*
-    const onPressButton = () => {
-        Alert.alert('clicked button');
-    };*/
-
-  const colors = ["#8914af", "#05b9de", "#45a7a9"];
+  const colors = ["#0c2461", "#1e3799", "#0c2461"];
   const start = { x: 0, y: 0 };
   const end = { x: 0, y: 1 };
   const locations = [0.1, 0.66, 1];
+  const opacityAnimation = useRef(new Animated.Value(0)).current;
 
-  //colors for wave
-  const gradientColors = [
-    { offset: "0%", color: "#00F" },
-    { offset: "100%", color: "#F00" },
-  ];
+  useEffect(() => {
+    startAnimation();
+  }, []);
+
+  const startAnimation = () => {
+    Animated.timing(opacityAnimation, {
+      toValue: 1,
+      duration: 1000,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start();
+  };
 
   return (
     <View style={styles.container}>
@@ -37,112 +40,133 @@ const Welcome = (props) => {
         locations={locations}
         style={styles.gradient}
       >
-        {/* d="M0 0 C 83.33 100, 166.67 100, 250 0 S 416.67 -100, 500 0 L 500 300 L 0 300 Z" */}
-
-        <View style={{ alignItems: "center"}}>
-          {/* <Svg height="50%" width="100%">
-            <Defs>
-              <LinearGradient
-                id="waveGradient"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="0%"
-              >
-                {gradientColors.map((stop, index) => (
-                  <Stop
-                    key={index}
-                    offset={stop.offset}
-                    stopColor={stop.color}
-                  />
-                ))}
-              </LinearGradient>
-            </Defs>
-
-            <Path
-              //   d="M0 20 C 50 100, 100 60, 250 25 S 416.67 -100, 500 0 L 500 300 L 0 300 Z"
-              d="M0 100 C -150 350, 50 100, 180 180 S 350 200, 400 200 S 500 300, 500 200 L 500 300 L 0 300 Z"
-              fill="url(#waveGradient)"
-            //   fill="#00F"
+        <View style={styles.logoContainer}>
+          <Animated.View style={[styles.logoCircle, { opacity: opacityAnimation }]}>
+            <Image
+              source={require("../assets/Logo/Diamate.png")}
+              style={styles.logo}
             />
-          </Svg> */}
-          <Text style={styles.text1}>Manage Your Diabetes</Text>
-          <Text style={styles.text2}>Welcome</Text>
+          </Animated.View>
+          <View style={styles.DiaMate}>
+          <Animated.Text
+            style={[
+              styles.text1,
+              { opacity: opacityAnimation },
+            ]}
+          >
+            DiaMate
+          </Animated.Text>
+          </View >
+          <View  style= {styles.ManageYD}>
+          <Animated.Text
+            style={[
+              styles.text2,
+              { opacity: opacityAnimation },
+            ]}
+          >
+            Manage your Diabetes
+          </Animated.Text>
+          </View>
+          <View style= {styles.Welcome}>
+          <Animated.Text
+            style={[
+              styles.text3,
+              { opacity: opacityAnimation },
+            ]}
+          >
+            Welcome
+          </Animated.Text>
+          </View>
+          <View style = {styles.buttonNext}>
           <TouchableOpacity
-          style={styles.button}
-          onPress={() => props.navigation.navigate("PatientHomePage")}
-        >
-          <Text style={styles.buttonText}>Patient home page</Text>
-        </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
+            style={[styles.button, { opacity: opacityAnimation }]}
             onPress={() => props.navigation.navigate("Login")}
           >
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => props.navigation.navigate("Admin")}
-          >
-            <Text style={styles.buttonText}>Admin dashbord</Text>
-          </TouchableOpacity>
+          </View>
         </View>
       </LinearGradient>
     </View>
   );
-    
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor:'#1E1E1E'
   },
   gradient: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
   },
-  text1: {
-    textAlign: "center",
+  logoContainer: {
+    alignItems: "center",
+    marginTop: 150,
+  },
+  logoCircle: {
+    width: 160,
+    height: 160,
+    borderRadius: 80, // half of width and height
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logo: {
+    width: "70%",
+    height: "70%",
+    resizeMode: "contain",
+  },
+  DiaMate : {
     width: 269,
-    height: 33,
-    // left:80,
-    fontSize: 18,
+    margin: 20,
+
+  },
+   
+  text1: {
+    height: 50,
+    textAlign: "center",
+    fontSize: 45,
     fontWeight: "bold",
-    top: 456,
-    color: "#FFFFFF",
+    color: "#rgb(100, 170, 250)",
+    fontFamily:""
+  },
+  ManageYD : {
+    // marginTop : 10,
+
+  },
+  Welcome : {
+    marginTop : 150,
   },
   text2: {
     textAlign: "center",
     width: 269,
     height: 33,
-    // left:80,
-    top: 460,
-    fontSize: 15,
-    fontWeight: "bold",
-
-    color: "#FFFFFF",
+    fontSize: 18,
+    // fontWeight: "bold",
+    color: "#dfe4ea",
+    // margin:30,
+  },
+  text3: {
+    textAlign: "center",
+    width: 269,
+    height: 33,
+    fontSize: 20,
+    // fontWeight: "bold",
+    color: "#ffffff",
+    // margin:30,
   },
   button: {
-    backgroundColor: "#7a42f4",
+    backgroundColor: "#4a69bd",
     padding: 10,
-    top: 500,
     width: 258,
     height: 49,
-    // left:85,
     borderRadius: 32,
   },
   buttonText: {
     textAlign: "center",
     color: "#FFFFFF",
   },
-  image: {
-    width: 200,
-    height: 200,
-    alignSelf: "center",
-    marginTop: 50,
+  buttonNext : {
+        marginTop:20,
   },
 });
 

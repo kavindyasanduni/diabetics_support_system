@@ -5,7 +5,7 @@ import { View ,Text , ScrollView , StyleSheet ,TouchableOpacity ,Alert } from "r
 // import axios from "axios";
 import BASE_URL from "../config";
 
-const ReservationCancel= () => {
+const ReservationNutritionist = () => {
     const id = 1;
     const [reservations , setReservations] = useState([]);
 
@@ -17,7 +17,7 @@ const ReservationCancel= () => {
       
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${BASE_URL}/getReservationsById/${id}`);
+          const response = await axios.get(`${BASE_URL}/getReservationsByRole/${id}/nutritionists`);
           if (response.data) {
             setReservations(response.data);
           }
@@ -70,40 +70,95 @@ const ReservationCancel= () => {
             alert('An error occurred while updating the data. Please try again later.');
           }
       };
-
-
+//to show current and old reservation
+      const currentDate = new Date();
+      const formattedDate = `${currentDate.getDate()}-${
+        currentDate.getMonth() + 1
+      }-${currentDate.getFullYear()}`;
+      console.log(formattedDate);
+    
+      //to show past and future reservation
+      const [showPastReservations, setShowPastReservations] = useState(false);
+      const [showNowReservations, setShowNowReservations] = useState(true);
+    
+      const handlePastReservations = () => {
+        setShowPastReservations(true);
+        setShowNowReservations(false);
+      };
+    
+      const handleNowReservations = () => {
+        setShowPastReservations(false);
+        setShowNowReservations(true);
+      };
 
     return (
-        <View style = {{flex:1 , backgroundColor: "#fff"}}>
-          <View style={{marginTop:50}}>
-            <View style={styles.DescContainer}>
-                <Text style={{ fontSize: 20  ,color:"#2980b9" , paddingBottom:5}}>Your Reservation</Text>
-                <Text style={styles.input}>Appointment Date</Text>
-
-                <Text style={styles.input}>Status</Text>
-
-                <Text style={styles.input}>Time</Text>
-
-                <Text style={styles.input}>Click here to cancel Appointment</Text>
-                </View>
-                </View>
+        <View style = {{flex : 1}}>
+             <View
+                style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                marginTop: 50,
+                }}
+            >
+                <TouchableOpacity
+                style={[
+                    styles.filterButton,
+                    showPastReservations && styles.activeButton,
+                ]}
+                onPress={handlePastReservations}
+                >
+                <Text style={styles.buttonTextHeader}>Past</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                style={[
+                    styles.filterButton,
+                    showNowReservations && styles.activeButton,
+                ]}
+                onPress={handleNowReservations}
+                >
+                <Text style={styles.buttonTextHeader}>Now</Text>
+                </TouchableOpacity>
+            </View>
             <ScrollView>
             
-            
+            <View style={{marginTop:50, backgroundColor: "#fff"}}>
+            <View style={styles.DescContainer}>
+                <Text style={{ fontSize: 20  ,color:"#2c3e50" , paddingBottom:5}}>Available Reservation</Text>
+                <Text style={styles.input}>Appointment Date and time</Text>
+                <Text style={styles.input}>Patient Name</Text>
+                <Text style={styles.input}>Mobile Number</Text>
+                <Text style={styles.input}>Click here to see reports</Text>
+                </View>
+                </View>
                 <View style={styles.DescContainer}>
-                    {reservations.map((data, index) => (    
+                    {reservations.map((data, index) => { 
+                       const reservationDateParts = data.date.split("-");
+                       const reservationDate = new Date(
+                       parseInt(reservationDateParts[2]),
+                       parseInt(reservationDateParts[1]) - 1,
+                       parseInt(reservationDateParts[0])
+                       );
+                       const isPastReservation = reservationDate < currentDate;
+                       if (
+                       (isPastReservation && showPastReservations) ||
+                       (!isPastReservation && showNowReservations)
+                       ) {  
+                        return (  
                     <View key={index}>
-                        <Text style={{ fontSize: 20 ,paddingBottom:5,paddingTop:10,color:"#2980b9" }}>Reservation</Text> 
-                        <Text style={styles.input}>{data.date}</Text>
-                        <Text style={styles.input}>Status</Text>
-                        <Text style={styles.input}>{data.time}</Text>
+                        <Text style={{ fontSize: 20 ,paddingBottom:5,paddingTop:10,color:"#2c3e50" }}>Reservation</Text> 
+                        <Text style={styles.input}>{data.date + " - " + data.time}</Text>
+                        <Text style={styles.input}>{data.p_name}</Text>
+                        <Text style={styles.input}>{data.phone_no}</Text>
+
                         <View style={styles.buttonContainer}>
                         <TouchableOpacity style={styles.button} onPress={() => handleClick(data.r_id)}>
-                            <Text style={styles.buttonText}>Cancel</Text>
+                            <Text style={styles.buttonText}>See Reports</Text>
                         </TouchableOpacity>
                         </View>
                     </View>
-                    ))}
+                        );
+                       }
+                    })}
                 </View>
             </ScrollView>
                 
@@ -161,7 +216,8 @@ const styles = StyleSheet.create({
     },
     DescContainer: {
       padding: 20,
-      
+    //   borderRadius: 8,
+    
       // marginTop: 50,
     },
     input: {
@@ -182,9 +238,9 @@ const styles = StyleSheet.create({
     },
   
     button: {
-      backgroundColor: "#c0392b",
-      height: 32,
-      width: 100,
+      backgroundColor: "#3498db",
+      height: 30,
+      width: 111,
       // marginLeft: 100,
       borderRadius: 20,
       marginRight: "auto",
@@ -199,6 +255,23 @@ const styles = StyleSheet.create({
     paddingTop : 5,
     
     },
+    filterButton: {
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        marginHorizontal: 5,
+        // backgroundColor: '#e0e0e0',
+        // borderRadius: 5,
+      },
+    
+      activeButton: {
+        borderBottomWidth: 2,
+        borderBottomColor: "#2c3e50",
+      },
+    
+      buttonTextHeader: {
+        fontSize: 16,
+        color: "#2c3e50",
+      },
   });
 
-export default ReservationCancel;
+export default ReservationNutritionist ;
