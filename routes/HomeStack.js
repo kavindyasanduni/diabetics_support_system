@@ -46,8 +46,8 @@ const Navigation = props => {
                 <Stack.Screen name="Welcome" component={Welcome} options={{headerShown:false}}/>
                 <Stack.Screen name="Admin" component={Dashbord} />
                 <Stack.Screen name="knowladgesharingdashbord" component={knowladgesharingdashbord} />
-                <Stack.Screen name="deletefromksc" component={DeleteContentFromKSC} />
-                <Stack.Screen name="updateksc" component={UpdateContainerCard}/>
+                <Stack.Screen name="Update or Delete Data - KSC" component={DeleteContentFromKSC} />
+                <Stack.Screen name="Add new content - KSC" component={UpdateContainerCard}/>
 
                 <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
                 <Stack.Screen name="PatientSignUp" component={PatientSignUp} options={{headerShown:false}}/>

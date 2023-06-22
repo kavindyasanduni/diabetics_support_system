@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-
 import {
   Button,
   View,
@@ -14,7 +13,6 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
-
 // importing firebase modules
 import { storage } from "../../firebaseconfig";
 import {
@@ -26,7 +24,6 @@ import {
 import { async } from "@firebase/util";
 import Swiper from "react-native-swiper";
 import BASE_URL from "../../config";
-
 
 const UpdateContainerCard = (props) => {
   const [image, setImage] = useState(null);
@@ -42,9 +39,21 @@ const UpdateContainerCard = (props) => {
   const [visibly , setVisible] = useState(true);
   const options = ["workouts", "diet plans", "news and reaserach"];
 
+  // const [currentPage, setCurrentPage] = useState(0);
 
-  let clickedSubmit;
-  let catchedPhoto;
+
+ 
+// useEffect(() => {
+//   if (swiperRef.current) {
+//     swiperRef.current.scrollToIndex({
+//       index: currentPage,
+//       animated: false,
+//     });
+//   }
+// }, [currentPage]);
+
+  // let clickedSubmit;
+  // let catchedPhoto;
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -82,17 +91,6 @@ const UpdateContainerCard = (props) => {
     }
   };
 
-  /////////////////////////////////////////////////////////////
-
-  // useEffect(() => {
-  //   console.log(text);
-  //   // setText(text);
-  //   console.log(title);
-  // }, [text, title]);
-
-  //end of sending data to database
-  // let imageLink;
-
   const handleImageSubmit = async () => {
 
      if (!image) {
@@ -100,7 +98,6 @@ const UpdateContainerCard = (props) => {
     return;
   }
   
-
     const response = await fetch(image);
     const blob = await response.blob();
 
@@ -122,9 +119,6 @@ const UpdateContainerCard = (props) => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
-          // setImage(downloadURL);
-          // imageLink = downloadURL;
-
           //send data to database when uploading finished
           axios
             .post(`${BASE_URL}/addKInformation`, {
@@ -138,6 +132,10 @@ const UpdateContainerCard = (props) => {
                 "Data successfully saved to database: ",
                 response.data
               );
+             props.navigation.navigate("knowladgesharingdashbord")
+            setText(null);
+            setImage(null);
+            setTitle(null);
             })
             .catch(function (error) {
               console.log(error);
@@ -159,7 +157,8 @@ const UpdateContainerCard = (props) => {
       alert('Please fill in the title and description.');
       return;
     }
-
+      // Reset current page to 0
+      // setCurrentPage(0);
     // Proceed to the next step
     swiperRef.current.scrollBy(1, true);
   };
@@ -170,6 +169,7 @@ const UpdateContainerCard = (props) => {
       alert('Please Select category.');
       return;
     }
+    // setCurrentPage(0);
 
     // Proceed to the next step
     swiperRef.current.scrollBy(1, true);
@@ -208,6 +208,7 @@ const UpdateContainerCard = (props) => {
         {
           text: 'Yes',
           onPress: () => {
+            // setCurrentPage(0);
             // Call your cancel reservation function here
              props.navigation.navigate("knowladgesharingdashbord")
              
@@ -220,16 +221,12 @@ const UpdateContainerCard = (props) => {
 
   return (
 
-    ///////////////////////////////////////////////////////////////
-
     //  <Modal visible={vissible} animationType="slide">
 
   <View style={styles.container}> 
-   
-
     <View style={{ flex: 1 }}>
-      <Swiper ref={swiperRef} loop={false}>
-      {/* first page */}
+    <Swiper ref={swiperRef} loop={false} initialPage={0}>      
+    {/* first page */}
       <View style={{ flex: 1 }}>
           {/* select catergory */}
           <View style={styles.headerContainer}>
@@ -410,9 +407,7 @@ const UpdateContainerCard = (props) => {
     </View>
 
     // </Modal>
-  
 
-  /////////////////////////////////////////////////////////
   );
 };
 

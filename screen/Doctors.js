@@ -1,5 +1,7 @@
 import { padding } from '@mui/system';
 import React, { useState, useEffect } from "react";
+import { Card, Button } from 'react-native-paper';
+import Icon from "react-native-vector-icons/AntDesign";
 
 import {
   SafeAreaView,
@@ -49,33 +51,58 @@ const DoctorsCard = (props) => {
   return (
     //using modal do this
 
-    <SafeAreaView>
-      <ScrollView>
-        <SearchBar style={styles.ser} />
-        <View style={styles.button1}>
-          {doctorsData.map((data, index) => (
-            <TouchableOpacity style={styles.buttonC} 
-            key={index}
-              onPress={() => props.navigation.navigate("DoctorProfile", { id: data.did  , name :name})}
+    // <SafeAreaView>
+    <View style={styles.container}>
 
-            >
-              <Image
-                source={require("../assets/images/d1.jpg")}
-                style={{ width: 70, height: 70 }}
-              />
-              <Text
-                style={styles.t1}
-                // onPress={() => props.navigation.navigate("DoctorProfile" ,  { id: data.did })}
-              >
-                {data.fname +" "+ data.lname}
-              </Text>
-            </TouchableOpacity>
+        <SearchBar style={styles.ser} />
+      <ScrollView contentContainerStyle={styles.cardsContainer}>
+
+          {doctorsData.map((data, index) => (
+            // <TouchableOpacity style={styles.buttonC} 
+            // key={index}
+            //   onPress={() => props.navigation.navigate("DoctorProfile", { id: data.did  , name :name})}
+
+            // >
+            //   <Image
+            //     source={require("../assets/images/d1.jpg")}
+            //     style={{ width: 70, height: 70 }}
+            //   />
+            //   <Text
+            //     style={styles.t1}
+            //     // onPress={() => props.navigation.navigate("DoctorProfile" ,  { id: data.did })}
+            //   >
+            //     {data.fname +" "+ data.lname}
+            //   </Text>
+            // </TouchableOpacity>
+            <View key={index} style={styles.cardContainer}>
+                <Card style={styles.cardStyles}>
+                  <Card.Cover source={require("../assets/images/d1.jpg")} style={styles.cardImage} />
+                  <Card.Title title={data.fname +" "+ data.lname} />
+                  <Card.Content>
+                    <Text>{data.description}</Text>
+                  </Card.Content>
+                  <Card.Actions>
+                  {/* <Button style={styles.readMoreButton}> */}
+                  <TouchableOpacity
+                  onPress={() => props.navigation.navigate("DoctorProfile", { id: data.did  , name :name , description : data.description})}
+                  activeOpacity={0.7}
+                  >
+                      <Text style={styles.readMoreButtonText}>Book Now   
+                    <Icon name="doubleright" size={12} color="#0984e3" style={{marginLeft:5}} />
+                      
+                      </Text> 
+
+                    {/* </Button> */}
+                    </TouchableOpacity>
+                  </Card.Actions>
+                </Card>
+              </View>
           ))}
 
+      </ScrollView>
         
         </View>
-      </ScrollView>
-    </SafeAreaView>
+    // </SafeAreaView>
   );
 };
 
@@ -96,6 +123,43 @@ const styles = StyleSheet.create({
   t4: { color: "#fff", padding: 10, fontSize: 20 },
 
   t5: { color: "#fff", padding: 10, fontSize: 20 },
+
+  cardsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+  },
+  cardContainer: {
+    width: '48%',
+    marginVertical: 10,
+  },
+  cardStyles: {
+    backgroundColor: '#fff',
+  },
+  readMoreButton: {
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+  },
+  readMoreButtonText: {
+    fontSize: 13,
+    // color: 'black',
+    color: "#0984e3",
+    paddingRight:10,
+  },
+  cardImage: {
+    height: 100, // Adjust the height as needed
+    resizeMode: 'cover',
+  },
+  container: {
+    flex: 1,
+    paddingTop: 30,
+    paddingHorizontal: 30,
+    backgroundColor: '#fff',
+  },
+
 });
 
 export default DoctorsCard;

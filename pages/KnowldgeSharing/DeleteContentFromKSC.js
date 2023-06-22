@@ -31,7 +31,7 @@ const DeleteContentFromKSC = () => {
   const [pogress, setPogress] = useState(0); //to get the upload pogress
   const [imgLinkForCheking, setImageLinkForCheking] = useState(null); //to CHECK if the image is same
   const [id, setId] = useState(null);
-  console.log("id : " + id);
+  // console.log("id : " + id);
 
   const options = ["workouts", "diet plans", "news and reaserach"];
 
@@ -53,7 +53,7 @@ const DeleteContentFromKSC = () => {
         `${BASE_URL}/getKInformationByCategory/${selectedOption}`
       );
       setTableData(response.data);
-      console.log("Data captured: " + response);
+      console.log("Data captured: " + response.data);
     } catch (error) {
       console.log(error);
       alert(
@@ -73,10 +73,13 @@ const DeleteContentFromKSC = () => {
       title: data.title,
       description: data.description,
       imgLink: data.img_url,
-      date: data.created_date,
+      date: data.createdDate ? new Date(data.createdDate).toLocaleDateString() : 'No date', // Convert to localized date format or set as 'No date' if null
+      
     };
   });
-  // console.log(kInformation.date);
+
+  // Sort the array in descending order based on the date
+// kInformation.sort((a, b) => new Date(b.date) - new Date(a.date));
   //to show spesific number of length
   const maxDescriptionLength = 10;
 
@@ -199,7 +202,7 @@ const DeleteContentFromKSC = () => {
   const handleDelete =  () => {
     Alert.alert(
       'Confirmation',
-      'Are you sure you want to delete the image changes?',
+      'Are you sure you want to delete the image ?',
       [
         {
           text: 'No',
@@ -268,6 +271,7 @@ const DeleteContentFromKSC = () => {
             <View style={styles.tableData}>
               <ScrollView>
                 {kInformation.map((item, index) => (
+                 
                   <View style={styles.tableRow} key={index}>
                     <Text style={styles.tableCell}>
                       {item.title.slice(0, maxDescriptionLength)}

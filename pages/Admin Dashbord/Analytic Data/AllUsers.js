@@ -196,6 +196,7 @@ const styles = StyleSheet.create({
   //styles for barchart
   barChartContainer : {
     paddingTop: 10,
+    paddingLeft:10,
     // alignItems:"center",
 
 

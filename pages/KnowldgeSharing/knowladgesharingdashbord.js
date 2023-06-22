@@ -71,7 +71,7 @@ const Knowladgesharingdashbord = (props) => {
               <TouchableOpacity
               style={styles.button}
               onPress={() =>
-                props.navigation.navigate("updateksc")
+                props.navigation.navigate("Add new content - KSC")
               }
             >       
               <Text style={styles.cardText}>
@@ -87,7 +87,7 @@ const Knowladgesharingdashbord = (props) => {
               <TouchableOpacity
               style={styles.button}
               onPress={() =>
-                props.navigation.navigate("deletefromksc")
+                props.navigation.navigate("Update or Delete Data - KSC")
               }
             >       
               <Text style={styles.cardText}>
