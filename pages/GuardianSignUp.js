@@ -156,7 +156,8 @@ const GuardianSignUp = props => {
          width:300,
          borderColor: '#7a42f4',
          borderWidth: 1,
-         borderRadius:22
+         borderRadius:22,
+         color:'#fff'
       },
       submitButton: {
          backgroundColor: '#7a42f4',

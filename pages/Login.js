@@ -1,5 +1,6 @@
 import React, { Component,useState,useContext,useRef,useEffect} from 'react'
-import { View, Text, TouchableOpacity, TextInput, StyleSheet ,  Animated,Easing,Image} from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, StyleSheet ,  Animated,Easing,Image,ScrollView,KeyboardAvoidingView} from 'react-native'
+//import {KeyboardAvoidingView, Platform} from 'react-native-keyboard-aware-scroll-view'
 import { Alert } from 'react-native';
 import axios from 'axios';
 import { UserContext } from './UserContext';
@@ -101,22 +102,25 @@ const Login = props => {
     }).start();
   };
   return (
-    <View style = {{flex:1}}>
+    // <View style = {{flex:1}}>
+      <View style = {{flex:1}}>
        <LinearGradient
         colors={colors}
         start={start}
         end={end}
         locations={locations}
         style={styles.gradient}
-      >
-      <TouchableOpacity style={styles.signUpContainer}>
-      <Text style={styles.signup} onPress={()=>props.navigation.navigate("PatientSignUp")}>
+        >
+    <ScrollView>
+
+       <TouchableOpacity style={styles.signUpContainer}>
+       <Text style={styles.signup} onPress={()=>props.navigation.navigate("PatientSignUp")}>
         New Patient
         
         </Text>
         <Icon style={styles.signupIcon} name="adduser" size={20} color="#1D11AD" />
       
-      </TouchableOpacity>
+       </TouchableOpacity>
         <View style={styles.logoContainer}>
 
          <Animated.View style={[styles.logoCircle, { opacity: opacityAnimation }]}>
@@ -145,8 +149,8 @@ const Login = props => {
           </Animated.Text>
           </View>
         </View >
-     <View style={styles.inputButtonContainer}>
-      <TextInput
+       <View style={styles.inputButtonContainer}>
+       <TextInput
         style={[styles.input,emailError && styles.errorInput]}
         underlineColorAndroid="transparent"
         placeholder="Email"
@@ -166,8 +170,7 @@ const Login = props => {
         secureTextEntry={true}
       />
      </View>
-      
-    <View >
+     <View >
       <TouchableOpacity style={styles.button} onPress={handleOnPress}>
         <Text  style={styles.buttonText} >Log In</Text>
       </TouchableOpacity>
@@ -177,9 +180,11 @@ const Login = props => {
       </TouchableOpacity>
        </View>
      </View>
+    </ScrollView>
 
       </LinearGradient>
-    </View>
+    </View>  
+    // </View>
   );
   }
 
@@ -224,12 +229,13 @@ const styles = StyleSheet.create({
     color:'#fff',
   },
   container: {
-    paddingTop: 1,
+    //paddingTop: 1,
+    flex: 1,
   },
   inputButtonContainer :{
     marginTop : 20,
     width:"90%",
-
+    justifyContent: 'center',
   },
   input: {
     marginTop: 20,
@@ -239,6 +245,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 32,
     paddingLeft:20,
+    color:'#fff'
   },
   buttonContainer: {
     margin: 10,

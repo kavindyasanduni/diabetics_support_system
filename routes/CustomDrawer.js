@@ -76,13 +76,18 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   signOutContainer: {
-    flex: 1,
     borderTopWidth: 1,
     borderTopColor: '#ccc',
+    paddingVertical: 15,
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 20,
+    width: '100%',
   },
   signOutButton: {
-    paddingVertical: 15,
-    left:15
+    paddingVertical: 10,
+    left:15,
+    width: '100%',
   },
   signOutText: {
     fontSize: 16,

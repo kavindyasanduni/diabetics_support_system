@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TouchableOpacity, TextInput, StyleSheet ,Image } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, StyleSheet ,Image,ScrollView } from 'react-native'
 import axios from 'axios'
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -151,6 +151,7 @@ const PatientSignUp = props => {
         locations={locations}
         style={styles.gradient}
       >
+        <ScrollView>
         <View style={styles.logoContainer}>
          <View style={styles.logoCircle}>
             <Image
@@ -224,7 +225,7 @@ const PatientSignUp = props => {
             <Text style = {styles.submitButtonText}> Next </Text>
       </TouchableOpacity>
       </View>
-
+      </ScrollView>
       </LinearGradient>
       </View>
    );
@@ -272,6 +273,7 @@ export default PatientSignUp
          borderRadius:22,
          paddingLeft:20,
          marginTop: 20,
+         color:'#fff'
       },
       submitButton: {
          backgroundColor: '#4a69bd',

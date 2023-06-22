@@ -12,6 +12,7 @@ import AddDoctorData from "../screen/DoctorDetails";
 import AddNutritionistData from "../screen/NutitionistDetails";
 import MViewFirstPage from "../pages/KnowldgeSharing/Mobile View/MVIewFirstPage";
 import AdminSeeRefund from "../screen/AdminSeeRefund";
+import PatientEditProfile from "../pages/PatientEditProfile";
 // create drawer navigation
 const Drawer = createDrawerNavigator();
 
@@ -30,6 +31,7 @@ const AdminDrawer = props => {
       <Drawer.Screen name="Refunding Requests" component={AdminSeeRefund} />
       
       <Drawer.Screen name="AdminProfile" component={AdminProfile} />
+      <Drawer.Screen name="PatientEditProfile" component={PatientEditProfile} />
 
     </Drawer.Navigator>
   );

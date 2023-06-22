@@ -18,7 +18,7 @@ const EditPassword = props => {
     }
 
     const updatedUser = { currentPassword: currentPassword, newPassword: newPassword };
-    axios.put(`${BASE_URL}/api/users/1/password`, updatedUser)
+    axios.put(`${BASE_URL}/api/users/${userId}/password`, updatedUser)
       .then(response => {
         Alert.alert("Password updated successfully");
       })
