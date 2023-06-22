@@ -8,7 +8,7 @@ import BASE_URL from "../config";
 const ProfileDoc = (props) => {
   const [AppoinmentDateandDay, setAppinmentDateandDay] = useState("");
 
-  const { id, name } = props.route.params;
+  const { id, name ,description} = props.route.params;
   console.log(id);
   console.log(name);
   const [doctorData, setDoctorData] = useState([]);
@@ -125,7 +125,7 @@ const ProfileDoc = (props) => {
             DR.{doctorData.fname + " " + doctorData.lname}
           </Text>
 
-          <Text style={styles.Desc}>Diabetologists</Text>
+          <Text style={styles.Desc}>{description}</Text>
           <Text style={styles.Desc}>BioNeu Hospital</Text>
         </View>
 
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   Desc: {
-    color: "gray",
+    color: "#fff",
     fontSize: 15,
     marginLeft: 32,
   },

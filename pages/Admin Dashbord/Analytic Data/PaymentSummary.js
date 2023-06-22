@@ -106,6 +106,7 @@ const paymentLabels = Object.keys(monthlyPayments);
                 backgroundColor="transparent"
                 paddingLeft="15"
                 absolute
+                style={styles.chart}
             
               />
             ) : (
@@ -194,7 +195,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   chart: {
-    marginVertical: 8,
+    // marginVertical: 8,
     borderRadius: 16,
   },
 });
