@@ -131,8 +131,7 @@ function UpdateNutritionistDetails() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.input1}>Update Nutritionist Data</Text>
-
+      <Text style={styles.input1}>Update Nutritionist</Text>
 
       <Picker
         selectedValue={selectedDoctor}
@@ -140,46 +139,52 @@ function UpdateNutritionistDetails() {
       >
         <Picker.Item label="Select Nutritionist" value="" />
         {doctorData.map((doctor) => (
-          <Picker.Item key={doctor.nid} label={`${doctor.fname} ${doctor.lname}`} value={doctor.did} />
+          <Picker.Item
+            key={doctor.nid}
+            label={`${doctor.fname} ${doctor.lname}`}
+            value={doctor.did}
+          />
         ))}
       </Picker>
 
-      <Text style={styles.label}>Appointment Dates:</Text>
+      <TextInput style={styles.label} placeholder="User Name">
+        Appointment Dates:
+      </TextInput>
       {appointmentDates.map((date, index) => (
         <Text key={index}>{date}</Text>
       ))}
 
-      <Text style={styles.label}>Appointment Times:</Text>
+      <Text style={styles.label}>Add new Date and times</Text>
       {appointmentTimes.map((time, index) => (
         <Text key={index}>{time}</Text>
       ))}
-   
 
-
-    <Text> Add new  Date and times</Text>
+      <Text style={styles.label}>Add new Date and times</Text>
       <View style={styles.datePickerContainer}>
-        <View >
-        <TouchableOpacity style = {styles.buttonP} onPress={showDatePicker}>
-          <Text >Select Date</Text>
-        </TouchableOpacity>
-        </View>
-        <View  >
-        <TouchableOpacity style = {styles.buttonP} onPress={showTimePicker}>
-          <Text >Select Time</Text>
-        </TouchableOpacity>
-        </View>
-        <View >
-        {selectedDate && selectedTime && (
-          <TouchableOpacity style={styles.buttonAddDate} onPress={addAvailableDateTime}>
-            <Text >Add DateTime</Text>
+        <View>
+          <TouchableOpacity style={styles.buttonP} onPress={showDatePicker}>
+            <Text>Select Date</Text>
           </TouchableOpacity>
-        )}
         </View>
-      </View> 
-
+        <View>
+          <TouchableOpacity style={styles.buttonP} onPress={showTimePicker}>
+            <Text>Select Time</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          {selectedDate && selectedTime && (
+            <TouchableOpacity
+              style={styles.buttonAddDate}
+              onPress={addAvailableDateTime}
+            >
+              <Text>Add DateTime</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
 
       <View style={styles.selectedDateTimeContainer}>
-      {availableTimes.map((dateTime, index) => (
+        {availableTimes.map((dateTime, index) => (
           <AvailableDateTime
             key={index}
             dateTime={dateTime}
@@ -204,7 +209,6 @@ function UpdateNutritionistDetails() {
         <Text style={styles.buttonText}>Update</Text>
       </TouchableOpacity>
     </View>
-      
   );
 };
 
@@ -214,28 +218,29 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 20,
   },
-
   input: {
     borderWidth: 2,
     borderColor: "#ddd",
     borderRadius: 25,
-    padding: 7,
+    // padding: 13,
     paddingLeft: 15,
-    marginBottom: 20,
+    marginBottom: 10,
+    width: 300,
+    height: 40,
+  },
+  label: {
+    margin: 20,
   },
   input1: {
     marginBottom: 10,
     fontSize: 18,
     fontWeight: "bold",
-    // paddingTop: 50,
-  },
-  input2: {
-    marginBottom: 15,
-    fontSize: 18,
-    fontWeight: "bold",
+    //alignContent:"center"
+    marginLeft: 100,
+    marginTop: 50,
   },
   button: {
-    backgroundColor: "#3498db",
+    backgroundColor: "#0E1879",
     padding: 10,
     borderRadius: 25,
     alignItems: "center",
@@ -248,31 +253,32 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
   },
-
-  //select dat and time
-
   datePickerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 10,
   },
   buttonP: {
     borderWidth: 2,
-    borderColor: '#ddd',
+    borderColor: "#ecf0f1",
     padding: 10,
     borderRadius: 25,
-    width: 120, // Adjust the width as needed
-    alignItems: 'center',
+    width: 120,
+    alignItems: "center",
+    backgroundColor: "#30A2FF",
   },
   buttonAddDate: {
-    marginTop: 30,
+    //marginTop: 30,
     borderWidth: 2,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     padding: 10,
     borderRadius: 25,
-    alignItems: 'center',
+    alignItems: "center",
+    height: 40,
+    borderColor: "#ecf0f1",
+    backgroundColor: "#30A2FF",
+    marginLeft: 1,
   },
 });
-
 export default UpdateNutritionistDetails;

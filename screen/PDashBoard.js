@@ -1,9 +1,4 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity,Image } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { ScrollView } from "react-native-gesture-handler";
-
-import react from "react";
 import {
   View,
   Text,
@@ -16,23 +11,23 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native-gesture-handler";
 
-const Guardianhome = ({ navigation }) => {
+const PatientDashbord = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.textView}>
         <Image
-          source={require("../assets/VectorArt/Dp.png")}
+          source={require("../assets/VectorArt/pd.png")}
           style={styles.Image}
-        /> 
+        />
         <Text style={styles.text}>HOME </Text>
       </View>
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.cardContainer}>
             <View style={styles.card}>
-              <Icon name="doctor" size={85} color="#1D11AD" />
+              <Icon name="stethoscope" size={85} color="#1D11AD" />
 
-              <Text style={styles.cardText}>Report</Text>
+              <Text style={styles.cardText}>Book Doctor</Text>
             </View>
           </View>
           <View style={styles.cardContainer}>
@@ -84,7 +79,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     marginBottom: 15,
-    marginLeft: 47,
+    marginLeft: 20,
     fontWeight: "bold",
     marginTop: 0,
     color: "#fff",
@@ -96,19 +91,20 @@ const styles = StyleSheet.create({
     // marginBottom: 180,
     width: "100%",
     height: 280,
-    paddingTop: 25,
+    paddingTop: 20,
   },
   cardText: {
     fontSize: 20,
     marginTop: 10,
     fontWeight: "bold",
-    // fontColor: "gray",
+    color: "#2c3e50",
   },
   Image: {
     height: 220,
     width: 200,
     alignSelf: "center",
+    marginLeft: 25,
   },
 });
 
-export default Guardianhome;
+export default PatientDashbord;

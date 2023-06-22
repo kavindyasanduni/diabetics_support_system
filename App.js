@@ -19,7 +19,7 @@ import DoctorsCard from './screen/Doctors';
 import Table from './screen/ReservationHistory';
 //import NutritionistCard from './screen/Nutritionist';
 import AddProfile from './screen/ProfileDoc';
-// import PDash from './screen/PDashBoard';
+
 import UpdateUserDetails from './screen/UpdateDoctor';
 import SeeReservation from './screen/SeeReservation';
 import AddUserDetails2 from './screen/NutitionistDetails';
@@ -31,6 +31,12 @@ import NutritionistCard from './screen/Nutritionist';
 import Guardianhome from './pages/Guardianhome';
 import NutritionistDashboard from './pages/NutritionistDashboard';
 import DoctorDashboard from './pages/DoctorDashboard';
+import AddDoctorData from './screen/DoctorDetails';
+import ReservationCancel from './screen/ReservationCansel';
+import AddNutritionistData from './screen/NutitionistDetails';
+import UpdateNutritionistDetails from './screen/UpdateNutritionist';
+import UpdateDoctorDetails from './screen/UpdateDoctor';
+import Search from './screen/Component/Search';
 
 
 
@@ -41,9 +47,23 @@ import DoctorDashboard from './pages/DoctorDashboard';
 
 const App = () => { 
   return (
-    <UserProvider>
-      <Navigation/>
-    </UserProvider>
+    // <UserProvider>
+      // <Navigation/>
+    // </UserProvider>
+    //<AddDoctorData/>
+    //<PDash/>
+   //<Guardianhome/>
+   //<DoctorDashboard/>
+   //<NutritionistDashboard/>
+   //<SeeReservation/>
+   //<Reservation/>
+   //<ReservationCancel/>
+   //< UpdateDoctorDetails/>
+   <AddNutritionistData/>
+   //<UpdateNutritionistDetails/>
+  // <search/>
+   
+   
   )
 }
 

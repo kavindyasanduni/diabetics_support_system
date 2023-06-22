@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
     fontWeight: "bold",
-    // fontColor: "gray",
+    color: "#2c3e50",
   },
   Image: {
     height: 220,
