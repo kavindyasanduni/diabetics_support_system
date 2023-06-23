@@ -174,9 +174,15 @@ function AddDoctorData() {
          telephone: phoneNo,
          a_date: date,
          a_time: availableTimes,
+         description : Description,
        })
        .then(function (response) {
          console.log("Successfully added to to databaseD", response.data);
+         alert("Data added successfully!");
+         
+
+         
+
        })
        .catch(function (error) {
          console.log(error);
@@ -446,14 +452,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#000",
     marginLeft: 50,
-    marginTop:50,
   },
 
   input1: {
     marginBottom: 25,
     fontSize: 18,
     fontWeight: "bold",
-    paddingTop: 50,
+    // paddingTop: ,
+    marginTop:5,
+
   },
   input2: {
     marginBottom: 30,

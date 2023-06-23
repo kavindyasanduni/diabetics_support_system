@@ -444,7 +444,8 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     fontSize: 18,
     fontWeight: "bold",
-    paddingTop: 50,
+    // paddingTop: ,
+    marginTop: 5,
   },
   input2: {
     marginBottom: 30,
@@ -469,7 +470,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 5,
   },
   buttonP: {
     borderWidth: 2,
