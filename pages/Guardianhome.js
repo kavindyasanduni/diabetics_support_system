@@ -22,13 +22,13 @@ const  Guardianhome = ({ navigation }) => {
               <Text style={styles.cardText}>Report</Text>
             </View>
           </View>
-          <View style={styles.cardContainer}>
+          {/* <View style={styles.cardContainer}>
             <View style={styles.card}>
               <Icon name="food-off-outline" size={80} color="#1D11AD" />
 
               <Text style={styles.cardText}>Exercise & Diet plane</Text>
             </View>
-          </View>
+          </View> */}
           <View style={styles.cardContainer}>
             <View style={styles.card}>
               <Icon name="wechat" size={85} color="#1D11AD" />
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
     fontWeight: "bold",
-    // fontColor: "gray",
+    color: "#2c3e50",
   },
   Image: {
     height: 220,
