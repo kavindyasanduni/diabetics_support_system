@@ -157,62 +157,62 @@ function AddNutritionistData () {
   // console.log(date);
 
   const handleSave = () => {
-    if (handleValidation()) {
-      console.log("Form submitted successfully!");
-      
-    } else {
-      // Handle the validation errors, e.g., show an error message
-      console.log("Validation failed. Please check the form for errors.");
-    }
-    // // Save the data to the database with the selected date and times
-    // const data = {
-    //   name,
-    //   phoneNo,
-    //   email,
-    //   userName,
-    //   password,
-    //   availableDays,
-    //   availableTimes,
-    // };
-    // // Send the data to the server or perform any required actions
-    // console.log(data);
-    // console.log(availableDays);
-    // console.log(availableTimes);
+  
+        axios
+        .get(`${BASE_URL}/api/users/checkemail?email=${email}`)
+        .then(function (response) {
+          const emailExists = response.data;
+    
+          if (emailExists) {
+            alert('Email already exists');
+            console.log("Email already exists in the database");
+            return;
+          }
+    
+          // Proceed with saving the data if email doesn't exist
+          axios
+          .post(`${BASE_URL}/addnutritionist`, {
+            description : "",
+            email : email,
+            fname : fName,
+            lname : lName,
+            h_no:"",
+            img_url : "",
+            telephone :phoneNo, 
+            a_date : date,
+            a_time : availableTimes,
+  
+          })
+          .then(function (response) {
+            console.log("Successfully added to to databaseN" , response.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    
+              axios
+            .post(`${BASE_URL}/api/users/adduser`, {
+              nic : nic,
+              email : email,
+              firstname : fName,
+              lastname : lName,
+              password : password,
+              user_type : "Nutritionist", 
+              
 
-    axios
-      .post(`${BASE_URL}/addnutritionist`, {
-        description: "",
-        email: email,
-        fname: fName,
-        lname: lName,
-        h_no: "",
-        img_url: "",
-        telephone: phoneNo,
-        a_date: date,
-        a_time: availableTimes,
-      })
-      .then(function (response) {
-        console.log("Successfully added to to databaseN", response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-    axios
-      .post(`${BASE_URL}/api/users/adduser`, {
-        nic: nic,
-        email: email,
-        firstname: fName,
-        lastname: lName,
-        password: password,
-        user_type: "Nutritionist",
-      })
-      .then(function (response) {
-        console.log("Successfully added to user databaseD", response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+            })
+            .then(function (response) {
+              console.log("Successfully added to user databaseD" , response.data);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+   
+   
   };
 
   // const addAvailableDateTime = () => {
