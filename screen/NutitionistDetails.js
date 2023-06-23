@@ -115,15 +115,7 @@ function AddNutritionistData () {
 
       return isValid;
     };
-    const handleSubmit = () => {
-      if (handleValidation()) {
-        // All values passed validation, proceed with the desired action
-        console.log("Form submitted successfully!");
-      } else {
-        // Handle the validation errors, e.g., show an error message
-        console.log("Validation failed. Please check the form for errors.");
-      }
-    };
+
   
 
   // console.log(selectedDate);
@@ -157,104 +149,72 @@ function AddNutritionistData () {
   // console.log(date);
 
   const handleSave = () => {
-  
-        axios
-        .get(`${BASE_URL}/api/users/checkemail?email=${email}`)
-        .then(function (response) {
-          const emailExists = response.data;
-    
-          if (emailExists) {
-            alert('Email already exists');
-            console.log("Email already exists in the database");
-            return;
-          }
-    
-          // Proceed with saving the data if email doesn't exist
-          axios
-          .post(`${BASE_URL}/addnutritionist`, {
-            description : "",
-            email : email,
-            fname : fName,
-            lname : lName,
-            h_no:"",
-            img_url : "",
-            telephone :phoneNo, 
-            a_date : date,
-            a_time : availableTimes,
-  
-          })
-          .then(function (response) {
-            console.log("Successfully added to to databaseN" , response.data);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-    
-              axios
-            .post(`${BASE_URL}/api/users/adduser`, {
-              nic : nic,
-              email : email,
-              firstname : fName,
-              lastname : lName,
-              password : password,
-              user_type : "Nutritionist", 
-              
+        if (handleValidation) {
+          console.log("data added successfully!");
 
-            })
+          axios
+            .get(`${BASE_URL}/api/users/checkemail?email=${email}`)
             .then(function (response) {
-              console.log("Successfully added to user databaseD" , response.data);
+              const emailExists = response.data;
+
+              if (emailExists) {
+                alert("Email already exists");
+                console.log("Email already exists in the database");
+                return;
+              }
+
+              // Proceed with saving the data if email doesn't exist
+              axios
+                .post(`${BASE_URL}/addnutritionist`, {
+                  description: "",
+                  email: email,
+                  fname: fName,
+                  lname: lName,
+                  h_no: "",
+                  img_url: "",
+                  telephone: phoneNo,
+                  a_date: date,
+                  a_time: availableTimes,
+                })
+                .then(function (response) {
+                  console.log(
+                    "Successfully added to to databaseN",
+                    response.data
+                  );
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+
+              axios
+                .post(`${BASE_URL}/api/users/adduser`, {
+                  nic: nic,
+                  email: email,
+                  firstname: fName,
+                  lastname: lName,
+                  password: password,
+                  user_type: "Nutritionist",
+                })
+                .then(function (response) {
+                  console.log(
+                    "Successfully added to user databaseD",
+                    response.data
+                  );
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
             })
             .catch(function (error) {
               console.log(error);
             });
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-   
+        } else {
+          // Handle the validation errors, e.g., show an error message
+          console.log("Validation failed. Please check the form for errors.");
+        }
    
   };
 
-  // const addAvailableDateTime = () => {
-  //   if (selectedDate && selectedTime) {
-  //     const date = new Date(selectedDate);
-  //     const time = new Date(selectedTime);
-  //     const dateTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes());
-
-  //     setAvailableTimes([...availableTimes, dateTime]);
-  //     setSelectedDate('');
-  //     setSelectedTime('');
-  //   }
-  // };
-
-  //to get dates and times seperatly
-  // const addAvailableDateTime = () => {
-  //   if (selectedDate && selectedTime) {
-  //     const date = new Date(selectedDate);
-  //     const time = new Date(selectedTime);
-  //     const formattedDate = date.toISOString().split('T')[0]; // Get the date in YYYY-MM-DD format
-  //     const formattedTime = time.toISOString().split('T')[1].slice(0, 5); // Get the time in HH:mm format
-
-  //     setAvailableDays(formattedDate); // Store the selected date
-  //     setAvailableTimes([...availableTimes, formattedTime]); // Store the selected time
-  //     setSelectedDate('');
-  //     setSelectedTime('');
-  //   }
-  // };
-
-  // const addAvailableDateTime = () => {
-  //   if (selectedDate && selectedTime) {
-  //     const date = new Date(selectedDate);
-  //     const time = selectedTime.toLocaleTimeString().slice(0, 5);
-  //     const dateString = date.toISOString().slice(0, 10);
-
-  //     setAvailableDays((prevDays) => prevDays ? prevDays + ', ' + dateString : dateString);
-  //     setAvailableTimes((prevTimes) => [...prevTimes, time]);
-
-  //     setSelectedDate('');
-  //     setSelectedTime('');
-  //   }
-  // };
 
   const addAvailableDateTime = () => {
     if (selectedDate && selectedTime) {

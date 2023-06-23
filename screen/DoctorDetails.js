@@ -158,57 +158,71 @@ function AddDoctorData() {
    
 
     const handleSave = () => {
-      // Check email existence in the database
-      axios
-        .get(`${BASE_URL}/api/users/checkemail?email=${email}`)
-        .then(function (response) {
-          const emailExists = response.data;
-    
-          if (emailExists) {
-            alert('Email already exists');
-            console.log("Email already exists in the database");
-            return;
+
+          if (handleValidation()) {
+            console.log("Validated successfully!");
+
+            // Check email existence in the database
+            axios
+              .get(`${BASE_URL}/api/users/checkemail?email=${email}`)
+              .then(function (response) {
+                const emailExists = response.data;
+
+                if (emailExists) {
+                  alert("Email already exists");
+                  console.log("Email already exists in the database");
+                  return;
+                }
+
+                // Proceed with saving the data if email doesn't exist
+                axios
+                  .post(`${BASE_URL}/adddoctorinformation`, {
+                    description: "",
+                    email: email,
+                    fname: fName,
+                    lname: lName,
+                    h_no: "",
+                    img_url: "",
+                    telephone: phoneNo,
+                    a_date: date,
+                    a_time: availableTimes,
+                  })
+                  .then(function (response) {
+                    console.log(
+                      "Successfully added to the databaseD",
+                      response.data
+                    );
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+
+                axios
+                  .post(`${BASE_URL}/api/users/adduser`, {
+                    email: email,
+                    firstname: fName,
+                    lastname: lName,
+                    nic: nic,
+                    password: password,
+                    user_type: "Doctor",
+                  })
+                  .then(function (response) {
+                    console.log(
+                      "Successfully added to user databaseU",
+                      response.data
+                    );
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          } else {
+            // Handle the validation errors, e.g., show an error message
+            console.log("Validation failed. Please check the form for errors.");
           }
-    
-          // Proceed with saving the data if email doesn't exist
-          axios
-            .post(`${BASE_URL}/adddoctorinformation`, {
-              description: "",
-              email: email,
-              fname: fName,
-              lname: lName,
-              h_no: "",
-              img_url: "",
-              telephone: phoneNo,
-              a_date: date,
-              a_time: availableTimes,
-            })
-            .then(function (response) {
-              console.log("Successfully added to the databaseD", response.data);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-    
-          axios
-            .post(`${BASE_URL}/api/users/adduser`, {
-              email: email,
-              firstname: fName,
-              lastname: lName,
-              nic: nic,
-              password: password,
-              user_type: "Doctor",
-            })
-            .then(function (response) {
-              console.log("Successfully added to user databaseU", response.data);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
     };
     
 
