@@ -39,21 +39,6 @@ const UpdateContainerCard = (props) => {
   const [visibly , setVisible] = useState(true);
   const options = ["workouts", "diet plans", "news and reaserach"];
 
-  // const [currentPage, setCurrentPage] = useState(0);
-
-
- 
-// useEffect(() => {
-//   if (swiperRef.current) {
-//     swiperRef.current.scrollToIndex({
-//       index: currentPage,
-//       animated: false,
-//     });
-//   }
-// }, [currentPage]);
-
-  // let clickedSubmit;
-  // let catchedPhoto;
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -64,7 +49,6 @@ const UpdateContainerCard = (props) => {
   };
 
     //end for dropdown selection
-
   useEffect(() => {
     const requestPermission = async () => {
       if (Platform.OS !== "web") {
@@ -90,6 +74,29 @@ const UpdateContainerCard = (props) => {
       setImage(result.uri);
     }
   };
+
+  //to confirmation to save 
+  const handleSave = () =>{
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want save content?',
+      [
+        {
+          text: 'No',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            // Call your cancel reservation function here
+            
+             handleImageSubmit();
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  }
 
   const handleImageSubmit = async () => {
 
@@ -132,16 +139,18 @@ const UpdateContainerCard = (props) => {
                 "Data successfully saved to database: ",
                 response.data
               );
-             props.navigation.navigate("knowladgesharingdashbord")
             setText(null);
             setImage(null);
             setTitle(null);
+            setSelectedOption(null);
+            alert("Data successfully saved!");
+
+            swiperRef.current.scrollBy(-2, true);
+
             })
             .catch(function (error) {
               console.log(error);
             });
-          // setLoading(false);
-
           //end of upload function
         });
       }
@@ -157,8 +166,6 @@ const UpdateContainerCard = (props) => {
       alert('Please fill in the title and description.');
       return;
     }
-      // Reset current page to 0
-      // setCurrentPage(0);
     // Proceed to the next step
     swiperRef.current.scrollBy(1, true);
   };
@@ -169,8 +176,6 @@ const UpdateContainerCard = (props) => {
       alert('Please Select category.');
       return;
     }
-    // setCurrentPage(0);
-
     // Proceed to the next step
     swiperRef.current.scrollBy(1, true);
   };
@@ -208,7 +213,6 @@ const UpdateContainerCard = (props) => {
         {
           text: 'Yes',
           onPress: () => {
-            // setCurrentPage(0);
             // Call your cancel reservation function here
              props.navigation.navigate("knowladgesharingdashbord")
              
@@ -386,7 +390,7 @@ const UpdateContainerCard = (props) => {
           <View style={styles.saveButtonConatiner}>
             <TouchableOpacity
                onPress={() => {
-                      handleImageSubmit();
+                      handleSave();
                   }}
               style={styles.buttonSaveChanges}
             >
