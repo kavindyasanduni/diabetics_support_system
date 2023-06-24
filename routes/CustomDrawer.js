@@ -39,7 +39,7 @@ const CustomDrawer = (props) => {
           <Text style={styles.userName}>{`${firstName} ${lastName}`}</Text>
         </ImageBackground>
         <View style={styles.drawerItemsContainer}>
-          <DrawerItemList {...props} />
+          <DrawerItemList {...props}  activeTintColor="#FF0000" />
         </View>
       </DrawerContentScrollView>
       <View style={styles.signOutContainer}>
@@ -53,7 +53,7 @@ const CustomDrawer = (props) => {
 
 const styles = StyleSheet.create({
   drawerContent: {
-    backgroundColor: '#82006d',
+    backgroundColor: '#1D11AD',
   },
   headerBackground: {
     padding: 20,
@@ -76,13 +76,18 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   signOutContainer: {
-    flex: 1,
     borderTopWidth: 1,
     borderTopColor: '#ccc',
+    paddingVertical: 15,
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 20,
+    width: '100%',
   },
   signOutButton: {
-    paddingVertical: 15,
-    left:15
+    paddingVertical: 10,
+    left:15,
+    width: '100%',
   },
   signOutText: {
     fontSize: 16,

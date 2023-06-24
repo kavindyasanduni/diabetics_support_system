@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { View, Text, TouchableOpacity, TextInput, StyleSheet ,Image } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, StyleSheet ,Image,ScrollView } from 'react-native'
 import axios from 'axios'
 import { LinearGradient } from "expo-linear-gradient";
-
+import BASE_URL from '../config';
 
 //sign up page for the patient 
 
@@ -114,7 +114,7 @@ const PatientSignUp = props => {
     
 
     // Send the data to the server
-    axios.post('http://192.168.8.167:8082/api/users/adduser', {
+    axios.post(`${BASE_URL}/api/users/adduser`, {
       email: email,
       firstname:firstName,
       lastname:lastName,
@@ -127,7 +127,7 @@ const PatientSignUp = props => {
       console.log('Data successfully saved to database:', response.data);
       //alert('Sign up successful!');
       // Navigate to the login page
-      props.navigation.navigate('GuardianSignUp');
+      props.navigation.navigate('GuardianSignUp',{ otpEmail: email });
     })
     .catch(error => {
       console.error('Error saving data:', error);
@@ -151,6 +151,7 @@ const PatientSignUp = props => {
         locations={locations}
         style={styles.gradient}
       >
+        <ScrollView>
         <View style={styles.logoContainer}>
          <View style={styles.logoCircle}>
             <Image
@@ -224,7 +225,7 @@ const PatientSignUp = props => {
             <Text style = {styles.submitButtonText}> Next </Text>
       </TouchableOpacity>
       </View>
-
+      </ScrollView>
       </LinearGradient>
       </View>
    );
@@ -272,6 +273,7 @@ export default PatientSignUp
          borderRadius:22,
          paddingLeft:20,
          marginTop: 20,
+         color:'#fff'
       },
       submitButton: {
          backgroundColor: '#4a69bd',

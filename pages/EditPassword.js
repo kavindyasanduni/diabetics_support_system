@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState ,useContext} from 'react';
 import { View, TextInput,Text, Button, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
+import { UserContext } from '../pages/UserContext';
 import BASE_URL from '../config';
 
 const EditPassword = props => {
 
-  const { userId } = props;
+  const { userId } = useContext(UserContext);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSave = () => {
+  const handleSave = () => { 
     if (newPassword !== confirmPassword) {
       Alert.alert("Passwords do not match");
       return;
     }
 
     const updatedUser = { currentPassword: currentPassword, newPassword: newPassword };
-    axios.put(`${BASE_URL}/api/users/1/password`, updatedUser)
+    axios.put(`${BASE_URL}/api/users/${userId}/password`, updatedUser)
       .then(response => {
         Alert.alert("Password updated successfully");
       })

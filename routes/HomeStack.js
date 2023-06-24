@@ -31,6 +31,7 @@ import AddUserDetails2 from "../screen/NutitionistDetails.js";
 
 import AdminDashboard from "../pages/AdminDashboard.js";
 import AdminDrawer from "./AdminDrawer.js";
+import OTPVerification from "../pages/OTPVerification.js";
 import SeeReservation from "../screen/SeeReservation.js";
 import ReservationCancel from "../screen/ReservationCansel.js";
 import ReservationNutritionist from "../screen/ReservationsNutritionist.js";
@@ -52,6 +53,7 @@ const Navigation = props => {
                 <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
                 <Stack.Screen name="PatientSignUp" component={PatientSignUp} options={{headerShown:false}}/>
                 <Stack.Screen name="GuardianSignUp" component={GuardianSignUp} options={{headerShown:false}}/>
+                <Stack.Screen name="OTPVerification" component={OTPVerification} options={{headerShown:false}}/>
                 <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerShown:false}}/>
                 <Stack.Screen name="ChangePassword" component={ChangePassword} options={{headerShown:false}}/>
                 {/* <Stack.Screen name="DoctorDashboard" component={DoctorDashboard} options={{headerShown:false}}/> */}

@@ -10,7 +10,7 @@ const ChangePassword = props => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState(true);
+  const [success, setSuccess] = useState(false);
 
   
 
