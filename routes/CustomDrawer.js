@@ -53,7 +53,7 @@ const CustomDrawer = (props) => {
 
 const styles = StyleSheet.create({
   drawerContent: {
-    backgroundColor: '#82006d',
+    backgroundColor: '#1D11AD',
   },
   headerBackground: {
     padding: 20,

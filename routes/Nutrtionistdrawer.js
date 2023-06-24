@@ -19,7 +19,6 @@ const NutritionistDrawer = () => {
       <Drawer.Screen name="EditPassword" component={EditPassword} />
       <Drawer.Screen name="Knowledge Sharing Center" component={MViewFirstPage} />
       {/* <Drawer.Screen name="Available Reservation" component={ReservationNutritionist} /> */}
-      <Drawer.Screen name="NutritionistProfile" component={NutritionistProfile} />
     </Drawer.Navigator>
   );
 }

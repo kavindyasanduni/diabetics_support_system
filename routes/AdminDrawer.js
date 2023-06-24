@@ -31,7 +31,6 @@ const AdminDrawer = props => {
       <Drawer.Screen name="Refunding Requests" component={AdminSeeRefund} />
       
       <Drawer.Screen name="AdminProfile" component={AdminProfile} />
-      <Drawer.Screen name="PatientEditProfile" component={PatientEditProfile} />
 
     </Drawer.Navigator>
   );

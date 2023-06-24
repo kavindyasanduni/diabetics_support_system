@@ -16,10 +16,9 @@ const MyDrawer = props =>{
     return (
     
       <Drawer.Navigator drawerContent={props => <CustomDrawer {...props}  />}>
-        <Drawer.Screen name="PatientHome" component={PatientHome} options={{headerStyle:{backgroundColor:'#82006d'}}}/>
-        <Drawer.Screen name="EditProfile" component={PatientEditProfile} options={{headerStyle:{backgroundColor:'#82006d'}}}/>
-        <Drawer.Screen name="EditPassword" component={EditPassword} options={{headerStyle:{backgroundColor:'#82006d'}}}/>
-        <Drawer.Screen name="PatientSetting" component={PatientSetting} options={{headerStyle:{backgroundColor:'#82006d'}}}/>
+        <Drawer.Screen name="PatientHome" component={PatientHome} options={{headerStyle:{backgroundColor:'#fff'}}}/>
+        <Drawer.Screen name="EditProfile" component={PatientEditProfile} options={{headerStyle:{backgroundColor:'#fff'}}}/>
+        <Drawer.Screen name="EditPassword" component={EditPassword} options={{headerStyle:{backgroundColor:'#fff'}}}/>
         <Drawer.Screen name="Knowledge Sharing Center" component={MViewFirstPage} />
 
         <Drawer.Screen name="PatientProfile" component={PatientProfile} />

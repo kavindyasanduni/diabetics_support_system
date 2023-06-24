@@ -18,8 +18,6 @@ const Guardiandrawer = props =>{
         <Drawer.Screen name="EditProfile" component={PatientEditProfile} />
         <Drawer.Screen name="EditPassword" component={EditPassword} />
         <Drawer.Screen name="Knowledge Sharing Center" component={MViewFirstPage} />
-
-        <Drawer.Screen name="GuardianProfile" component={GuardianProfile} />
       </Drawer.Navigator>
       
     );
