@@ -20,7 +20,6 @@ const App = () => {
     <UserProvider>
       <Navigation/>
     </UserProvider>
-    //<OTPVerification/>
   )
 }
 

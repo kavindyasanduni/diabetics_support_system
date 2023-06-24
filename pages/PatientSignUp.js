@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet ,Image,ScrollView } from 'react-native'
 import axios from 'axios'
 import { LinearGradient } from "expo-linear-gradient";
-
+import BASE_URL from '../config';
 
 //sign up page for the patient 
 
@@ -114,7 +114,7 @@ const PatientSignUp = props => {
     
 
     // Send the data to the server
-    axios.post('http://192.168.8.167:8082/api/users/adduser', {
+    axios.post(`${BASE_URL}/api/users/adduser`, {
       email: email,
       firstname:firstName,
       lastname:lastName,
