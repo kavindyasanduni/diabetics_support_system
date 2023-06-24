@@ -34,8 +34,8 @@ const NutritionistDashboard = (props) => {
           </View>
           <View style={styles.cardContainer}>
             <View style={styles.card}>
-              <Icon name="wechat" size={85} color="#1D11AD" />
-              <Text style={styles.cardText}>Online Consultation</Text>
+              <Icon name="web" size={85} color="#1D11AD" />
+              <Text style={styles.cardText}>Knowledge Sharing Center</Text>
             </View>
           </View>
         </View>
@@ -92,8 +92,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
     fontWeight: "bold",
-    color : "#2c3e50",
-    // fontColor: "gray",
+    color: "#2c3e50",
   },
   Image: {
     height: 220,

@@ -215,6 +215,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 5,
     alignItems: 'center',
+    marginBottom: 50,
   },
   modalCloseButtonText: {
     color: '#fff',

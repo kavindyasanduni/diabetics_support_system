@@ -1,34 +1,6 @@
 
 import { View, Text, TextInput, TouchableOpacity,StyleSheet } from 'react-native';
 
-// const AvailableDateTime = ({ dateTime, onRemove }) => {
-//     console.log(dateTime);
-//     const formattedDateTime = dateTime.toLocaleString([], {
-//       dateStyle: 'medium',
-//       timeStyle: 'short',
-//     });
-  
-//     return (
-//       <View style={styles.dateTimeContainer}>
-//         <Text>{formattedDateTime}</Text>
-//         <TouchableOpacity onPress={onRemove}>
-//           <Text style={styles.removeButton}>Remove</Text>
-//         </TouchableOpacity>
-//       </View>
-//     );
-//   };
-
-// const AvailableDateTime = ({ dateTime, onRemove }) => (
-//     <View style={styles.dateTimeContainer}>
-//       <Text>{dateTime}</Text>
-//       <TouchableOpacity onPress={onRemove}>
-//         <Text style={styles.removeButton}>Remove</Text>
-//       </TouchableOpacity>
-//     </View>
-//   );
-
-
-
 const AvailableDateTime = ({ dateTime, onRemove }) => {
     const formattedDateTime = dateTime.toLocaleString([], {
       dateStyle: 'medium',
