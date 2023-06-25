@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logoCircle: {
-    backgroundColor: '#fff',
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     width: 120,
     height: 120,
     borderRadius: 60,

@@ -10,7 +10,7 @@ const EditPassword = props => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+  
   const handleSave = () => { 
     if (newPassword !== confirmPassword) {
       Alert.alert("Passwords do not match");
