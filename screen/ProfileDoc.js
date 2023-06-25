@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { ScrollView, View, Text, Image, TouchableOpacity ,StyleSheet} from 'react-native';
+import { CardField, useStripe } from '@stripe/stripe-react-native';
+import {useConfirmPayment} from '@stripe/stripe-react-native'
+
+
 
 import axios from "axios";
 import BASE_URL from "../config";
+import { Button } from "react-native-elements";
 
 
 const ProfileDoc = (props) => {
+const {confirmPayment, loading} = useConfirmPayment();
+
   const [AppoinmentDateandDay, setAppinmentDateandDay] = useState("");
+  const [showCardField, setShowCardField] = useState(false);
+
 
   const { id, name } = props.route.params;
   console.log(id);
@@ -108,9 +117,33 @@ const ProfileDoc = (props) => {
       }
     };
   
+    const handleBookNowPress = () => {
+      setShowCardField(true);
+    };
 
 
   const click = () => {};
+
+  const fetchPaymentIntentClientSecret = async () => {
+    const response = await fetch(`${BASE_URL}/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        // this is the default booking fee 
+        amount : 200000,
+        currency: 'lkr',
+      }),
+    });
+    const {clientSecret} = await response.json();
+    return clientSecret;
+  };
+
+  const handlePayPress = async () => {
+    const clientSecret = await fetchPaymentIntentClientSecret();
+  };
+
 
   return (
     <ScrollView>
@@ -120,7 +153,6 @@ const ProfileDoc = (props) => {
             source={require("../assets/images/d1.jpg")}
             style={styles.photoButton}
           />
-          {/* <Text style={styles.DocName}>Dr.Jack Alan</Text> */}
           <Text style={styles.DocName}>
             DR.{doctorData.fname + " " + doctorData.lname}
           </Text>
@@ -139,21 +171,6 @@ const ProfileDoc = (props) => {
 
           <Text style={styles.input}>Clik here to make Appointment</Text>
         </View>
-
-        {/* <View style={styles.DescContainer}>
-          <Text style={{ fontSize: 20 }}>Available Time</Text>
-          <Text style={styles.input}>{doctorData.a_date}</Text>
-
-          <Text style={styles.input}>Status</Text>
-
-          <Text style={styles.input}>{doctorData.a_time}</Text>
-
-          <View style={styles.input}>
-            <TouchableOpacity style={styles.button} onPress={click}>
-              <Text style={styles.buttonText}>Book Now </Text>
-            </TouchableOpacity>
-          </View>
-        </View> */}
         <View style={styles.DescContainer}>
         {doctorData.a_date && doctorData.a_date.map((date, index) => (    
           <View key={index}>
@@ -162,7 +179,7 @@ const ProfileDoc = (props) => {
             <Text style={styles.input}>Status</Text>
             <Text style={styles.input}>{doctorData.a_time[index]}</Text>
             <View style={styles.input}>
-              <TouchableOpacity style={styles.button} onPress={() => handleClick(date, doctorData.a_time[index])}>
+              <TouchableOpacity style={styles.button} onPress={handleBookNowPress}>
                 <Text style={styles.buttonText}>Book Now </Text>
               </TouchableOpacity>
             </View>
@@ -170,22 +187,39 @@ const ProfileDoc = (props) => {
         ))}
       </View>
 
-
-        {/* <View style={styles.DescContainer}>
-          <Text style={{ fontSize: 20 }}>Available Time</Text>
-          <Text style={styles.input}>{doctorData.a_date}</Text>
-
-          <Text style={styles.input}>Status</Text>
-
-          <Text style={styles.input}>{doctorData.a_time}</Text>
-
-          <View style={styles.input}>
-            <TouchableOpacity style={styles.button} onPress={click}>
-              <Text style={styles.buttonText}>Book Now </Text>
-            </TouchableOpacity>
-          </View>
-        </View> */}
       </View>
+
+      {/* card */}
+    <View>
+    {showCardField && (
+              <View style={styles.stickyCardContainer}>
+
+      <CardField
+        postalCodeEnabled={false}
+        placeholders={{
+          number: '4242 4242 4242 4242',
+        }}
+        cardStyle={{
+          backgroundColor: '#FFFFFF',
+          textColor: '#000000',
+        }}
+        style={{
+          width: '100%',
+          height: 50,
+          marginVertical: 30,
+        }}
+        onCardChange={(cardDetails) => {
+          console.log('cardDetails', cardDetails);
+        }}
+        onFocus={(focusedField) => {
+          console.log('focusField', focusedField);
+        }}
+      />
+      <Button onPress={handlePayPress} title="Pay" disabled={loading} />
+      </View>
+    )}
+    </View>
+      {/*  */}
     </ScrollView>
   );
 };
@@ -267,6 +301,17 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 16,
     marginTop: 3,
+  },
+  stickyCardContainer: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    backgroundColor: '#FFFFFF',
+  },
+  cardField: {
+    height: 50,
   },
 });
 
