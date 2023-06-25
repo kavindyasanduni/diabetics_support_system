@@ -1,5 +1,5 @@
 # DiaMate
-DiaMate is a mobile application built using React Native that aims to support diabetes patients in managing their condition effectively. The app provides various features and tools to help users provide knowledge sharing center, make reservations to meet doctors and nutritionist, upload reports relating to there status for the recerved doctor and contact doctors and nutritionist via calling system.
+DiaMate is a mobile application developed using React Native that aims to support diabetes patients in managing their condition effectively. The app provides various features and tools to help users provide knowledge sharing center, make reservations to meet doctors and nutritionist, upload reports relating to there status for the reserved doctor and contact doctors and nutritionist via calling system.
 
 # Features
   * Online Reservation : You can reserve your doctor and nutritionist from the app.You will be able to see the avalable dates and times of the doctors and nutritionists and you can make a reservation.
@@ -11,9 +11,9 @@ DiaMate is a mobile application built using React Native that aims to support di
 To run DiaMate locally on your machine, follow these steps:
 
 1. Clone the repository to your local machine using the following command : 
-  * git clone
+  * git clone https://github.com/kavindyasanduni/diabetics_support_system.git
 2. Navigate to the project directory:
-  * cd DiaMate
+  * cd diabetics_support_system
 3. Install the necessary dependencies:
   * npm install
 4. Start the development server:
