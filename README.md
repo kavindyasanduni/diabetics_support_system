@@ -1,3 +1,8 @@
+<div align="center">
+  <img src="https://punkt.de/_Resources/Persistent/8/f/c/0/8fc0125238b099cacbed5db2fad79da413cc4654/React_Native_Logo-1140x599.png" width = "700" >
+ <h2>React Native</h2>
+</div>
+
 # DiaMate
 DiaMate is a mobile application developed using React Native that aims to support diabetes patients in managing their condition effectively. The app provides various features and tools to help users provide knowledge sharing center, make reservations to meet doctors and nutritionist, upload reports relating to there status for the reserved doctor and contact doctors and nutritionist via calling system.
 
@@ -18,7 +23,7 @@ To run DiaMate locally on your machine, follow these steps:
   * npm install
 4. Start the development server:
   * npm start
-Use the Expo app on your mobile device or emulator to scan the QR code displayed in the terminal or browser window.
+* Use the Expo app on your mobile device or emulator to scan the QR code displayed in the terminal or browser window.
 
  The app will now load on your device, and you can start exploring and using DiaMate!
 
