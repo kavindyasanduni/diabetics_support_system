@@ -21,7 +21,7 @@ const MyDrawer = props =>{
         <Drawer.Screen name="EditPassword" component={EditPassword} options={{headerStyle:{backgroundColor:'#fff'}}}/>
         <Drawer.Screen name="Knowledge Sharing Center" component={MViewFirstPage} />
 
-        <Drawer.Screen name="PatientProfile" component={PatientProfile} />
+        {/* <Drawer.Screen name="PatientProfile" component={PatientProfile} /> */}
         
         {/* <Drawer.Screen name="PatientSetting" component={PatientSetting} /> */}
 

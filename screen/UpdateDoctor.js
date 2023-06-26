@@ -112,7 +112,7 @@ function UpdateDoctorDetails() {
 
     try {
       const response = await axios.put(
-        `http://192.168.8.101:8082/updateDoctor/${selectedDoctor}`,
+        `${BASE_URL}/updateDoctor/${selectedDoctor}`,
         {
           a_date: dateArray,
           a_time: appointmentTimes,
@@ -159,10 +159,10 @@ function UpdateDoctorDetails() {
       <Text style={styles.label}>Add new Date and times</Text>
       <View style={styles.datePickerContainer}>
         <TouchableOpacity style={styles.buttonP} onPress={showDatePicker}>
-          <Text>Select Date</Text>
+          <Text style={{color : "#fff"}}>Select Date</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonP} onPress={showTimePicker}>
-          <Text>Select Time</Text>
+          <Text style={{color : "#fff"}}>Select Time</Text>
         </TouchableOpacity>
         {selectedDate && selectedTime && (
           <TouchableOpacity

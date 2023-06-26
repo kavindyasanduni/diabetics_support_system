@@ -10,6 +10,7 @@ import {
   TextInput,
   Modal,
   Alert,
+  ScrollView,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
@@ -24,6 +25,11 @@ import {
 import { async } from "@firebase/util";
 import Swiper from "react-native-swiper";
 import BASE_URL from "../../config";
+import Icon from "react-native-vector-icons/AntDesign";
+
+
+
+
 
 const UpdateContainerCard = (props) => {
   const [image, setImage] = useState(null);
@@ -145,7 +151,7 @@ const UpdateContainerCard = (props) => {
             setSelectedOption(null);
             alert("Data successfully saved!");
 
-            swiperRef.current.scrollBy(-2, true);
+            swiperRef.current.scrollBy(-3, true);
 
             })
             .catch(function (error) {
@@ -161,14 +167,18 @@ const UpdateContainerCard = (props) => {
 
   //to check user have filled the title and description
   const handleNextButtonPress = () => {
-    if (title.trim() === '' || text.trim() === '') {
+    if (!title || !text || title.trim() === '' || text.trim() === '') {
       // Check if the title or description is empty or contains only whitespace
       alert('Please fill in the title and description.');
+      return;
+    }else if (image == null){
+      alert('Select an image');
       return;
     }
     // Proceed to the next step
     swiperRef.current.scrollBy(1, true);
   };
+  
 
   const handleNextButtonSelectCategory = () => {
     if (selectedOption === null) {
@@ -214,7 +224,13 @@ const UpdateContainerCard = (props) => {
           text: 'Yes',
           onPress: () => {
             // Call your cancel reservation function here
-             props.navigation.navigate("knowladgesharingdashbord")
+            //  props.navigation.navigate("knowladgesharingdashbord")
+            setText(null);
+            setImage(null);
+            setTitle(null);
+            setSelectedOption(null);
+            swiperRef.current.scrollBy(-3, true);
+
              
           },
         },
@@ -387,7 +403,7 @@ const UpdateContainerCard = (props) => {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.saveButtonConatiner}>
+          {/* <View style={styles.saveButtonConatiner}>
             <TouchableOpacity
                onPress={() => {
                       handleSave();
@@ -396,16 +412,85 @@ const UpdateContainerCard = (props) => {
             >
               <Text style={styles.buttonText}>Save content</Text>
             </TouchableOpacity>
+          </View> */}
+
+          {/* <View style={styles.deleteButtonConatiner}>
+            <View style={styles.deleteButtonConatiner}>
+             <TouchableOpacity onPress={onCancel} style={styles.buttonDeleteContent}>
+               <Text style={styles.buttonText}>Cancel</Text>
+             </TouchableOpacity>
+            </View>
+          </View> */}
+        
+              <View style={styles.deleteButtonConatiner}>
+                      <TouchableOpacity onPress={handleNextButtonPress} style={styles.button_s}>
+                        <Text style={styles.buttonText}>View Preview    
+                        
+                        </Text>
+                        <Icon name="doubleright" size={15} color="#00a8ff"  style={{marginTop:8}}/>
+                    
+                      </TouchableOpacity>
+                </View>
+        
+        </View>
+
+
+        {/* Fourth page - Preview */}
+          <View style={{ flex: 1 }}>
+            <ScrollView>            
+              <View style={styles.headerContainer}>
+              <Text style={styles.modalHeader}>Preview</Text>
+            </View>
+
+            <View style={styles.previewContainer}>
+              <View style={styles.previewImage}>
+                {image && (
+                  <Image
+                    source={{ uri: image }}
+                    style={{ width: '100%', height: 200 }}
+                  />
+                )}
+              </View>
+
+              <View style={styles.previewTitle}>
+                <Text style={styles.previewText}>{title}</Text>
+              </View>
+
+              <View style={styles.previewDescription}>
+                <Text style={styles.previewText2}>{text}</Text>
+              </View>
+            </View>
+
+            <View style={styles.buttonContainerThirdPage}>
+              <View style={styles.nextButtonContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    swiperRef.current.scrollBy(-1, true);
+                  }}
+                  style={styles.buttonPrevious}
+                >
+                  <Text style={styles.buttonText}>Previous</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.nextButtonContainer}>
+                  <TouchableOpacity onPress={onCancel} style={styles.button_c}>
+                    <Text style={styles.buttonText}>Cancel</Text>
+                  </TouchableOpacity>
+                </View>
+              <View style={styles.nextButtonContainer}>
+                <TouchableOpacity
+                  onPress={handleSave}
+                  style={styles.button_s}
+                >
+                  <Text style={styles.buttonText}>Save Content</Text>
+                </TouchableOpacity>
+              </View>
+              
+            </View>
+            </ScrollView>
+
           </View>
 
-          <View style={styles.deleteButtonConatiner}>
-          <View style={styles.deleteButtonConatiner}>
-            <TouchableOpacity onPress={onCancel} style={styles.buttonDeleteContent}>
-              <Text style={styles.buttonText}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-          </View>
-        </View>
       </Swiper>
     </View>
     </View>
@@ -676,7 +761,7 @@ const styles = StyleSheet.create({
   //delete all content
   deleteButtonConatiner:{
     alignItems: "center",
-    marginTop: 5,
+    marginTop: 40,
   },
   buttonDeleteContent:{
     backgroundColor: "#c0392b",
@@ -686,6 +771,70 @@ const styles = StyleSheet.create({
     width: 130,
     height: 40,
   },
+
+//preview content of the added data
+
+
+ // ...
+
+ previewContainer: {
+  flex: 1,
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: 20,
+},
+
+previewImage: {
+  width: '100%',
+  height: 200,
+  marginBottom: 20,
+},
+
+previewTitle: {
+  marginBottom: 10,
+  
+},
+
+previewDescription: {
+  marginBottom: 10,
+},
+
+previewText: {
+  fontSize: 18,
+  fontWeight: 'bold',
+},
+previewText2: {
+  fontSize: 18,
+  // fontWeight: 'bold',
+},
+
+buttonContainerThirdPage: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  // marginTop: 20,
+  marginBottom : 40,
+},
+button_c: {
+  backgroundColor: "#EA2027",
+  padding: 3,
+  borderRadius: 18,
+  alignItems: "center",
+  width: 110,
+  height: 35,
+},
+
+
+
+button_next: {
+  backgroundColor: "#00a8ff",
+  padding: 3,
+  borderRadius: 18,
+  alignItems: "center",
+  width: 120,
+  height: 40,
+},
+
+
 });
 
 export default UpdateContainerCard;

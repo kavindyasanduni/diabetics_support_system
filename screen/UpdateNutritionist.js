@@ -113,7 +113,7 @@ function UpdateNutritionistDetails() {
     const handleSave = async () => {
       console.log(selectedDoctor);
       try {
-        const response = await axios.put(`http://192.168.8.101:8082/updateNutritionist/${selectedDoctor}`, {
+        const response = await axios.put(`${BASE_URL}/updateNutritionist/${selectedDoctor}`, {
           // did: selectedDoctor,
           a_date: date,
           a_time: appointmentTimes,
@@ -163,12 +163,12 @@ function UpdateNutritionistDetails() {
       <View style={styles.datePickerContainer}>
         <View>
           <TouchableOpacity style={styles.buttonP} onPress={showDatePicker}>
-            <Text>Select Date</Text>
+            <Text style={{color : "#fff"}}>Select Date</Text>
           </TouchableOpacity>
         </View>
         <View>
           <TouchableOpacity style={styles.buttonP} onPress={showTimePicker}>
-            <Text>Select Time</Text>
+            <Text style={{color : "#fff"}}>Select Time</Text>
           </TouchableOpacity>
         </View>
         <View>
