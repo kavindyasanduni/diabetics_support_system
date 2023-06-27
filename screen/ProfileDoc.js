@@ -107,6 +107,7 @@ const {confirmPayment, loading} = useConfirmPayment();
         .then(response => {
           // Handle the response if needed
           alert("Reservation saved!");
+          setShowCardField(false)
           console.log('Data saved successfully!');
         })
         .catch(error => {
