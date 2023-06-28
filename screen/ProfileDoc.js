@@ -5,7 +5,7 @@ import axios from "axios";
 import BASE_URL from "../config";
 
 
-const ProfileDoc = (props) => {
+const ProfileDoc = props => {
   const [AppoinmentDateandDay, setAppinmentDateandDay] = useState("");
 
   const { id, name } = props.route.params;
@@ -148,7 +148,7 @@ const handleClick = (date, time) => {
             text: 'Yes',
             onPress: () => {
               if (name ==="doctor"){
-                navigation.navigate("UploadFiles", { typeOfUser , id , pid});
+                props.navigation.navigate("UploadFiles", { typeOfUser , id , pid});
                 // Send the data to the server using Axios
                 axios.post(`${BASE_URL}/addReservation`,{
                       p_id: "1", //should send actual p id

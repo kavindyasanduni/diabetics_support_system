@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //calling to backend
-const Link = "http://192.168.8.101:8082";
+const Link = "http://192.168.8.100:8082";
 const Port = "8082";
 const BASE_URL = `${Link}/api/`//link plus port
 

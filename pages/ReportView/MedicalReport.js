@@ -6,7 +6,7 @@ import { white } from 'color-name';
 import { Linking } from 'react-native';
 const baseURL = "http://192.168.8.101:8082";
 const medicalReportURL = "/medicalReports/did/1/2";
-
+import BASE_URL from '../../config';
 const MedicalReport = (props) => {
     const id = props.route.params.id;
     const p_id = props.route.params.p_id;
@@ -24,7 +24,9 @@ const MedicalReport = (props) => {
         // Fetch data using Axios GET request
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${baseURL}/medicalReports/did/${p_id}/${id}`);
+                // const response = await axios.get(`${baseURL}/medicalReports/did/${p_id}/${id}`);
+                const response = await axios.get(`${BASE_URL}/medicalReports/did/1/2`);
+
                 setData(response.data);
                 console.log(response.data);
                 setReportLinkes(response.data[0].reportlink);
@@ -39,7 +41,7 @@ const MedicalReport = (props) => {
     <View style={{color: "#fff"}}>
 
         <View style = {{marginTop:50}}>
-            <Text>View reports fro doctor</Text>
+            <Text>View reports for doctor</Text>
         </View>
          {data ? (
             <View style={{color: white}}>
