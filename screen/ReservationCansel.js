@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-// import axios from "axios";
 import BASE_URL from "../config";
 import { TextInput } from "react-native-gesture-handler";
 import { Picker } from "@react-native-picker/picker";
@@ -23,8 +22,8 @@ const ReservationCancel = () => {
   const [bank, setBank] = useState("sampath");
   const [accountNumber, setAccountNumber] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
-  const [customerName , setCustomerName] = useState("")
-  const [bookingDate , setBookingDate] = useState("")
+  const [customerName, setCustomerName] = useState("");
+  const [bookingDate, setBookingDate] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -38,8 +37,6 @@ const ReservationCancel = () => {
       }
       console.log(response.data);
       console.log("Data successfully fetched");
-      // setDoctorData(response.data)
-      // console.log('Data successfully fetched:', response.data);
     } catch (error) {
       console.log(error);
       alert(
@@ -65,7 +62,7 @@ const ReservationCancel = () => {
             // Call your cancel reservation function here
 
             cancelReservation(data.r_id);
-            setBookingDate(data.date)
+            setBookingDate(data.date);
           },
         },
       ],
@@ -77,20 +74,17 @@ const ReservationCancel = () => {
     try {
       setShowBankDetailsForm(true);
       alert("Reservation deleted successfully");
-      const response = await axios.delete(
-        `${BASE_URL}/deleteReservation`,
-        {
-          data: {
-            id: reservationId,
-            accountHolderName: accountHolderName,
-            bank: bank,
-            accountNumber: accountNumber,
-            mobileNumber: mobileNumber,
-            customerName: customerName,
-            bookingDate: bookingDate,
-          },
-        }
-      );
+      const response = await axios.delete(`${BASE_URL}/deleteReservation`, {
+        data: {
+          id: reservationId,
+          accountHolderName: accountHolderName,
+          bank: bank,
+          accountNumber: accountNumber,
+          mobileNumber: mobileNumber,
+          customerName: customerName,
+          bookingDate: bookingDate,
+        },
+      });
       fetchData();
     } catch (error) {
       console.log(error);
@@ -99,7 +93,7 @@ const ReservationCancel = () => {
       );
     }
   };
-  
+
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       {!showBankDetailsForm && (
