@@ -78,6 +78,10 @@ const GuardianSignUp = props => {
       })
       .then(response => {
         console.log('Data successfully saved to database:', response.data);
+        setFirstName('');
+        setLastName('');
+        setNIC('');
+        setEmail('');
       })
       .catch(error => {
         console.error('Error saving data:', error);
@@ -117,7 +121,7 @@ const GuardianSignUp = props => {
             style={[styles.input, firstNameError && styles.errorInput]}
             underlineColorAndroid="transparent"
             placeholder="Guardian First Name"
-            placeholderTextColor="#1e3799"
+            placeholderTextColor="#0E1879"
             autoCapitalize="none"
             onChangeText={handleFirstName}
           />
@@ -185,7 +189,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#1e3799',
+    color: '#0E1879',
     marginBottom: 20,
   },
   input: {
@@ -195,7 +199,7 @@ const styles = StyleSheet.create({
     //left:25,
     marginTop:20,
     width:'90%',
-    borderColor: '#1e3799',
+    borderColor: '#0E1879',
     borderWidth: 1,
     borderRadius:22,
     color:'#1e3799',
@@ -207,7 +211,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '80%',
-    backgroundColor: '#1e3799',
+    backgroundColor: '#0E1879',
     borderRadius: 25,
     marginVertical: 10,
     paddingVertical: 12,

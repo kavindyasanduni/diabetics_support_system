@@ -139,8 +139,8 @@ const styles = StyleSheet.create({
     color:'#fff'
   },
   button: {
-    width: 280,
-    height: 50,
+    width: 200,
+    height: 40,
     backgroundColor: '#4a69bd',
     borderRadius: 32,
     justifyContent: 'center',
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     color: '#fff',
-    fontWeight: 'bold',
+    //fontWeight: 'bold',
   },
   successMessage: {
     color: '#fff',

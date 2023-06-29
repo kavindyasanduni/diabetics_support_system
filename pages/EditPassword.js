@@ -1,5 +1,5 @@
 import React, { useState ,useContext} from 'react';
-import { View, TextInput,Text, Button, StyleSheet, Alert } from 'react-native';
+import { View, TextInput,Text, Button, StyleSheet, Alert ,TouchableOpacity} from 'react-native';
 import axios from 'axios';
 import { UserContext } from '../pages/UserContext';
 import BASE_URL from '../config';
@@ -21,6 +21,9 @@ const EditPassword = props => {
     axios.put(`${BASE_URL}/api/users/${userId}/password`, updatedUser)
       .then(response => {
         Alert.alert("Password updated successfully");
+        setCurrentPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
       })
       .catch(error => {
         Alert.alert("Error updating password");
@@ -31,7 +34,7 @@ const EditPassword = props => {
   return (
     <View style={styles.container}>
 
-    <Text style={{ color: '#7a42f4', fontSize: 20, top: 0.1, textAlign: 'center', justifyContent: 'center', alignItems: 'center' }}>Update Password</Text>
+    <Text style={{ color: '#0E1879', fontSize: 20, top: 0.1,marginBottom:5, textAlign: 'center', justifyContent: 'center', alignItems: 'center' }}>Update Password</Text>
 
       <TextInput
         style={styles.input}
@@ -54,7 +57,9 @@ const EditPassword = props => {
         value={confirmPassword}
         onChangeText={text => setConfirmPassword(text)}
       />
-      <Button title="Save" onPress={handleSave} />
+      <TouchableOpacity style={styles.button} onPress={handleSave}>
+        <Text style={styles.buttonText}>Save</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -64,9 +69,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor:'#ffff'
   },
   input: {
-    borderColor: '#7a42f4',
+    borderColor: '#0E1879',
     padding: 10,
     marginBottom: 10,
     width: "90%",
@@ -74,6 +80,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 10,
+  },
+  button: {
+    backgroundColor: '#0E1879',
+    padding: 10,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    color: 'white',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
   },
 });
 
