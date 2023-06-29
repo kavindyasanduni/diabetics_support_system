@@ -14,9 +14,9 @@ const Guardiandrawer = props =>{
     return (
     
       <Drawer.Navigator drawerContent={props =><CustomDrawer{...props}/>}>
-        <Drawer.Screen name="Guardianhome" component={Guardianhome} />
-        <Drawer.Screen name="EditProfile" component={PatientEditProfile} />
-        <Drawer.Screen name="EditPassword" component={EditPassword} />
+        <Drawer.Screen name="Guardian home" component={Guardianhome} />
+        <Drawer.Screen name="Edit Profile" component={PatientEditProfile} />
+        <Drawer.Screen name="Edit Password" component={EditPassword} />
         <Drawer.Screen name="Knowledge Sharing Center" component={MViewFirstPage} />
       </Drawer.Navigator>
       
