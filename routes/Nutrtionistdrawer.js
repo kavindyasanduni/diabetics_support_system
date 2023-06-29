@@ -14,9 +14,9 @@ const Drawer = createDrawerNavigator();
 const NutritionistDrawer = () => {
   return (
     <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />}>
-      <Drawer.Screen name="NutritionistDashboard" component={NutritionistDashboard} />
-      <Drawer.Screen name="EditProfile" component={PatientEditProfile} />
-      <Drawer.Screen name="EditPassword" component={EditPassword} />
+      <Drawer.Screen name="Nutritionist Dashboard" component={NutritionistDashboard} />
+      <Drawer.Screen name="Edit Profile" component={PatientEditProfile} />
+      <Drawer.Screen name="Edit Password" component={EditPassword} />
       <Drawer.Screen name="Knowledge Sharing Center" component={MViewFirstPage} />
       {/* <Drawer.Screen name="Available Reservation" component={ReservationNutritionist} /> */}
     </Drawer.Navigator>

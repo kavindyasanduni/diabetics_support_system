@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { View, Text, ImageBackground, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
+import { useFocusEffect,useIsFocused } from '@react-navigation/native';
 import axios from "axios";
 import BASE_URL from "../config";
 
@@ -12,12 +13,13 @@ const CustomDrawer = (props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
+  const isDrawerFocused = useIsFocused();
+
   useEffect(() => {
-    if (userId) {
-      // Fetch user data from the backend API
+    if (userId && isDrawerFocused) {
       fetchUserData();
     }
-  }, [userId]);
+  }, [userId, isDrawerFocused]);
 
   const fetchUserData = async () => {
     try {

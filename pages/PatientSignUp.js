@@ -111,7 +111,16 @@ const PatientSignUp = props => {
       alert('password should have at least one spelling, number and symbol')
     }
   
-    
+    axios
+    .get(`${BASE_URL}/api/users/checkemail?email=${email}`)
+    .then(function (response) {
+      const emailExists = response.data;
+
+      if (emailExists) {
+        alert("Email already exists");
+        console.log("Email already exists in the database");
+        return;
+      }    
 
     // Send the data to the server
     axios.post(`${BASE_URL}/api/users/adduser`, {
@@ -127,12 +136,22 @@ const PatientSignUp = props => {
       console.log('Data successfully saved to database:', response.data);
       //alert('Sign up successful!');
       // Navigate to the login page
+      setFirstName('');
+      setLastName('');
+      setNIC('');
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
       props.navigation.navigate('OTPVerification',{ otpEmail: email });
     })
     .catch(error => {
       console.error('Error saving data:', error);
       alert('Error saving data, please try again.');
     });
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
   };
 
   //gradient
