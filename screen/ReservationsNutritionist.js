@@ -5,7 +5,7 @@ import { View ,Text , ScrollView , StyleSheet ,TouchableOpacity ,Alert } from "r
 // import axios from "axios";
 import BASE_URL from "../config";
 
-const ReservationNutritionist = () => {
+const ReservationNutritionist = (props) => {
     const id = 1;
     const [reservations , setReservations] = useState([]);
 
@@ -151,8 +151,11 @@ const ReservationNutritionist = () => {
                         <Text style={styles.input}>{data.phone_no}</Text>
 
                         <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.button} onPress={() => handleClick(data.r_id)}>
-                            <Text style={styles.buttonText}>See Reports</Text>
+                        <TouchableOpacity style={styles.button}>
+                            <Text style={styles.buttonText}
+                        onPress={() => props.navigation.navigate("ViewReportsNutritionist", {id , p_id: data.p_id})}
+                            
+                            >See Reports</Text>
                         </TouchableOpacity>
                         </View>
                     </View>

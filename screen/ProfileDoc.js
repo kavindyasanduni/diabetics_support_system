@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, View, Text, Image, TouchableOpacity ,StyleSheet} from 'react-native';
+import { ScrollView, View, Text, Image, TouchableOpacity ,StyleSheet ,Alert} from 'react-native';
 
 import axios from "axios";
 import BASE_URL from "../config";
 
 
-const ProfileDoc = (props) => {
+const ProfileDoc = props => {
   const [AppoinmentDateandDay, setAppinmentDateandDay] = useState("");
 
-  const { id, name ,description} = props.route.params;
+  const { id, name,description } = props.route.params;
+  const pid = 1;
   console.log(id);
   console.log(name);
+  const typeOfUser = name;
+  // console.log(type);
   const [doctorData, setDoctorData] = useState([]);
+
+  
 
   useEffect(() => {
     if (name === "doctor") {
@@ -56,59 +61,146 @@ const ProfileDoc = (props) => {
 
 
   //send data
-    const handleClick = (date, time) => {
+    // const handleClick = (date, time,id) => {
+    //   // Create an object with the data to be sent
+    //   const data = {
+    //     date: date,
+    //     time: time,
+    //   };
+    //   Alert.alert(
+    //     'Confirmation',
+    //     'Do you want to upload report',
+    //     [
+    //       {
+    //         text: 'No',
+    //         style: 'cancel',
+    //       },
+    //       {
+    //         text: 'Yes',
+    //         onPress: () => {
+    //           console.log("helloo")
+    //         },
+    //       },
+    //     ],
+    //     { cancelable: false }
+    //   );
+    //  if (name ==="doctor"){
+    //   // Send the data to the server using Axios
+    //   axios.post(`${BASE_URL}/addReservation`,{
+    //         p_id: "1", //should send actual p id
+    //         r_type : name,
+    //         d_id : id,
+    //         date : date,
+    //         time : time,
+    //         p_name : "Lakshan",
+ 
+    //   })
+    //     .then(response => {
+    //       // Handle the response if needed
+    //       alert("Reservation saved!");
+    //       console.log('Data saved successfully!');
+    //     })
+    //     .catch(error => {
+    //       // Handle the error if needed
+    //       alert("Error occurred! Try again later");
+    //       console.error('Error saving data:', error);
+    //     });
+
+    //  }else if (name === "nutritionist"){
+    //       axios.post(`${BASE_URL}/addReservation`,{
+    //         p_id: "1",
+    //         r_type : name,
+    //         d_id : id,
+    //         date : date,
+    //         time : time,
+    //         p_name : "Lakshan",
+    //         isremove : "no",
+
+    //    })
+    //     .then(response => {
+    //       // Handle the response if needed
+    //       alert("Reservation saved!");
+    //       console.log('Data saved successfully!');
+    //     })
+    //     .catch(error => {
+    //       // Handle the error if needed
+    //       alert("Error occurred! Try again later");
+    //       console.error('Error saving data:', error);
+    //     });
+    //   }
+    // };
+  
+const handleClick = (date, time) => {
       // Create an object with the data to be sent
       const data = {
         date: date,
-        time: time
+        time: time,
       };
-     if (name ==="doctor"){
-      // Send the data to the server using Axios
-      axios.post(`${BASE_URL}/addReservation`,{
-            p_id: "1", //should send actual p id
-            r_type : name,
-            d_id : id,
-            date : date,
-            time : time,
-            p_name : "Lakshan",
- 
-      })
-        .then(response => {
-          // Handle the response if needed
-          alert("Reservation saved!");
-          console.log('Data saved successfully!');
-        })
-        .catch(error => {
-          // Handle the error if needed
-          alert("Error occurred! Try again later");
-          console.error('Error saving data:', error);
-        });
+      Alert.alert(
+        'Confirmation',
+        'Do you want to upload report',
+        [
+          {
+            text: 'No',
+            style: 'cancel',
+          },
+          {
+            text: 'Yes',
+            onPress: () => {
+              if (name ==="doctor"){
+                props.navigation.navigate("UploadFiles", { typeOfUser , id , pid});
+                // Send the data to the server using Axios
+                axios.post(`${BASE_URL}/addReservation`,{
+                      p_id: "1", //should send actual p id
+                      r_type : name,
+                      d_id : id,
+                      date : date,
+                      time : time,
+                      p_name : "Lakshan",
+           
+                })
+                  .then(response => {
+                    // Handle the response if needed
+                    alert("Reservation saved!");
+                    console.log('Data saved successfully!');
+                  })
+                  .catch(error => {
+                    // Handle the error if needed
+                    alert("Error occurred! Try again later");
+                    console.error('Error saving data:', error);
+                  });
+          
+               }else if (name === "nutritionist"){
+                props.navigation.navigate("UploadFiles", { typeOfUser , id , pid});
 
-     }else if (name === "nutritionist"){
-          axios.post(`${BASE_URL}/addReservation`,{
-            p_id: "1",
-            r_type : name,
-            d_id : id,
-            date : date,
-            time : time,
-            p_name : "Lakshan",
-            isremove : "no",
-
-       })
-        .then(response => {
-          // Handle the response if needed
-          alert("Reservation saved!");
-          console.log('Data saved successfully!');
-        })
-        .catch(error => {
-          // Handle the error if needed
-          alert("Error occurred! Try again later");
-          console.error('Error saving data:', error);
-        });
-      }
+                //     axios.post(`${BASE_URL}/addReservation`,{
+                //       p_id: "1",
+                //       r_type : name,
+                //       d_id : id,
+                //       date : date,
+                //       time : time,
+                //       p_name : "Lakshan",
+                //       isremove : "no",
+          
+                //  })
+                //   .then(response => {
+                //     // Handle the response if needed
+                //     alert("Reservation saved!");
+                //     console.log('Data saved successfully!');
+                //   })
+                //   .catch(error => {
+                //     // Handle the error if needed
+                //     alert("Error occurred! Try again later");
+                //     console.error('Error saving data:', error);
+                //   });
+                }
+            },
+          },
+        ],
+        { cancelable: false }
+      );
+     
     };
-  
-
 
   const click = () => {};
 
@@ -139,21 +231,6 @@ const ProfileDoc = (props) => {
 
           <Text style={styles.input}>Clik here to make Appointment</Text>
         </View>
-
-        {/* <View style={styles.DescContainer}>
-          <Text style={{ fontSize: 20 }}>Available Time</Text>
-          <Text style={styles.input}>{doctorData.a_date}</Text>
-
-          <Text style={styles.input}>Status</Text>
-
-          <Text style={styles.input}>{doctorData.a_time}</Text>
-
-          <View style={styles.input}>
-            <TouchableOpacity style={styles.button} onPress={click}>
-              <Text style={styles.buttonText}>Book Now </Text>
-            </TouchableOpacity>
-          </View>
-        </View> */}
         <View style={styles.DescContainer}>
         {doctorData.a_date && doctorData.a_date.map((date, index) => (    
           <View key={index}>
@@ -162,29 +239,13 @@ const ProfileDoc = (props) => {
             <Text style={styles.input}>Status</Text>
             <Text style={styles.input}>{doctorData.a_time[index]}</Text>
             <View style={styles.input}>
-              <TouchableOpacity style={styles.button} onPress={() => handleClick(date, doctorData.a_time[index])}>
+              <TouchableOpacity style={styles.button} onPress={() => handleClick(date, doctorData.a_time[index] )}>
                 <Text style={styles.buttonText}>Book Now </Text>
               </TouchableOpacity>
             </View>
           </View>
         ))}
       </View>
-
-
-        {/* <View style={styles.DescContainer}>
-          <Text style={{ fontSize: 20 }}>Available Time</Text>
-          <Text style={styles.input}>{doctorData.a_date}</Text>
-
-          <Text style={styles.input}>Status</Text>
-
-          <Text style={styles.input}>{doctorData.a_time}</Text>
-
-          <View style={styles.input}>
-            <TouchableOpacity style={styles.button} onPress={click}>
-              <Text style={styles.buttonText}>Book Now </Text>
-            </TouchableOpacity>
-          </View>
-        </View> */}
       </View>
     </ScrollView>
   );

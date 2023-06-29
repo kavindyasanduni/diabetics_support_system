@@ -12,7 +12,7 @@ import {
 // import axios from "axios";
 import BASE_URL from "../config";
 
-const ReservationDoctor = () => {
+const ReservationDoctor = (props) => {
   const id = 1;
   const [reservations, setReservations] = useState([]);
 
@@ -182,7 +182,7 @@ const ReservationDoctor = () => {
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
                         style={styles.button}
-                        onPress={() => handleClick(data.r_id)}
+                        onPress={() => props.navigation.navigate("ViewReportsDoctor", {id , p_id: data.p_id})}
                         >
                         <Text style={styles.buttonText}>See Reports</Text>
                         </TouchableOpacity>
