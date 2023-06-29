@@ -1,5 +1,5 @@
 import { padding } from "@mui/system";
-import React from "react";
+import {React,useContext} from "react";
 import {
   SafeAreaView,
   View,
@@ -13,8 +13,12 @@ import {
 
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { UserContext } from '../pages/UserContext';
 
 const PatientHome = (props) => {
+  const { userId } = useContext(UserContext);
+  console.log(userId);
+
   return (
     <View style={{ flex: 1 }}>
     <View style={styles.textView}>
@@ -33,7 +37,7 @@ const PatientHome = (props) => {
             <TouchableOpacity
             style={styles.button}
             onPress={() =>
-             props.navigation.navigate("DoctorAppointment" , {type : "doctor"})
+             props.navigation.navigate("DoctorAppointment" , {type : "doctor" , userId : userId})
             }
           >       
             <Text style={styles.cardText}>
@@ -50,11 +54,27 @@ const PatientHome = (props) => {
             <TouchableOpacity
             style={styles.button}
             onPress={() =>
-              props.navigation.navigate("NutritionistAppointment")
+              props.navigation.navigate("NutritionistAppointment"  , { userId : userId})
             }
           >       
             <Text style={styles.cardText}>
             Book Nutritionist
+            </Text>
+          </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.cardContainer}>
+          <View style={styles.card}>
+            <Icon name="book-clock" size={85} color="#1D11AD" />
+
+            <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              props.navigation.navigate("ReservationCancel"  , {userId : userId})
+            }
+          >       
+            <Text style={styles.cardText}>
+            Reservations
             </Text>
           </TouchableOpacity>
           </View>

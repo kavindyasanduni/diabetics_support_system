@@ -16,12 +16,13 @@ const {confirmPayment, loading} = useConfirmPayment();
   const [AppoinmentDateandDay, setAppinmentDateandDay] = useState("");
   const [showCardField, setShowCardField] = useState(false);
   const [showAddReport, setshowAddReport] = useState(false);
+  const [dataSave , setDataSave] = useState(false);
 
 
 
-  const { id, name,description } = props.route.params;
-  const pid = 1;
-  console.log(id);
+  const { id, name,description ,pid } = props.route.params;
+  // const pid = 1;
+  console.log(pid);
   console.log(name);
   const typeOfUser = name;
   // console.log(type);
@@ -71,82 +72,16 @@ const {confirmPayment, loading} = useConfirmPayment();
   };
 
 
-  //send data
-    // const handleClick = (date, time,id) => {
-    //   // Create an object with the data to be sent
-    //   const data = {
-    //     date: date,
-    //     time: time,
-    //   };
-    //   Alert.alert(
-    //     'Confirmation',
-    //     'Do you want to upload report',
-    //     [
-    //       {
-    //         text: 'No',
-    //         style: 'cancel',
-    //       },
-    //       {
-    //         text: 'Yes',
-    //         onPress: () => {
-    //           console.log("helloo")
-    //         },
-    //       },
-    //     ],
-    //     { cancelable: false }
-    //   );
-    //  if (name ==="doctor"){
-    //   // Send the data to the server using Axios
-    //   axios.post(`${BASE_URL}/addReservation`,{
-    //         p_id: "1", //should send actual p id
-    //         r_type : name,
-    //         d_id : id,
-    //         date : date,
-    //         time : time,
-    //         p_name : "Lakshan",
- 
-    //   })
-    //     .then(response => {
-    //       // Handle the response if needed
-    //       alert("Reservation saved!");
-    //       console.log('Data saved successfully!');
-    //     })
-    //     .catch(error => {
-    //       // Handle the error if needed
-    //       alert("Error occurred! Try again later");
-    //       console.error('Error saving data:', error);
-    //     });
-
-    //  }else if (name === "nutritionist"){
-    //       axios.post(`${BASE_URL}/addReservation`,{
-    //         p_id: "1",
-    //         r_type : name,
-    //         d_id : id,
-    //         date : date,
-    //         time : time,
-    //         p_name : "Lakshan",
-    //         isremove : "no",
-
-    //    })
-    //     .then(response => {
-    //       // Handle the response if needed
-    //       alert("Reservation saved!");
-    //       console.log('Data saved successfully!');
-    //     })
-    //     .catch(error => {
-    //       // Handle the error if needed
-    //       alert("Error occurred! Try again later");
-    //       console.error('Error saving data:', error);
-    //     });
-    //   }
-    // };
   
 const handleClick = (date, time) => {
+  const dateS = date;
+  const timeS = time;
+  console.log(dateS);
       // Create an object with the data to be sent
-      const data = {
-        date: date,
-        time: time,
-      };
+      // const data = {
+      //   date: date,
+      //   time: time,
+      // };
       // Alert.alert(
       //   'Confirmation',
       //   'Do you want to upload report',
@@ -158,21 +93,30 @@ const handleClick = (date, time) => {
       //     {
       //       text: 'Yes',
       //       onPress: () => {
+
+
+      if (dataSave == true){ //upload if payment is successful
+
               if (name ==="doctor"){
-                props.navigation.navigate("UploadFiles", { typeOfUser , id , pid});
+                // props.navigation.navigate("UploadFiles", { typeOfUser , id , pid});
                 // Send the data to the server using Axios
                 axios.post(`${BASE_URL}/addReservation`,{
-                      p_id: "1", //should send actual p id
+                      p_id: pid, //should send actual p id
                       r_type : name,
                       d_id : id,
-                      date : date,
-                      time : time,
-                      p_name : "Lakshan",
+                      date : dateS,
+                      time : timeS,
+                      p_name : "Kavindya",
+                      isremove : "no",
+
            
                 })
                   .then(response => {
                     // Handle the response if needed
-                    alert("Reservation saved!");
+                    alert("Reservation saved! if you have reports click upload reports button to upload them");
+                    setshowAddReport(true);
+                    setShowCardField(false)
+
                     console.log('Data saved successfully!');
                   })
                   .catch(error => {
@@ -181,33 +125,37 @@ const handleClick = (date, time) => {
                     console.error('Error saving data:', error);
                   });
           
-               }else if (name === "nutritionist"){
-                props.navigation.navigate("UploadFiles", { typeOfUser , id , pid});
+               }
+          else if (name === "nutritionist"){
+                axios.post(`${BASE_URL}/addReservation`,{
+                  p_id: pid,
+                  r_type : name,
+                  d_id : id,
+                  date : dateS,
+                  time : timeS,
+                  p_name : "Kavindya",
+                  isremove : "no",
 
-     }else if (name === "nutritionist"){
-          axios.post(`${BASE_URL}/addReservation`,{
-            p_id: "1",
-            r_type : name,
-            d_id : id,
-            date : date,
-            time : time,
-            p_name : "Lakshan",
-            isremove : "no",
+            })
+              .then(response => {
+                // Handle the response if needed
+                alert("Reservation saved!");
+                setShowCardField(false)
+                console.log('Data saved successfully!');
+              })
+              .catch(error => {
+                // Handle the error if needed
+                alert("Error occurred! Try again later");
+                console.error('Error saving data:', error);
+              });
+            }
 
-       })
-        .then(response => {
-          // Handle the response if needed
-          alert("Reservation saved!");
-          setShowCardField(false)
-          console.log('Data saved successfully!');
-        })
-        .catch(error => {
-          // Handle the error if needed
-          alert("Error occurred! Try again later");
-          console.error('Error saving data:', error);
-        });
-      }
-    };
+           }else {
+            console.log("Reservation failed!");
+            alert("Reservation failed!");
+           }
+
+          };
   
     const handleBookNowPress = () => {
       setShowCardField(true);
@@ -225,10 +173,11 @@ const handleClick = (date, time) => {
       body: JSON.stringify({
         amount : 200000,
         currency: 'lkr',
-        description: 'testpayment'
+        // description: 'testpayment'
       }),
     });
     const {clientSecret} = await response.json();
+    setDataSave(true);
     return clientSecret;
   };
 
@@ -273,15 +222,26 @@ const handleClick = (date, time) => {
             <Text style={styles.input}>{doctorData.a_time[index]}</Text>
             <View style={styles.input}>
               {/* <TouchableOpacity style={styles.button} onPress={() => handleClick(date, doctorData.a_time[index] )}> */}
-              <TouchableOpacity style={styles.button} onPress={handleBookNowPress}>
+              {/* <TouchableOpacity style={styles.button} onPress={handleBookNowPress} >
                 <Text style={styles.buttonText}>Book Now </Text>
+              </TouchableOpacity> */}
+
+              <TouchableOpacity style={styles.button} onPress={() => {
+                handleBookNowPress();
+                handleClick(date, doctorData.a_time[index]);
+              }}>
+                <Text style={styles.buttonText}>Book Now</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.input}>
 
-              <TouchableOpacity style={styles.button} >
-                <Text style={styles.buttonText}>Add Report </Text>
-              </TouchableOpacity>
+            {showAddReport && (
+                <TouchableOpacity style={styles.button} 
+                onPress={() => props.navigation.navigate("UploadFiles", { typeOfUser , id , pid})}
+                >
+                  <Text style={styles.buttonText}>Add Report</Text>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         ))}

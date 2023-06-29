@@ -6,7 +6,8 @@ import { View ,Text , ScrollView , StyleSheet ,TouchableOpacity ,Alert } from "r
 import BASE_URL from "../config";
 
 const ReservationNutritionist = (props) => {
-    const id = 1;
+  const { userId } = props.route.params;
+  console.log(userId);
     const [reservations , setReservations] = useState([]);
 
     useEffect(() => {
@@ -17,7 +18,7 @@ const ReservationNutritionist = (props) => {
       
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${BASE_URL}/getReservationsByRole/${id}/nutritionists`);
+          const response = await axios.get(`${BASE_URL}/getReservationsByRole/${userId}/nutritionists`);
           if (response.data) {
             setReservations(response.data);
           }

@@ -1,9 +1,14 @@
-import React from "react";
+import {React,useContext} from "react";
 import { View, Text, StyleSheet, TouchableOpacity,Image } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { UserContext } from '../pages/UserContext';
+
 
 const NutritionistDashboard = (props) => {
+  const { userId } = useContext(UserContext);
+  console.log(userId);
+
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.textView}>
@@ -22,7 +27,7 @@ const NutritionistDashboard = (props) => {
               <TouchableOpacity
               style={styles.button}
               onPress={() =>
-                props.navigation.navigate("Available Reservation nutritionist")
+                props.navigation.navigate("Available Reservation nutritionist" , {userId : userId})
               }
             >       
               <Text style={styles.cardText}>

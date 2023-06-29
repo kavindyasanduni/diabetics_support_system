@@ -13,7 +13,8 @@ import {
 import BASE_URL from "../config";
 
 const ReservationDoctor = (props) => {
-  const id = 1;
+  const { userId } = props.route.params;
+  console.log(userId);
   const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
@@ -23,7 +24,7 @@ const ReservationDoctor = (props) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/getReservationsByRole/${id}/doctor`
+        `${BASE_URL}/getReservationsByRole/${userId}/doctor`
       );
       if (response.data) {
         setReservations(response.data);

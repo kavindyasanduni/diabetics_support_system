@@ -13,8 +13,10 @@ import BASE_URL from "../config";
 import { TextInput } from "react-native-gesture-handler";
 import { Picker } from "@react-native-picker/picker";
 
-const ReservationCancel = () => {
-  const id = 1;
+const ReservationCancel = (props) => {
+  const { userId } = props.route.params;
+  console.log(userId); //patient id fro getting data
+  
   const [reservations, setReservations] = useState([]);
   const [confirmCancellation, setConfirmCancellation] = useState(false);
   const [showBankDetailsForm, setShowBankDetailsForm] = useState(false);
@@ -24,45 +26,51 @@ const ReservationCancel = () => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [bookingDate, setBookingDate] = useState("");
+  const [saveData , setSaveData] = useState(false);
+
+  const [rid , setRid] = useState("");
 
   useEffect(() => {
     fetchData();
   }, []);
 
+
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/getAllReservations`);
+      const response = await axios.get(`${BASE_URL}/getReservationsById/${userId}`);
       if (response.data) {
         setReservations(response.data);
       }
       console.log(response.data);
-      console.log("Data successfully fetched");
+      console.log('Data successfully fetched');
+      // setDoctorData(response.data)
+      // console.log('Data successfully fetched:', response.data);
     } catch (error) {
       console.log(error);
-      alert(
-        "An error occurred while fetching the data. Please try again later."
-      );
+      alert('An error occurred while fetching the data. Please try again later.');
     }
+
+    
   };
 
   //to delete
-  const isRemove = "yes";
-  const handleClick = (data) => {
+  const isRemove =  'yes';
+  const handleClick = (reservationId) => {
     Alert.alert(
-      "Confirmation",
-      "Are you sure you want to cancel this reservation?",
+      'Confirmation',
+      'Are you sure you want to cancel this reservation?',
       [
         {
-          text: "No",
-          style: "cancel",
+          text: 'No',
+          style: 'cancel',
         },
         {
-          text: "Yes",
+          text: 'Yes',
           onPress: () => {
             // Call your cancel reservation function here
-            setBookingDate(data.date);
-
-            cancelReservation(data);
+            // cancelReservation(reservationId);
+            setRid(reservationId);
+            setShowBankDetailsForm(true);
           },
         },
       ],
@@ -70,30 +78,42 @@ const ReservationCancel = () => {
     );
   };
 
-  const cancelReservation = async (localdata) => {
+  const cancelReservation = async () => {
+    console.log(`Cancelled reservation with ID: ${rid}`);
     try {
-      setShowBankDetailsForm(true);
-      // 
-      const response = await axios.delete(`${BASE_URL}/deleteReservation`, {
-        data: {
-          id: localdata.r_id,
-          account_holder_name: localdata.p_name,
-          bank: bank,
-          account_number: accountNumber,
-          mobile_number: localdata.phone_no,
-          customer_name: localdata.p_name,
-          booking_date: localdata.date,
-        },
-      });
-      console.log("reservationId :", localdata);
-      fetchData();
-      alert("Reservation deleted successfully");
-    } catch (error) {
-      // console.log(error);
-      // alert(
-      //   "An error occurred while deleting the reservation. Please try again later."
-      // );
-    }
+        const response = await axios.put(`${BASE_URL}/updateReservation/${rid}`,{
+            isremove : isRemove
+        });
+
+        //update the bank details
+        const response2 = await axios.delete(`${BASE_URL}/deleteReservation`, {
+          data: {
+            id: rid,
+            account_holder_name: accountHolderName,
+            bank: bank,
+            account_number: accountNumber,
+            mobile_number: mobileNumber,
+            customer_name: "",
+            booking_date: "",
+          },
+        });
+
+        console.log('Data successfully updated');
+        if(response2){
+        console.log('Data successfully added to the refund details table'); 
+
+        }
+        alert("Reservation cancel request has been sent");
+        fetchData();
+        setShowBankDetailsForm(false);
+        // setDoctorData(response.data)
+        // console.log('Data successfully fetched:', response.data);
+      } catch (error) {
+        console.log(error);
+        alert('An error occurred while updating the data. Please try again later.');
+      }
+ 
+    
   };
 
   return (
@@ -119,7 +139,7 @@ const ReservationCancel = () => {
                 <View style={styles.buttonContainer}>
                   <TouchableOpacity
                     style={styles.button}
-                    onPress={() => handleClick(data)}
+                    onPress={() =>  handleClick(data.r_id)}
                   >
                     <Text style={styles.buttonText}>Cancel</Text>
                   </TouchableOpacity>
@@ -181,7 +201,13 @@ const ReservationCancel = () => {
 
             <TouchableOpacity
               style={styles.bankdetails_button}
-              onPress={handleClick}
+              // onPress={saveData}
+              onPress={() => 
+                cancelReservation()
+              
+              
+              }
+
             >
               <Text style={styles.bankdetails_buttonText}>Confirm</Text>
             </TouchableOpacity>
