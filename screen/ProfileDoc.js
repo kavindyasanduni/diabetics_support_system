@@ -134,9 +134,9 @@ const {confirmPayment, loading} = useConfirmPayment();
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        // this is the default booking fee 
         amount : 200000,
         currency: 'lkr',
+        description: 'testpayment'
       }),
     });
     const {clientSecret} = await response.json();
@@ -188,7 +188,7 @@ const {confirmPayment, loading} = useConfirmPayment();
               </TouchableOpacity>
             </View>
             <View style={styles.input}>
-              
+
               <TouchableOpacity style={styles.button} >
                 <Text style={styles.buttonText}>Add Report </Text>
               </TouchableOpacity>

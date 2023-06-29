@@ -60,9 +60,9 @@ const ReservationCancel = () => {
           text: "Yes",
           onPress: () => {
             // Call your cancel reservation function here
-
-            cancelReservation(data.r_id);
             setBookingDate(data.date);
+
+            cancelReservation(data);
           },
         },
       ],
@@ -70,31 +70,31 @@ const ReservationCancel = () => {
     );
   };
 
-  const cancelReservation = async (reservationId) => {
+  const cancelReservation = async (localdata) => {
     try {
       setShowBankDetailsForm(true);
+      // 
       const response = await axios.delete(`${BASE_URL}/deleteReservation`, {
         data: {
-          id: reservationId,
-          accountHolderName: accountHolderName,
+          id: localdata.r_id,
+          account_holder_name: localdata.p_name,
           bank: bank,
-          accountNumber: accountNumber,
-          mobileNumber: mobileNumber,
-          customerName: customerName,
-          bookingDate: bookingDate,
+          account_number: accountNumber,
+          mobile_number: localdata.phone_no,
+          customer_name: localdata.p_name,
+          booking_date: localdata.date,
         },
       });
-      console.log("reservationId :" , reservationId)
-      // fetchData();
+      console.log("reservationId :", localdata);
+      fetchData();
       alert("Reservation deleted successfully");
     } catch (error) {
-      console.log(error);
-      alert(
-        "An error occurred while deleting the reservation. Please try again later."
-      );
+      // console.log(error);
+      // alert(
+      //   "An error occurred while deleting the reservation. Please try again later."
+      // );
     }
   };
-  
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
