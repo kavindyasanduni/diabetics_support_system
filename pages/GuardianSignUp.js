@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState ,useContext} from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image, ScrollView } from 'react-native';
 import axios from 'axios';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import BASE_URL from '../config'
+import { UserContext } from '../pages/UserContext';
 
 const GuardianSignUp = props => {
+  const { userId } = useContext(UserContext);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [NIC, setNIC] = useState('');
@@ -15,9 +17,10 @@ const GuardianSignUp = props => {
   const [lastNameError, setLastNameError] = useState(false);
   const [NICError, setNICError] = useState(false);
   const [emailError, setEmailError] = useState(false);
-  const route = useRoute();
-  const { otpEmail } = route.params;
-
+  //const route = useRoute();
+  //const { otpEmail } = route.params;
+  console.log(userId)
+  //console.log(typeof userId);
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
   const handleFirstName = text => {
@@ -75,35 +78,50 @@ const GuardianSignUp = props => {
       })
       .then(response => {
         console.log('Data successfully saved to database:', response.data);
-        props.navigation.navigate('OTPVerification', { otpEmail: otpEmail });
+        setFirstName('');
+        setLastName('');
+        setNIC('');
+        setEmail('');
       })
       .catch(error => {
         console.error('Error saving data:', error);
         alert('Error saving data, please try again.');
       });
+
+      axios
+        .post(`${BASE_URL}/api/users/addGuardian`,{
+          pid:userId
+        })
+        .then(response => {
+          console.log('Data successfully saved to database:', response.data);
+        })
+        .catch(error => {
+          console.error('Errorr saving data:', error);
+          alert('Error saving data, please try again.');
+        });
   };
 
   return (
     <View style={{ flex: 1 }}>
-      <LinearGradient
+      {/* <LinearGradient
         colors={['#0c2461', '#1e3799', '#0c2461']}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
         locations={[0.1, 0.66, 1]}
         style={styles.gradient}
-      >
+      > */}
         <ScrollView contentContainerStyle={styles.container}>
-          <View style={styles.logoContainer}>
+          {/* <View style={styles.logoContainer}>
             <View style={styles.logoCircle}>
               <Image source={require('../assets/Logo/Diamate.png')} style={styles.logo} />
             </View>
-          </View>
+          </View> */}
           <Text style={styles.title}>Enter Your Guardian Details</Text>
           <TextInput
             style={[styles.input, firstNameError && styles.errorInput]}
             underlineColorAndroid="transparent"
             placeholder="Guardian First Name"
-            placeholderTextColor="#fff"
+            placeholderTextColor="#0E1879"
             autoCapitalize="none"
             onChangeText={handleFirstName}
           />
@@ -111,7 +129,7 @@ const GuardianSignUp = props => {
             style={[styles.input, lastNameError && styles.errorInput]}
             underlineColorAndroid="transparent"
             placeholder="Guardian Last Name"
-            placeholderTextColor="#fff"
+            placeholderTextColor="#1e3799"
             autoCapitalize="none"
             onChangeText={handleLastName}
           />
@@ -119,7 +137,7 @@ const GuardianSignUp = props => {
             style={[styles.input, NICError && styles.errorInput]}
             underlineColorAndroid="transparent"
             placeholder="NIC Number"
-            placeholderTextColor="#fff"
+            placeholderTextColor="#1e3799"
             autoCapitalize="none"
             keyboardType='numeric'
             maxLength={12}
@@ -129,15 +147,15 @@ const GuardianSignUp = props => {
             style={[styles.input, emailError && styles.errorInput]}
             underlineColorAndroid="transparent"
             placeholder="Email"
-            placeholderTextColor="#fff"
+            placeholderTextColor="#1e3799"
             autoCapitalize="none"
             onChangeText={handleEmail}
           />
           <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-            <Text style={styles.buttonText}>SIGN UP</Text>
+            <Text style={styles.buttonText}>Add</Text>
           </TouchableOpacity>
         </ScrollView>
-      </LinearGradient>
+      {/* </LinearGradient> */}
     </View>
   );
 };
@@ -152,6 +170,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor:"#fff"
   },
   logoContainer: {
     marginBottom: 50,
@@ -170,7 +189,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#0E1879',
     marginBottom: 20,
   },
   input: {
@@ -180,10 +199,10 @@ const styles = StyleSheet.create({
     //left:25,
     marginTop:20,
     width:'90%',
-    borderColor: '#fff',
+    borderColor: '#0E1879',
     borderWidth: 1,
     borderRadius:22,
-    color:'#fff',
+    color:'#1e3799',
     paddingLeft:20,
   },
   errorInput: {
@@ -192,7 +211,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '80%',
-    backgroundColor: '#1e3799',
+    backgroundColor: '#0E1879',
     borderRadius: 25,
     marginVertical: 10,
     paddingVertical: 12,

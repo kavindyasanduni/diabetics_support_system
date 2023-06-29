@@ -59,7 +59,8 @@ const Login = props => {
       const data = response.data;
       const userId = data.uid;
       setUserId(userId);
-
+      //console.log(typeof userId);
+      
       setEmail(''); // Reset email field
       setPassword(''); // Reset password field
       //console.log(userId);

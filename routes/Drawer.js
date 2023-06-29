@@ -7,6 +7,7 @@ import PatientSetting from '../pages/PatientSetting';
 import CustomDrawer from "./CustomDrawer";
 import PatientEditProfile from "../pages/PatientEditProfile";
 import EditPassword from "../pages/EditPassword";
+import GuardianSignUp from "../pages/GuardianSignUp";
 import MViewFirstPage from "../pages/KnowldgeSharing/Mobile View/MVIewFirstPage";
 
 // create drawer navigation
@@ -16,12 +17,11 @@ const MyDrawer = props =>{
     return (
     
       <Drawer.Navigator drawerContent={props => <CustomDrawer {...props}  />}>
-        <Drawer.Screen name="PatientHome" component={PatientHome} options={{headerStyle:{backgroundColor:'#fff'}}}/>
-        <Drawer.Screen name="EditProfile" component={PatientEditProfile} options={{headerStyle:{backgroundColor:'#fff'}}}/>
-        <Drawer.Screen name="EditPassword" component={EditPassword} options={{headerStyle:{backgroundColor:'#fff'}}}/>
+        <Drawer.Screen name="Patient Home" component={PatientHome} options={{headerStyle:{backgroundColor:'#fff'}}}/>
+        <Drawer.Screen name="Edit Profile" component={PatientEditProfile} options={{headerStyle:{backgroundColor:'#fff'}}}/>
+        <Drawer.Screen name="Edit Password" component={EditPassword} options={{headerStyle:{backgroundColor:'#fff'}}}/>
+        <Drawer.Screen name="Add Guardian" component={GuardianSignUp} />
         <Drawer.Screen name="Knowledge Sharing Center" component={MViewFirstPage} />
-
-        {/* <Drawer.Screen name="PatientProfile" component={PatientProfile} /> */}
         
         {/* <Drawer.Screen name="PatientSetting" component={PatientSetting} /> */}
 

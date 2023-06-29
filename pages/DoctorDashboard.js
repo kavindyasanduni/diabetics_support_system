@@ -1,9 +1,12 @@
-import react from 'react'
+import {React,useContext} from "react";
 import { View, Text, TouchableOpacity, TextInput, StyleSheet ,SafeAreaView,Image} from 'react-native'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native-gesture-handler";
+import { UserContext } from '../pages/UserContext';
 
 const DoctorDashboard = (props) => {
+  const { userId } = useContext(UserContext);
+  console.log(userId);
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.textView}>
@@ -22,7 +25,7 @@ const DoctorDashboard = (props) => {
               <TouchableOpacity
               style={styles.button}
               onPress={() =>
-                props.navigation.navigate("Available Reservation doctor")
+                props.navigation.navigate("Available Reservation doctor" , {userId : userId})
               }
             >       
               <Text style={styles.cardText}>

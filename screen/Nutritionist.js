@@ -20,6 +20,8 @@ import BASE_URL from "../config.js";
 
 
   const NutritionistCard = (props) => {
+    const { userId } = props.route.params;
+    console.log(userId);
     const [nutritionistData , setNutritionistData] = useState([]); //data save 
 
     useEffect(() => {
@@ -79,7 +81,7 @@ import BASE_URL from "../config.js";
               <Card.Actions>
               {/* <Button style={styles.readMoreButton}> */}
               <TouchableOpacity
-              onPress={() => props.navigation.navigate("DoctorProfile", { id: data.nid  , name :name , description : data.description})}
+              onPress={() => props.navigation.navigate("DoctorProfile", { id: data.nid  , name :name , description : data.description ,pid : userId})}
               activeOpacity={0.7}
               >
                   <Text style={styles.readMoreButtonText}>Book Now   

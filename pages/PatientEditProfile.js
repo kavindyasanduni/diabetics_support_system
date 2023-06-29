@@ -65,11 +65,12 @@ const PatientEditProfile = props =>{
       updatedUser.profilePictureUrl = await getDownloadURL(storageRef);
     }
     try {
-      const response = await axios.put(`${BASE_URL}/api/users/${userId}`, updatedUser);
+      const response = await axios.put(`${BASE_URL}/api/users/update/${userId}`, updatedUser);
       if (response.status === 200) {
         setUser(response.data);
         setIsEditing(false);
         setEditedProfilePicture(null); 
+        alert('update successful!');
       } else {
         Alert.alert("Error saving user");
       }
@@ -180,12 +181,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10, // Add margin top to create space
+    backgroundColor:"#fff"
   },
   profilePictureContainer: {
     marginBottom: 20,
   },
   input: {
-    borderColor: '#7a42f4',
+    borderColor: '#0E1879',
     padding: 10,
     marginBottom: 10,
     width:"90%",
@@ -207,7 +209,7 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   button: {
-    backgroundColor: '#7a42f4',
+    backgroundColor: '#0E1879',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -217,7 +219,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   editButton: {
-    backgroundColor: '#7a42f4',
+    backgroundColor: '#0E1879',
     padding: 10,
     borderRadius: 10,
     paddingVertical: 10,

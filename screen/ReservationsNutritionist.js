@@ -5,8 +5,9 @@ import { View ,Text , ScrollView , StyleSheet ,TouchableOpacity ,Alert } from "r
 // import axios from "axios";
 import BASE_URL from "../config";
 
-const ReservationNutritionist = () => {
-    const id = 1;
+const ReservationNutritionist = (props) => {
+  const { userId } = props.route.params;
+  console.log(userId);
     const [reservations , setReservations] = useState([]);
 
     useEffect(() => {
@@ -17,7 +18,7 @@ const ReservationNutritionist = () => {
       
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${BASE_URL}/getReservationsByRole/${id}/nutritionists`);
+          const response = await axios.get(`${BASE_URL}/getReservationsByRole/${userId}/nutritionists`);
           if (response.data) {
             setReservations(response.data);
           }
@@ -151,8 +152,11 @@ const ReservationNutritionist = () => {
                         <Text style={styles.input}>{data.phone_no}</Text>
 
                         <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.button} onPress={() => handleClick(data.r_id)}>
-                            <Text style={styles.buttonText}>See Reports</Text>
+                        <TouchableOpacity style={styles.button}>
+                            <Text style={styles.buttonText}
+                        onPress={() => props.navigation.navigate("ViewReportsNutritionist", {id , p_id: data.p_id})}
+                            
+                            >See Reports</Text>
                         </TouchableOpacity>
                         </View>
                     </View>

@@ -12,8 +12,9 @@ import {
 // import axios from "axios";
 import BASE_URL from "../config";
 
-const ReservationDoctor = () => {
-  const id = 1;
+const ReservationDoctor = (props) => {
+  const { userId } = props.route.params;
+  console.log(userId);
   const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
@@ -23,7 +24,7 @@ const ReservationDoctor = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/getReservationsByRole/${id}/doctor`
+        `${BASE_URL}/getReservationsByRole/${userId}/doctor`
       );
       if (response.data) {
         setReservations(response.data);
@@ -182,7 +183,7 @@ const ReservationDoctor = () => {
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
                         style={styles.button}
-                        onPress={() => handleClick(data.r_id)}
+                        onPress={() => props.navigation.navigate("ViewReportsDoctor", {id , p_id: data.p_id})}
                         >
                         <Text style={styles.buttonText}>See Reports</Text>
                         </TouchableOpacity>

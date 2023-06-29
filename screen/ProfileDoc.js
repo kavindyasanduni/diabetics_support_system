@@ -1,17 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, View, Text, Image, TouchableOpacity ,StyleSheet} from 'react-native';
+import { ScrollView, View, Text, Image, TouchableOpacity ,StyleSheet , Alert} from 'react-native';
+import { CardField, useStripe } from '@stripe/stripe-react-native';
+import {useConfirmPayment} from '@stripe/stripe-react-native'
+
+
 
 import axios from "axios";
 import BASE_URL from "../config";
+import { Button } from "react-native-elements";
 
 
 const ProfileDoc = (props) => {
-  const [AppoinmentDateandDay, setAppinmentDateandDay] = useState("");
+const {confirmPayment, loading} = useConfirmPayment();
 
-  const { id, name ,description} = props.route.params;
-  console.log(id);
+  const [AppoinmentDateandDay, setAppinmentDateandDay] = useState("");
+  const [showCardField, setShowCardField] = useState(false);
+  const [showAddReport, setshowAddReport] = useState(false);
+  const [dataSave , setDataSave] = useState(false);
+
+
+
+  const { id, name,description ,pid } = props.route.params;
+  // const pid = 1;
+  console.log(pid);
   console.log(name);
+  const typeOfUser = name;
+  // console.log(type);
   const [doctorData, setDoctorData] = useState([]);
+
+  
 
   useEffect(() => {
     if (name === "doctor") {
@@ -55,62 +72,120 @@ const ProfileDoc = (props) => {
   };
 
 
-  //send data
-    const handleClick = (date, time) => {
-      // Create an object with the data to be sent
-      const data = {
-        date: date,
-        time: time
-      };
-     if (name ==="doctor"){
-      // Send the data to the server using Axios
-      axios.post(`${BASE_URL}/addReservation`,{
-            p_id: "1", //should send actual p id
-            r_type : name,
-            d_id : id,
-            date : date,
-            time : time,
-            p_name : "Lakshan",
- 
-      })
-        .then(response => {
-          // Handle the response if needed
-          alert("Reservation saved!");
-          console.log('Data saved successfully!');
-        })
-        .catch(error => {
-          // Handle the error if needed
-          alert("Error occurred! Try again later");
-          console.error('Error saving data:', error);
-        });
-
-     }else if (name === "nutritionist"){
-          axios.post(`${BASE_URL}/addReservation`,{
-            p_id: "1",
-            r_type : name,
-            d_id : id,
-            date : date,
-            time : time,
-            p_name : "Lakshan",
-            isremove : "no",
-
-       })
-        .then(response => {
-          // Handle the response if needed
-          alert("Reservation saved!");
-          console.log('Data saved successfully!');
-        })
-        .catch(error => {
-          // Handle the error if needed
-          alert("Error occurred! Try again later");
-          console.error('Error saving data:', error);
-        });
-      }
-    };
   
+const handleClick = (date, time) => {
+  const dateS = date;
+  const timeS = time;
+  console.log(dateS);
+      // Create an object with the data to be sent
+      // const data = {
+      //   date: date,
+      //   time: time,
+      // };
+      // Alert.alert(
+      //   'Confirmation',
+      //   'Do you want to upload report',
+      //   [
+      //     {
+      //       text: 'No',
+      //       style: 'cancel',
+      //     },
+      //     {
+      //       text: 'Yes',
+      //       onPress: () => {
+
+
+      if (dataSave == true){ //upload if payment is successful
+
+              if (name ==="doctor"){
+                // props.navigation.navigate("UploadFiles", { typeOfUser , id , pid});
+                // Send the data to the server using Axios
+                axios.post(`${BASE_URL}/addReservation`,{
+                      p_id: pid, //should send actual p id
+                      r_type : name,
+                      d_id : id,
+                      date : dateS,
+                      time : timeS,
+                      p_name : "Kavindya",
+                      isremove : "no",
+
+           
+                })
+                  .then(response => {
+                    // Handle the response if needed
+                    alert("Reservation saved! if you have reports click upload reports button to upload them");
+                    setshowAddReport(true);
+                    setShowCardField(false)
+
+                    console.log('Data saved successfully!');
+                  })
+                  .catch(error => {
+                    // Handle the error if needed
+                    alert("Error occurred! Try again later");
+                    console.error('Error saving data:', error);
+                  });
+          
+               }
+          else if (name === "nutritionist"){
+                axios.post(`${BASE_URL}/addReservation`,{
+                  p_id: pid,
+                  r_type : name,
+                  d_id : id,
+                  date : dateS,
+                  time : timeS,
+                  p_name : "Kavindya",
+                  isremove : "no",
+
+            })
+              .then(response => {
+                // Handle the response if needed
+                alert("Reservation saved!");
+                setShowCardField(false)
+                console.log('Data saved successfully!');
+              })
+              .catch(error => {
+                // Handle the error if needed
+                alert("Error occurred! Try again later");
+                console.error('Error saving data:', error);
+              });
+            }
+
+           }else {
+            console.log("Reservation failed!");
+            alert("Reservation failed!");
+           }
+
+          };
+  
+    const handleBookNowPress = () => {
+      setShowCardField(true);
+    };
 
 
   const click = () => {};
+
+  const fetchPaymentIntentClientSecret = async () => {
+    const response = await fetch(`${BASE_URL}/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        amount : 200000,
+        currency: 'lkr',
+        // description: 'testpayment'
+      }),
+    });
+    const {clientSecret} = await response.json();
+    setDataSave(true);
+    return clientSecret;
+  };
+
+  const handlePayPress = async () => {
+    const clientSecret = await fetchPaymentIntentClientSecret();
+    setShowCardField(false)
+  };
+
 
   return (
     <ScrollView>
@@ -120,7 +195,6 @@ const ProfileDoc = (props) => {
             source={require("../assets/images/d1.jpg")}
             style={styles.photoButton}
           />
-          {/* <Text style={styles.DocName}>Dr.Jack Alan</Text> */}
           <Text style={styles.DocName}>
             DR.{doctorData.fname + " " + doctorData.lname}
           </Text>
@@ -139,21 +213,6 @@ const ProfileDoc = (props) => {
 
           <Text style={styles.input}>Clik here to make Appointment</Text>
         </View>
-
-        {/* <View style={styles.DescContainer}>
-          <Text style={{ fontSize: 20 }}>Available Time</Text>
-          <Text style={styles.input}>{doctorData.a_date}</Text>
-
-          <Text style={styles.input}>Status</Text>
-
-          <Text style={styles.input}>{doctorData.a_time}</Text>
-
-          <View style={styles.input}>
-            <TouchableOpacity style={styles.button} onPress={click}>
-              <Text style={styles.buttonText}>Book Now </Text>
-            </TouchableOpacity>
-          </View>
-        </View> */}
         <View style={styles.DescContainer}>
         {doctorData.a_date && doctorData.a_date.map((date, index) => (    
           <View key={index}>
@@ -162,30 +221,64 @@ const ProfileDoc = (props) => {
             <Text style={styles.input}>Status</Text>
             <Text style={styles.input}>{doctorData.a_time[index]}</Text>
             <View style={styles.input}>
-              <TouchableOpacity style={styles.button} onPress={() => handleClick(date, doctorData.a_time[index])}>
+              {/* <TouchableOpacity style={styles.button} onPress={() => handleClick(date, doctorData.a_time[index] )}> */}
+              {/* <TouchableOpacity style={styles.button} onPress={handleBookNowPress} >
                 <Text style={styles.buttonText}>Book Now </Text>
+              </TouchableOpacity> */}
+
+              <TouchableOpacity style={styles.button} onPress={() => {
+                handleBookNowPress();
+                handleClick(date, doctorData.a_time[index]);
+              }}>
+                <Text style={styles.buttonText}>Book Now</Text>
               </TouchableOpacity>
+            </View>
+            <View style={styles.input}>
+
+            {showAddReport && (
+                <TouchableOpacity style={styles.button} 
+                onPress={() => props.navigation.navigate("UploadFiles", { typeOfUser , id , pid})}
+                >
+                  <Text style={styles.buttonText}>Add Report</Text>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         ))}
       </View>
-
-
-        {/* <View style={styles.DescContainer}>
-          <Text style={{ fontSize: 20 }}>Available Time</Text>
-          <Text style={styles.input}>{doctorData.a_date}</Text>
-
-          <Text style={styles.input}>Status</Text>
-
-          <Text style={styles.input}>{doctorData.a_time}</Text>
-
-          <View style={styles.input}>
-            <TouchableOpacity style={styles.button} onPress={click}>
-              <Text style={styles.buttonText}>Book Now </Text>
-            </TouchableOpacity>
-          </View>
-        </View> */}
       </View>
+
+      {/* card */}
+    <View>
+    {showCardField && (
+              <View style={styles.stickyCardContainer}>
+
+      <CardField
+        postalCodeEnabled={false}
+        placeholders={{
+          number: '4242 4242 4242 4242',
+        }}
+        cardStyle={{
+          backgroundColor: '#FFFFFF',
+          textColor: '#000000',
+        }}
+        style={{
+          width: '100%',
+          height: 50,
+          marginVertical: 30,
+        }}
+        onCardChange={(cardDetails) => {
+          console.log('cardDetails', cardDetails);
+        }}
+        onFocus={(focusedField) => {
+          console.log('focusField', focusedField);
+        }}
+      />
+      <Button onPress={handlePayPress} title="Pay" disabled={loading} />
+      </View>
+    )}
+    </View>
+      {/*  */}
     </ScrollView>
   );
 };
@@ -267,6 +360,17 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 16,
     marginTop: 3,
+  },
+  stickyCardContainer: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    backgroundColor: '#FFFFFF',
+  },
+  cardField: {
+    height: 50,
   },
 });
 
