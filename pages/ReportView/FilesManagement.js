@@ -35,7 +35,7 @@ const FileManagement = (props) => {
     }
   };
 
-  const handleSaveFile = async (name,id,pid) => {
+  const handleSaveFile = async () => {
     if (selectedFile) {
       const { uri, name } = selectedFile;
 
@@ -52,7 +52,7 @@ const FileManagement = (props) => {
           },
           {
             text: "Save",
-            onPress: async (name,id,pid) => {
+            onPress: async () => {
               if (typeOfUser == "doctor"){
                 try {
                   const response = await uploadFile(uri, name);
@@ -68,6 +68,7 @@ const FileManagement = (props) => {
                       did : id,
                       nid : "",
                       reportlink : reportLink,
+                      // type:typeOfUser,
                     });
                     alert("File uploaded successfully");
 
@@ -93,6 +94,8 @@ const FileManagement = (props) => {
                       did : "",
                       nid : id,
                       reportlink : reportLink,
+                      // type:typeOfUser,
+
                     });
                     alert("File uploaded successfully");
                     props.navigation.navigate('ProfileDoc')
@@ -136,7 +139,7 @@ const FileManagement = (props) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.uploadButton} onPress={handleUploadFiles}>
-        <Text style={styles.buttonText}>Upload files</Text>
+        <Text style={styles.buttonTextU}>Upload files</Text>
         <View style={styles.iconContainer}>
           <AntDesign name="upload" size={35} color="black" />
         </View>
@@ -186,6 +189,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginLeft: 5,
+    color : "white",	
   },
   fileContainer: {
     borderWidth: 1,
@@ -199,6 +203,12 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     marginTop: 10,
+  },
+  buttonTextU:{
+    fontSize: 16,
+    fontWeight: "bold",
+    marginLeft: 5,
+    	
   }
   
 });

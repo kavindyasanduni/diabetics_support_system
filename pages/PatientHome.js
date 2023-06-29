@@ -61,8 +61,13 @@ const PatientHome = (props) => {
         </View>
         <View style={styles.cardContainer}>
           <View style={styles.card}>
-            <Icon name="wechat" size={85} color="#1D11AD" />
+          <Icon name="wechat" size={85} color="#1D11AD" />
+          <TouchableOpacity style={styles.button} 
+            onPress={() => props.navigation.navigate("LandingPage")}
+          
+          >
             <Text style={styles.cardText}>Online Consultation</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
