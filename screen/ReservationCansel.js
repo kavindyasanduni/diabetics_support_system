@@ -73,7 +73,6 @@ const ReservationCancel = () => {
   const cancelReservation = async (reservationId) => {
     try {
       setShowBankDetailsForm(true);
-      alert("Reservation deleted successfully");
       const response = await axios.delete(`${BASE_URL}/deleteReservation`, {
         data: {
           id: reservationId,
@@ -85,7 +84,9 @@ const ReservationCancel = () => {
           bookingDate: bookingDate,
         },
       });
-      fetchData();
+      console.log("reservationId :" , reservationId)
+      // fetchData();
+      alert("Reservation deleted successfully");
     } catch (error) {
       console.log(error);
       alert(
@@ -93,6 +94,7 @@ const ReservationCancel = () => {
       );
     }
   };
+  
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>

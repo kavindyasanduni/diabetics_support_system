@@ -15,6 +15,8 @@ const {confirmPayment, loading} = useConfirmPayment();
 
   const [AppoinmentDateandDay, setAppinmentDateandDay] = useState("");
   const [showCardField, setShowCardField] = useState(false);
+  const [showAddReport, setshowAddReport] = useState(false);
+
 
 
   const { id, name } = props.route.params;
@@ -143,6 +145,7 @@ const {confirmPayment, loading} = useConfirmPayment();
 
   const handlePayPress = async () => {
     const clientSecret = await fetchPaymentIntentClientSecret();
+    setShowCardField(false)
   };
 
 
@@ -182,6 +185,12 @@ const {confirmPayment, loading} = useConfirmPayment();
             <View style={styles.input}>
               <TouchableOpacity style={styles.button} onPress={handleBookNowPress}>
                 <Text style={styles.buttonText}>Book Now </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.input}>
+              
+              <TouchableOpacity style={styles.button} >
+                <Text style={styles.buttonText}>Add Report </Text>
               </TouchableOpacity>
             </View>
           </View>
