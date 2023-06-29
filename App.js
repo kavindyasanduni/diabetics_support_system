@@ -36,7 +36,7 @@ import ReservationCancel from './screen/ReservationCansel';
 import AddNutritionistData from './screen/NutitionistDetails';
 import UpdateNutritionistDetails from './screen/UpdateNutritionist';
 import UpdateDoctorDetails from './screen/UpdateDoctor';
-import Search from './screen/Component/Search';
+import SearchScreen from './screen/Component/Search';
 import FileManagement from './pages/FilesManagement';
 import PaymentSummary from './pages/Admin Dashbord/Analytic Data/PaymentSummary';
 

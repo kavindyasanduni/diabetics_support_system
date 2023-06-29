@@ -1,8 +1,6 @@
-import { padding } from '@mui/system';
 import React, { useState, useEffect } from "react";
-import { Card, Button } from 'react-native-paper';
+import { Card, Button } from "react-native-paper";
 import Icon from "react-native-vector-icons/AntDesign";
-
 import {
   SafeAreaView,
   View,
@@ -11,100 +9,92 @@ import {
   Text,
   TouchableOpacity,
   Image,
- } from 'react-native';
-import SearchBar from './Component/Searchbar.js';
-import { ScrollView } from 'react-native-gesture-handler';
-import axios from 'axios';
-// import { useEffect } from 'react';
-import BASE_URL from '../config.js';
-
+} from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import SearchBar from "./Component/Searchbar.js";
+import axios from "axios";
+import BASE_URL from "../config.js";
 
 const DoctorsCard = (props) => {
-
-  const [doctorsData , setDoctorData] = useState([]); //data save 
+  const [doctorsData, setDoctorData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
-      fetchData();
-    }, []);  
-  
-  //fetch the data
-  const fetchData = async () =>{
-    try { 
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
       const response = await axios.get(`${BASE_URL}/getdoctordata`);
       setDoctorData(response.data);
+      setFilteredData(response.data); // Set initial filtered data as all doctors
       console.log("Data successfully fetched" + response);
-
-    }catch (error){
+    } catch (error) {
       console.log(error);
-      alert(
-        "An error occurred while fetching the data. Please try again later."
-      );
-
+      alert("An error occurred while fetching the data. Please try again later.");
     }
-  }
+  };
+
+  const handleSearch = (searchTerm) => {
+    const filteredDoctors = doctorsData.filter(
+      (doctor) =>
+        doctor.fname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        doctor.lname.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredData(filteredDoctors);
+  };
 
   const name = "doctor";
 
-
-
-
   return (
-    //using modal do this
-
-    // <SafeAreaView>
     <View style={styles.container}>
-
-        <SearchBar style={styles.ser} />
+      <SearchBar onSubmit={handleSearch} />
       <ScrollView contentContainerStyle={styles.cardsContainer}>
-
-          {doctorsData.map((data, index) => (
-            // <TouchableOpacity style={styles.buttonC} 
-            // key={index}
-            //   onPress={() => props.navigation.navigate("DoctorProfile", { id: data.did  , name :name})}
-
-            // >
-            //   <Image
-            //     source={require("../assets/images/d1.jpg")}
-            //     style={{ width: 70, height: 70 }}
-            //   />
-            //   <Text
-            //     style={styles.t1}
-            //     // onPress={() => props.navigation.navigate("DoctorProfile" ,  { id: data.did })}
-            //   >
-            //     {data.fname +" "+ data.lname}
-            //   </Text>
-            // </TouchableOpacity>
-            <View key={index} style={styles.cardContainer}>
-                <Card style={styles.cardStyles}>
-                  <Card.Cover source={require("../assets/images/d1.jpg")} style={styles.cardImage} />
-                  <Card.Title title={data.fname +" "+ data.lname} />
-                  <Card.Content>
-                    <Text>{data.description}</Text>
-                  </Card.Content>
-                  <Card.Actions>
-                  {/* <Button style={styles.readMoreButton}> */}
-                  <TouchableOpacity
-                  onPress={() => props.navigation.navigate("DoctorProfile", { id: data.did  , name :name , description : data.description})}
+        {filteredData.map((data, index) => (
+          <View key={index} style={styles.cardContainer}>
+            <Card style={styles.cardStyles}>
+              <Card.Cover
+                source={require("../assets/VectorArt/doc13.png")}
+                style={styles.cardImage}
+              />
+              <Card.Title
+                title={data.fname + " " + data.lname}
+                titleStyle={styles.titleText}
+              />
+              <Card.Content>
+                <Text style={styles.descriptionText}>{data.description}</Text>
+              </Card.Content>
+              <Card.Actions>
+                <TouchableOpacity
+                  onPress={() =>
+                    props.navigation.navigate("DoctorProfile", {
+                      id: data.did,
+                      name: name,
+                      description: data.description,
+                    })
+                  }
                   activeOpacity={0.7}
-                  >
-                      <Text style={styles.readMoreButtonText}>Book Now   
-                    <Icon name="doubleright" size={12} color="#0984e3" style={{marginLeft:5}} />
-                      
-                      </Text> 
-
-                    {/* </Button> */}
-                    </TouchableOpacity>
-                  </Card.Actions>
-                </Card>
-              </View>
-          ))}
-
+                >
+                  <Text style={styles.readMoreButtonText}>
+                    Book Now
+                    <Icon
+                      name="doubleright"
+                      size={12}
+                      color="#0984e3"
+                      style={{ marginLeft: 5 }}
+                    />
+                  </Text>
+                </TouchableOpacity>
+              </Card.Actions>
+            </Card>
+          </View>
+        ))}
       </ScrollView>
-        
-        </View>
-    // </SafeAreaView>
+    </View>
   );
 };
+
+
 
 const styles = StyleSheet.create({
   buttonC: {
@@ -125,41 +115,48 @@ const styles = StyleSheet.create({
   t5: { color: "#fff", padding: 10, fontSize: 20 },
 
   cardsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
     paddingVertical: 10,
   },
   cardContainer: {
-    width: '48%',
+    width: "48%",
     marginVertical: 10,
   },
   cardStyles: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   readMoreButton: {
     height: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 10,
   },
   readMoreButtonText: {
     fontSize: 13,
     // color: 'black',
     color: "#0984e3",
-    paddingRight:10,
+    paddingRight: 10,
   },
   cardImage: {
     height: 100, // Adjust the height as needed
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   container: {
     flex: 1,
     paddingTop: 30,
     paddingHorizontal: 30,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
-
+  descriptionText: {
+    fontWeight: "bold", // Add desired font weight
+    color: "#435B66", // Add desired color
+  },
+  titleText: {
+    fontWeight: "bold", // Add desired font weight
+    color: "#2c3e50", // Add desired color
+  },
 });
 
 export default DoctorsCard;

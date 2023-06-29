@@ -117,7 +117,7 @@ const ProfileDoc = (props) => {
       <View style={styles.container}>
         <View style={styles.HeadContainer}>
           <Image
-            source={require("../assets/images/d1.jpg")}
+            source={require("../assets/VectorArt/doc13.png")}
             style={styles.photoButton}
           />
           {/* <Text style={styles.DocName}>Dr.Jack Alan</Text> */}
@@ -133,7 +133,7 @@ const ProfileDoc = (props) => {
           <Text style={{ fontSize: 20 }}>Available Time</Text>
           <Text style={styles.input}>Appoinment Date and day</Text>
 
-          <Text style={styles.input}>Status</Text>
+          
 
           <Text style={styles.input}>Time</Text>
 
@@ -159,7 +159,7 @@ const ProfileDoc = (props) => {
           <View key={index}>
             <Text style={{ fontSize: 20 ,paddingTop:20 }}>Available Time</Text> 
             <Text style={styles.input}>{date}</Text>
-            <Text style={styles.input}>Status</Text>
+            
             <Text style={styles.input}>{doctorData.a_time[index]}</Text>
             <View style={styles.input}>
               <TouchableOpacity style={styles.button} onPress={() => handleClick(date, doctorData.a_time[index])}>
