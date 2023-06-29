@@ -127,7 +127,7 @@ const PatientSignUp = props => {
       console.log('Data successfully saved to database:', response.data);
       //alert('Sign up successful!');
       // Navigate to the login page
-      props.navigation.navigate('GuardianSignUp',{ otpEmail: email });
+      props.navigation.navigate('OTPVerification',{ otpEmail: email });
     })
     .catch(error => {
       console.error('Error saving data:', error);
@@ -222,7 +222,7 @@ const PatientSignUp = props => {
         <TouchableOpacity
             style = {styles.submitButton}
             onPress={handleSubmit}>
-            <Text style = {styles.submitButtonText}> Next </Text>
+            <Text style = {styles.submitButtonText}> Sign Up </Text>
       </TouchableOpacity>
       </View>
       </ScrollView>

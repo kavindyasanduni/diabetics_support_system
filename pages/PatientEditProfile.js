@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10, // Add margin top to create space
+    backgroundColor:"#fff"
   },
   profilePictureContainer: {
     marginBottom: 20,
