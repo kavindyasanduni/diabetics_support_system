@@ -1,12 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, View, Text, Image, TouchableOpacity ,StyleSheet ,Alert} from 'react-native';
+import { ScrollView, View, Text, Image, TouchableOpacity ,StyleSheet , Alert} from 'react-native';
+import { CardField, useStripe } from '@stripe/stripe-react-native';
+import {useConfirmPayment} from '@stripe/stripe-react-native'
+
+
 
 import axios from "axios";
 import BASE_URL from "../config";
+import { Button } from "react-native-elements";
 
 
-const ProfileDoc = props => {
+const ProfileDoc = (props) => {
+const {confirmPayment, loading} = useConfirmPayment();
+
   const [AppoinmentDateandDay, setAppinmentDateandDay] = useState("");
+  const [showCardField, setShowCardField] = useState(false);
+  const [showAddReport, setshowAddReport] = useState(false);
+
+
 
   const { id, name,description } = props.route.params;
   const pid = 1;
@@ -136,17 +147,17 @@ const handleClick = (date, time) => {
         date: date,
         time: time,
       };
-      Alert.alert(
-        'Confirmation',
-        'Do you want to upload report',
-        [
-          {
-            text: 'No',
-            style: 'cancel',
-          },
-          {
-            text: 'Yes',
-            onPress: () => {
+      // Alert.alert(
+      //   'Confirmation',
+      //   'Do you want to upload report',
+      //   [
+      //     {
+      //       text: 'No',
+      //       style: 'cancel',
+      //     },
+      //     {
+      //       text: 'Yes',
+      //       onPress: () => {
               if (name ==="doctor"){
                 props.navigation.navigate("UploadFiles", { typeOfUser , id , pid});
                 // Send the data to the server using Axios
@@ -173,36 +184,59 @@ const handleClick = (date, time) => {
                }else if (name === "nutritionist"){
                 props.navigation.navigate("UploadFiles", { typeOfUser , id , pid});
 
-                //     axios.post(`${BASE_URL}/addReservation`,{
-                //       p_id: "1",
-                //       r_type : name,
-                //       d_id : id,
-                //       date : date,
-                //       time : time,
-                //       p_name : "Lakshan",
-                //       isremove : "no",
-          
-                //  })
-                //   .then(response => {
-                //     // Handle the response if needed
-                //     alert("Reservation saved!");
-                //     console.log('Data saved successfully!');
-                //   })
-                //   .catch(error => {
-                //     // Handle the error if needed
-                //     alert("Error occurred! Try again later");
-                //     console.error('Error saving data:', error);
-                //   });
-                }
-            },
-          },
-        ],
-        { cancelable: false }
-      );
-     
+     }else if (name === "nutritionist"){
+          axios.post(`${BASE_URL}/addReservation`,{
+            p_id: "1",
+            r_type : name,
+            d_id : id,
+            date : date,
+            time : time,
+            p_name : "Lakshan",
+            isremove : "no",
+
+       })
+        .then(response => {
+          // Handle the response if needed
+          alert("Reservation saved!");
+          setShowCardField(false)
+          console.log('Data saved successfully!');
+        })
+        .catch(error => {
+          // Handle the error if needed
+          alert("Error occurred! Try again later");
+          console.error('Error saving data:', error);
+        });
+      }
+    };
+  
+    const handleBookNowPress = () => {
+      setShowCardField(true);
     };
 
+
   const click = () => {};
+
+  const fetchPaymentIntentClientSecret = async () => {
+    const response = await fetch(`${BASE_URL}/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        amount : 200000,
+        currency: 'lkr',
+        description: 'testpayment'
+      }),
+    });
+    const {clientSecret} = await response.json();
+    return clientSecret;
+  };
+
+  const handlePayPress = async () => {
+    const clientSecret = await fetchPaymentIntentClientSecret();
+    setShowCardField(false)
+  };
+
 
   return (
     <ScrollView>
@@ -212,7 +246,6 @@ const handleClick = (date, time) => {
             source={require("../assets/images/d1.jpg")}
             style={styles.photoButton}
           />
-          {/* <Text style={styles.DocName}>Dr.Jack Alan</Text> */}
           <Text style={styles.DocName}>
             DR.{doctorData.fname + " " + doctorData.lname}
           </Text>
@@ -239,14 +272,53 @@ const handleClick = (date, time) => {
             <Text style={styles.input}>Status</Text>
             <Text style={styles.input}>{doctorData.a_time[index]}</Text>
             <View style={styles.input}>
-              <TouchableOpacity style={styles.button} onPress={() => handleClick(date, doctorData.a_time[index] )}>
+              {/* <TouchableOpacity style={styles.button} onPress={() => handleClick(date, doctorData.a_time[index] )}> */}
+              <TouchableOpacity style={styles.button} onPress={handleBookNowPress}>
                 <Text style={styles.buttonText}>Book Now </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.input}>
+
+              <TouchableOpacity style={styles.button} >
+                <Text style={styles.buttonText}>Add Report </Text>
               </TouchableOpacity>
             </View>
           </View>
         ))}
       </View>
       </View>
+
+      {/* card */}
+    <View>
+    {showCardField && (
+              <View style={styles.stickyCardContainer}>
+
+      <CardField
+        postalCodeEnabled={false}
+        placeholders={{
+          number: '4242 4242 4242 4242',
+        }}
+        cardStyle={{
+          backgroundColor: '#FFFFFF',
+          textColor: '#000000',
+        }}
+        style={{
+          width: '100%',
+          height: 50,
+          marginVertical: 30,
+        }}
+        onCardChange={(cardDetails) => {
+          console.log('cardDetails', cardDetails);
+        }}
+        onFocus={(focusedField) => {
+          console.log('focusField', focusedField);
+        }}
+      />
+      <Button onPress={handlePayPress} title="Pay" disabled={loading} />
+      </View>
+    )}
+    </View>
+      {/*  */}
     </ScrollView>
   );
 };
@@ -328,6 +400,17 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 16,
     marginTop: 3,
+  },
+  stickyCardContainer: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    backgroundColor: '#FFFFFF',
+  },
+  cardField: {
+    height: 50,
   },
 });
 
