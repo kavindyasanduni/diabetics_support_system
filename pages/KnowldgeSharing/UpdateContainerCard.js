@@ -81,6 +81,30 @@ const UpdateContainerCard = (props) => {
     }
   };
 
+  // let result;
+  // let result;
+  // const PickImage = async () => {
+  //   result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     quality: 1,
+  //   });
+  
+  //   if (!result.cancelled) {
+  //     const response = await fetch(result.uri);
+  //     const blob = await response.blob();
+  //     const fileSizeInMB = blob.size / 1024 / 1024;
+  //     if (fileSizeInMB > 2) {
+  //       Alert.alert('Image Size Limit Exceeded', 'Please select an image smaller than 2MB.');
+  //     } else {
+  //       setImage(result.uri);
+  //     }
+  //   }
+  // };
+  
+
+  
+
   //to confirmation to save 
   const handleSave = () =>{
     Alert.alert(
@@ -171,14 +195,20 @@ const UpdateContainerCard = (props) => {
       // Check if the title or description is empty or contains only whitespace
       alert('Please fill in the title and description.');
       return;
-    }else if (image == null){
+    }
+    // Proceed to the next step
+    swiperRef.current.scrollBy(1, true);
+  };
+  handleNextButtonPressImage
+
+  const handleNextButtonPressImage = () => {
+   if (image == null){
       alert('Select an image');
       return;
     }
     // Proceed to the next step
     swiperRef.current.scrollBy(1, true);
   };
-  
 
   const handleNextButtonSelectCategory = () => {
     if (selectedOption === null) {
@@ -423,7 +453,7 @@ const UpdateContainerCard = (props) => {
           </View> */}
         
               <View style={styles.deleteButtonConatiner}>
-                      <TouchableOpacity onPress={handleNextButtonPress} style={styles.button_s}>
+                      <TouchableOpacity onPress={handleNextButtonPressImage} style={styles.button_s}>
                         <Text style={styles.buttonText}>View Preview    
                         
                         </Text>

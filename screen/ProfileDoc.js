@@ -95,7 +95,7 @@ const handleClick = (date, time) => {
       //       onPress: () => {
 
 
-      if (dataSave == true){ //upload if payment is successful
+      // if (dataSave == true){ //upload if payment is successful
 
               if (name ==="doctor"){
                 // props.navigation.navigate("UploadFiles", { typeOfUser , id , pid});
@@ -150,10 +150,10 @@ const handleClick = (date, time) => {
               });
             }
 
-           }else {
-            console.log("Reservation failed!");
-            alert("Reservation failed!");
-           }
+          //  }else {
+          //   console.log("Reservation failed!");
+          //   alert("Reservation failed!");
+          //  }
 
           };
   
