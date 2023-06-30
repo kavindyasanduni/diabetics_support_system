@@ -15,18 +15,12 @@ import { ScrollView } from "react-native-gesture-handler";
 import axios from "axios";
 import BASE_URL from "../config.js";
 
-const NutritionistCard = (props) => {
-  const [nutritionistData, setNutritionistData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const NutritionistCard = (props) => {
     const { userId } = props.route.params;
     console.log(userId);
     const [nutritionistData , setNutritionistData] = useState([]); //data save 
+  const [filteredData, setFilteredData] = useState([]);
+
 
     useEffect(() => {
         fetchData();
@@ -105,7 +99,7 @@ const NutritionistCard = (props) => {
     </View>
   );
 };
-}
+
 
 
 
