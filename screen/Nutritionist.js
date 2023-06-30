@@ -1,7 +1,5 @@
-import { padding } from "@mui/system";
-// import React from "react";
 import React, { useState, useEffect } from "react";
-import { Card, Button } from 'react-native-paper';
+import { Card, Button } from "react-native-paper";
 import Icon from "react-native-vector-icons/AntDesign";
 import {
   SafeAreaView,
@@ -14,93 +12,98 @@ import {
 } from "react-native";
 import SearchBar from "./Component/Searchbar.js";
 import { ScrollView } from "react-native-gesture-handler";
-import axios from 'axios';
+import axios from "axios";
 import BASE_URL from "../config.js";
-
-
 
   const NutritionistCard = (props) => {
     const { userId } = props.route.params;
     console.log(userId);
     const [nutritionistData , setNutritionistData] = useState([]); //data save 
+  const [filteredData, setFilteredData] = useState([]);
+
 
     useEffect(() => {
         fetchData();
       }, []);  
     
     //fetch the data
-    const fetchData = async () =>{
-      try { 
-        const response = await axios.get(`${BASE_URL}/getallnutritionist`);
-        setNutritionistData(response.data);
-        console.log("Data successfully fetched" + response.data);
   
-      }catch (error){
-        console.log(error);
-        alert(
-          "An error occurred while fetching the data. Please try again later."
-        );
-  
-      }
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/getallnutritionist`);
+      setNutritionistData(response.data);
+      setFilteredData(response.data); // Set initial filtered data as all nutritionists
+      console.log("Data successfully fetched" + response.data);
+    } catch (error) {
+      console.log(error);
+      alert("An error occurred while fetching the data. Please try again later.");
     }
+  };
 
-    const name = "nutritionist";
-  
+  const handleSearch = (searchTerm) => {
+    const filteredNutritionists = nutritionistData.filter(
+      (nutritionist) =>
+        nutritionist.fname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        nutritionist.lname.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredData(filteredNutritionists);
+  };
 
+  const name = "nutritionist";
 
   return (
-    // <SafeAreaView>
     <View style={styles.container}>
-        <SearchBar style={styles.ser} />
-
+      <SearchBar onSubmit={handleSearch} />
       <ScrollView contentContainerStyle={styles.cardsContainer}>
-        {nutritionistData.map((data, index) => (
-            // <TouchableOpacity style={styles.buttonC} 
-            // key={index}
-            //   onPress={() => props.navigation.navigate("DoctorProfile", { id: data.nid , name: name })}
-
-            // >
-            //   <Image
-            //     source={require("../assets/images/d1.jpg")}
-            //     style={{ width: 70, height: 70 }}
-            //   />
-            //   <Text
-            //     style={styles.t1}
-            //     // onPress={() => props.navigation.navigate("DoctorProfile" ,  { id: data.did })}
-            //   >
-            //     {data.fname +" "+ data.lname}
-            //   </Text>
-            // </TouchableOpacity>
-            <View key={index} style={styles.cardContainer}>
+        {filteredData.map((data, index) => (
+          <View key={index} style={styles.cardContainer}>
             <Card style={styles.cardStyles}>
-              <Card.Cover source={require("../assets/images/d2.jpg")} style={styles.cardImage} />
-              <Card.Title title={data.fname +" "+ data.lname} />
+              <Card.Cover
+                source={require("../assets/VectorArt/nut1.png")}
+                style={styles.cardImage}
+              />
+              <Card.Title
+                title={data.fname + " " + data.lname}
+                titleStyle={styles.titleText}
+              />
               <Card.Content>
-                <Text>{data.description}</Text>
+                <Text style={styles.descriptionText}>{data.description}</Text>
               </Card.Content>
               <Card.Actions>
-              {/* <Button style={styles.readMoreButton}> */}
-              <TouchableOpacity
-              onPress={() => props.navigation.navigate("DoctorProfile", { id: data.nid  , name :name , description : data.description ,pid : userId})}
-              activeOpacity={0.7}
-              >
-                  <Text style={styles.readMoreButtonText}>Book Now   
-                <Icon name="doubleright" size={12} color="#0984e3" style={{marginLeft:5}} />
-                  
-                  </Text> 
-
-                {/* </Button> */}
+                <TouchableOpacity
+                  onPress={() =>
+                    props.navigation.navigate("DoctorProfile", {
+                      id: data.nid,
+                      name: name,
+                      description: data.description,
+                      pid : userId,
+                    })
+                  }
+                  activeOpacity={0.7}
+                >
+                  <Text style={styles.readMoreButtonText}>
+                    Book Now
+                    <Icon
+                      name="doubleright"
+                      size={12}
+                      color="#0984e3"
+                      style={{ marginLeft: 5 }}
+                    />
+                  </Text>
                 </TouchableOpacity>
               </Card.Actions>
             </Card>
           </View>
-          ))}
+        ))}
       </ScrollView>
-    {/* </SafeAreaView> */}
     </View>
-
   );
 };
+
+
+
+
+
 
 const styles = StyleSheet.create({
   t1: { color: "#fff", padding: 10, fontSize: 20 },
@@ -144,41 +147,48 @@ const styles = StyleSheet.create({
   t4: { color: "#fff", padding: 10, fontSize: 20 },
   t5: { color: "#fff", padding: 10, fontSize: 20 },
 
-  
   cardsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
     paddingVertical: 10,
   },
   cardContainer: {
-    width: '48%',
+    width: "48%",
     marginVertical: 10,
   },
   cardStyles: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   readMoreButton: {
     height: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 10,
   },
   readMoreButtonText: {
     fontSize: 13,
     // color: 'black',
     color: "#0984e3",
-    paddingRight:10,
+    paddingRight: 10,
   },
   cardImage: {
     height: 100, // Adjust the height as needed
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   container: {
     flex: 1,
     paddingTop: 30,
     paddingHorizontal: 30,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
+  },
+  descriptionText: {
+    fontWeight: "bold", // Add desired font weight
+    color: "#435B66", // Add desired color
+  },
+  titleText: {
+    fontWeight: "bold", // Add desired font weight
+    color: "#2c3e50", // Add desired color
   },
 });
 
