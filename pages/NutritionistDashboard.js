@@ -40,7 +40,17 @@ const NutritionistDashboard = (props) => {
           <View style={styles.cardContainer}>
             <View style={styles.card}>
               <Icon name="web" size={85} color="#1D11AD" />
-              <Text style={styles.cardText}>Knowledge Sharing Center</Text>
+              <TouchableOpacity
+              style={styles.button}
+              onPress={() =>
+                props.navigation.navigate("Knowledge Sharing Center")
+              }
+            >       
+              <Text style={styles.cardText}>
+              Knowledge Sharing Center
+              </Text>
+            </TouchableOpacity>
+              {/* <Text style={styles.cardText}>Knowledge Sharing Center</Text> */}
             </View>
           </View>
         </View>

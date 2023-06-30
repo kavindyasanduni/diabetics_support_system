@@ -39,6 +39,7 @@ import SeeReservation from "../screen/SeeReservation.js";
 import ReservationCancel from "../screen/ReservationCansel.js";
 import ReservationNutritionist from "../screen/ReservationsNutritionist.js";
 import ReservationDoctor from "../screen/ReservationsDoctor.js";
+import MViewFirstPage from "../pages/KnowldgeSharing/Mobile View/MVIewFirstPage.js";
 import FileManagement from "../pages/ReportView/FilesManagement.js";
 import MedicalReport from "../pages/ReportView/MedicalReport.js";
 import MedicalReportNutritionist from "../pages/ReportView/MedicalReportNutritionist.js";
@@ -55,6 +56,7 @@ const Navigation = props => {
                 <Stack.Screen name="knowladgesharingdashbord" component={knowladgesharingdashbord} />
                 <Stack.Screen name="Update or Delete Data - KSC" component={DeleteContentFromKSC} />
                 <Stack.Screen name="Add new content - KSC" component={UpdateContainerCard}/>
+                <Stack.Screen name="Knowledge Sharing Center" component={MViewFirstPage} />
 
                 <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
                 <Stack.Screen name="PatientSignUp" component={PatientSignUp} options={{headerShown:false}}/>

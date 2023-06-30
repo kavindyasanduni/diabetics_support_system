@@ -34,13 +34,12 @@ const AllUsers = () => {
   };
 
 
-  // Calculate the total count and percentages
-  const totalCount = countAccordingToUserType.reduce((acc, curr) => acc + curr.count, 0);
-  const percentages = countAccordingToUserType.map((item) => (item.count / totalCount) * 100);
-  
-  // Truncate labels to 4 characters
-  const truncatedLabels = countAccordingToUserType.map((item) => item.userType.substring(0, 4));
+// Calculate the total count and percentages
+const totalCount = countAccordingToUserType.reduce((acc, curr) => acc + curr.count, 0);
+const percentages = countAccordingToUserType.map((item) => Math.floor((item.count / totalCount) * 100));
 
+// Truncate labels to 4 characters
+const truncatedLabels = countAccordingToUserType.map((item) => item.userType);
 
 // Render the bar chart
 const data = {
@@ -92,7 +91,7 @@ const data = {
             // backgroundColor: '#2ecc71',
             backgroundGradientFrom: '#f1c40f',
             backgroundGradientTo: '#27ae60',
-            decimalPlaces: 2,
+            decimalPlaces: 0,
             color: (opacity = 50) => `rgba(255, 255, 255, ${opacity})`,
             style: {
               borderRadius: 16,

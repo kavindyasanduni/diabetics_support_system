@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, TextInput, StyleSheet ,SafeAreaView,Image
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native-gesture-handler";
 
-const  Guardianhome = ({ navigation }) => {
+const  Guardianhome = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.textView}>
@@ -18,21 +18,44 @@ const  Guardianhome = ({ navigation }) => {
           <View style={styles.cardContainer}>
             <View style={styles.card}>
               <Icon name="file-plus-outline" size={85} color="#1D11AD" />
-
-              <Text style={styles.cardText}>Report</Text>
+              <TouchableOpacity style={styles.button} 
+                  onPress={() => props.navigation.navigate("ViewReportsDoctor",{id : 1 , p_id : 2})}
+          
+              >
+              <Text style={styles.cardText}>Reports</Text>
+              </TouchableOpacity>
             </View>
           </View>
-          {/* <View style={styles.cardContainer}>
+          
+          <View style={styles.cardContainer}>
             <View style={styles.card}>
-              <Icon name="food-off-outline" size={80} color="#1D11AD" />
-
-              <Text style={styles.cardText}>Exercise & Diet plane</Text>
+              <Icon name="web" size={85} color="#1D11AD" />
+              
+              <TouchableOpacity
+              style={styles.button}
+              onPress={() =>
+                props.navigation.navigate("Knowledge Sharing Center")
+              }
+            >       
+              <Text style={styles.cardText}>
+              Knowledge Sharing Center
+              </Text>
+            </TouchableOpacity>
             </View>
-          </View> */}
+          </View>
+          
           <View style={styles.cardContainer}>
             <View style={styles.card}>
               <Icon name="wechat" size={85} color="#1D11AD" />
+              <TouchableOpacity
+              style={styles.button}
+              onPress={() =>
+                props.navigation.navigate("LandingPage")
+              }
+            >
               <Text style={styles.cardText}>Online Consultation</Text>
+            </TouchableOpacity>
+
             </View>
           </View>
         </View>
